@@ -1,4 +1,5 @@
 ﻿using System;
+using HoneyBadgers.Logic;
 
 namespace HoneyBadgers.ConsoleApp
 {
@@ -6,7 +7,8 @@ namespace HoneyBadgers.ConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var data = new Data();
+            data.LoadData();
         }
     }
 }

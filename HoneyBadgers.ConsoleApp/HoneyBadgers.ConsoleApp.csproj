@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -7,6 +7,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HoneyBadgers.Logic\HoneyBadgers.Logic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\movies.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\users.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
