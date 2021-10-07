@@ -16,6 +16,7 @@ namespace HoneyBadgers.Logic
         public string Plot;
         public string Genre;
         public string Country;
+        public double imdbRating;
         public List<Rating> Ratings;
     }
 }

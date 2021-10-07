@@ -1,8 +1,7 @@
 {
   "profiles": {
     "HoneyBadgers.ConsoleApp": {
-      "commandName": "Project",
-      "commandLineArgs": "users.json movies.json"
+      "commandName": "Project"
     }
   }
 }

@@ -20,15 +20,15 @@ namespace HoneyBadgers.Logic
             
         }
 
-        public void LoadData(string userFilePath, string movieFilePath)
+        public void LoadData()
         {
-            LoadUsers(userFilePath);
-            LoadMovies(movieFilePath);
+            LoadUsers("/Resources/users.json");
+            LoadMovies("/Resources/movies.json");
             InitMockData();
         }
         public void LoadUsers(string fileName)
         {
-            var path = Directory.GetCurrentDirectory() + "/Resources/" + fileName;
+            var path = Directory.GetCurrentDirectory() + fileName;
             using var file = new StreamReader(path);
             try
             {
@@ -51,7 +51,7 @@ namespace HoneyBadgers.Logic
 
         public void LoadMovies(string fileName)
         {
-            var path = Directory.GetCurrentDirectory() + "/Resources/" + fileName;
+            var path = Directory.GetCurrentDirectory() + fileName;
             using var file = new StreamReader(path);
             try
             {
@@ -80,9 +80,9 @@ namespace HoneyBadgers.Logic
                 Year = movieDto.Year,
                 Director = movieDto.Director,
                 Writer = movieDto.Writer,
-                Actors = movieDto.Actors.Split(",").ToList(),
+                Actors = movieDto.Actors.Split(",").Select(p => p.Trim()).ToList(),
                 Plot = movieDto.Plot,
-                Genre = movieDto.Genre.Split(",").ToList(),
+                Genre = movieDto.Genre.Split(",").Select(p => p.Trim()).ToList(),
                 Country = movieDto.Country,
                 Status = MovieStatus.NoStatus,
                 Rating = null,
@@ -95,11 +95,11 @@ namespace HoneyBadgers.Logic
             var random = new Random();
             foreach (var user in Users)
             {
-                var movie = Movies[random.Next(0, 6)];
+                var movie = Movies[random.Next(0, Movies.Count)];
                 if (movie != null)
                 {
                     movie.Status = MovieStatus.Watched;
-                    movie.Rating = random.Next(1, 5);
+                    movie.Rating = random.Next(1, 10);
                     user.Movies = new List<Movie> { movie };
                 }
             }

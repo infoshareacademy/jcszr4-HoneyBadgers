@@ -8,7 +8,7 @@ namespace HoneyBadgers.ConsoleApp
         static void Main(string[] args)
         {
             var data = new Data();
-            data.LoadData(args[0], args[1]);
+            data.LoadData();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace HoneyBadgers.Logic
         public List<string> Genre;
         public string Country;
         public MovieStatus Status;
-        public int? Rating;
+        public double? Rating;
         public List<Rating> Ratings;
 
         public Movie()
