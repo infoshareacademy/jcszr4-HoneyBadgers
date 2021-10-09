@@ -30,18 +30,5 @@ namespace HoneyBadgers.Logic
             }
             return results;
         }
-
-        //public static List<Movie> FindByRate(List<Movie> db, int lowerScore, int higherScore)
-        //{
-        //    List<Movie> results = new List<Movie>();
-        //    foreach (Movie itemDB in db)
-        //    {
-        //        if (itemDB.Rating<= (double)higherScore && itemDB.Rating>= (double)lowerScore)
-        //        {
-        //            results.Add(itemDB);
-        //        }
-        //    }
-        //    return results;
-        //}
     }
 }
