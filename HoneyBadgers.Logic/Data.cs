@@ -23,7 +23,23 @@ namespace HoneyBadgers.Logic
             LoadMovies("/Resources/movies.json");
             InitMockData();
         }
-        public void LoadUsers(string fileName)
+
+        public void AddMovie()
+        {
+            var movieService = new MovieService();
+            try
+            {
+                var movie = movieService.AddMovie();
+                Movies.Add(movie);
+                Console.WriteLine("The video has been added successfully!");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("There was a problem adding the movie.");
+            }
+        }
+
+        private void LoadUsers(string fileName)
         {
             var path = Directory.GetCurrentDirectory() + fileName;
             using var file = new StreamReader(path);
@@ -46,7 +62,7 @@ namespace HoneyBadgers.Logic
             }
         }
 
-        public void LoadMovies(string fileName)
+        private void LoadMovies(string fileName)
         {
             var path = Directory.GetCurrentDirectory() + fileName;
             using var file = new StreamReader(path);
@@ -122,7 +138,7 @@ namespace HoneyBadgers.Logic
             if (rates.Count > 0)
             {
                 var sumRates = rates.Sum();
-                var rate = (double)sumRates / rates.Count();
+                var rate = (double)sumRates / rates.Count;
                 movie.Ratings.Add(new Rating("User votes", rate.ToString()));
             }
            

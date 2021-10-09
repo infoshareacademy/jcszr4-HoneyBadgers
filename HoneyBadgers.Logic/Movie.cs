@@ -9,9 +9,10 @@ namespace HoneyBadgers.Logic
 {
     public enum MovieStatus
     {
+        NoStatus,
         Watched,
-        WantToWatch,
-        NoStatus
+        WantToWatch
+        
     }
     public class Movie
     {
@@ -34,21 +35,14 @@ namespace HoneyBadgers.Logic
 
         public Movie(string title, int year, string director, string writer, List<string> actors, string plot, List<string> genre, string country)
         {
-            
-        }
-
-        public Movie AddMovie()
-        {
-            Movie movie = new Movie("title", 2021, "director", "writer", new List<string>(), "plot", new List<string>(), "country");
-            Type type = movie.GetType();
-            PropertyInfo[] properties = type.GetProperties();
-
-            foreach (PropertyInfo property in properties)
-            {
-                Console.WriteLine("Name: " + property.Name + ", Value: " + property.GetValue(movie, null));
-            }
-
-            return movie;
+            Title = title;
+            Year = year;
+            Director = director;
+            Writer = writer;
+            Actors = actors;
+            Plot = plot;
+            Genre = genre;
+            Country = country;
         }
     }
 }

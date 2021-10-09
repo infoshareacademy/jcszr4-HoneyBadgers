@@ -10,8 +10,6 @@ namespace HoneyBadgers.ConsoleApp
             var data = new Data();
             data.LoadData();
 
-            var movie = new Movie();
-            movie.AddMovie();
         }
     }
 }
