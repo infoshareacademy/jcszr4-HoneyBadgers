@@ -3,17 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json.Serialization;
 
 namespace HoneyBadgers.Logic
 {
     public class Data
     {
-        public List<User> Users = new();
-        public List<Movie> Movies = new();
+        public List<User> Users { get; set; } = new();
+        public List<Movie> Movies { get; set; } = new();
 
         public Data()
         {
