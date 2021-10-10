@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace HoneyBadgers.Logic
 {
@@ -26,6 +27,21 @@ namespace HoneyBadgers.Logic
         public Movie()
         {
             
+        }
+
+        public Movie(MovieDto movieDto)
+        {
+            Title = movieDto.Title;
+            Year = movieDto.Year;
+            Director = movieDto.Director;
+            Writer = movieDto.Writer;
+            Actors = movieDto.Actors.Split(",").Select(p => p.Trim()).ToList();
+            Plot = movieDto.Plot;
+            Genre = movieDto.Genre.Split(",").Select(p => p.Trim()).ToList();
+            Country = movieDto.Country;
+            Status = MovieStatus.NoStatus;
+            Rating = null;
+            Ratings = movieDto.Ratings;
         }
     }
 }

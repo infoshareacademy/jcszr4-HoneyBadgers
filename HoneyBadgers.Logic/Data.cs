@@ -24,19 +24,9 @@ namespace HoneyBadgers.Logic
             InitMockData();
         }
 
-        public void AddMovie()
+        public void AddMovie(Movie movie)
         {
-            var movieService = new MovieService();
-            try
-            {
-                var movie = movieService.AddMovie();
-                Movies.Add(movie);
-                Console.WriteLine("The video has been added successfully!");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("There was a problem adding the movie.");
-            }
+            Movies.Add(movie);
         }
 
         private void LoadUsers(string fileName)
@@ -76,31 +66,13 @@ namespace HoneyBadgers.Logic
                 var moviesDto = JsonConvert.DeserializeObject<List<MovieDto>>(json, serializerSettings);
                 if (moviesDto != null && moviesDto.Count > 0)
                 {
-                    Movies = moviesDto.Select(MapMovie).ToList();
+                    Movies = moviesDto.Select(m => new Movie(m)).ToList();
                 }
             }
             catch (Exception)
             {
                 Console.WriteLine("Problem reading movies.json file");
             }
-        }
-
-        private Movie MapMovie(MovieDto movieDto)
-        {
-            return new Movie
-            {
-                Title = movieDto.Title,
-                Year = movieDto.Year,
-                Director = movieDto.Director,
-                Writer = movieDto.Writer,
-                Actors = movieDto.Actors.Split(",").Select(p => p.Trim()).ToList(),
-                Plot = movieDto.Plot,
-                Genre = movieDto.Genre.Split(",").Select(p => p.Trim()).ToList(),
-                Country = movieDto.Country,
-                Status = MovieStatus.NoStatus,
-                Rating = null,
-                Ratings = movieDto.Ratings
-            };
         }
 
         private void InitMockData()
