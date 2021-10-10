@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json.Serialization;
 
 namespace HoneyBadgers.Logic
 {
@@ -12,15 +11,10 @@ namespace HoneyBadgers.Logic
         public List<User> Users { get; set; } = new();
         public List<Movie> Movies { get; set; } = new();
 
-        public Data()
-        {
-            
-        }
-
         public void LoadData()
         {
-            LoadUsers("/Resources/users.json");
-            LoadMovies("/Resources/movies.json");
+            LoadUsers("Resources/users.json");
+            LoadMovies("Resources/movies.json");
             InitMockData();
         }
 
@@ -31,22 +25,16 @@ namespace HoneyBadgers.Logic
 
         private void LoadUsers(string fileName)
         {
-            var path = Directory.GetCurrentDirectory() + fileName;
-            using var file = new StreamReader(path);
             try
             {
-                var json = file.ReadToEnd();
-                var serializerSettings = new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
-                };
-                var users = JsonConvert.DeserializeObject<List<User>>(json, serializerSettings);
+                var fileText = File.ReadAllText(fileName);
+                var users = JsonConvert.DeserializeObject<List<User>>(fileText);
                 if (users != null && users.Count > 0)
                 {
                     Users = users;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 Console.WriteLine("Problem reading users.json file");
             }
@@ -54,22 +42,16 @@ namespace HoneyBadgers.Logic
 
         private void LoadMovies(string fileName)
         {
-            var path = Directory.GetCurrentDirectory() + fileName;
-            using var file = new StreamReader(path);
             try
             {
-                var json = file.ReadToEnd();
-                var serializerSettings = new JsonSerializerSettings
+                var fileText = File.ReadAllText(fileName);
+                var movies = JsonConvert.DeserializeObject<List<MovieDto>>(fileText);
+                if (movies != null && movies.Count > 0)
                 {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
-                };
-                var moviesDto = JsonConvert.DeserializeObject<List<MovieDto>>(json, serializerSettings);
-                if (moviesDto != null && moviesDto.Count > 0)
-                {
-                    Movies = moviesDto.Select(m => new Movie(m)).ToList();
+                    Movies = movies.Select(m => new Movie(m)).ToList();
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 Console.WriteLine("Problem reading movies.json file");
             }
@@ -88,7 +70,6 @@ namespace HoneyBadgers.Logic
                     user.Movies = new List<Movie> { movie };
                 }
             }
-            
         }
 
         private void RatingMovie(Movie movie)
