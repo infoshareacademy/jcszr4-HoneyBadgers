@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace HoneyBadgers.Logic
 {
@@ -31,18 +26,6 @@ namespace HoneyBadgers.Logic
         public Movie()
         {
             
-        }
-
-        public Movie(string title, int year, string director, string writer, List<string> actors, string plot, List<string> genre, string country)
-        {
-            Title = title;
-            Year = year;
-            Director = director;
-            Writer = writer;
-            Actors = actors;
-            Plot = plot;
-            Genre = genre;
-            Country = country;
         }
     }
 }
