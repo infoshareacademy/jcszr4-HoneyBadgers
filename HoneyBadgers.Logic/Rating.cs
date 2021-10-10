@@ -2,8 +2,8 @@
 {
     public class Rating
     {
-        public string Source;
-        public string Value;
+        public string Source { get; set; }
+        public string Value { get; set; }
 
         public Rating(string source, string value)
         {

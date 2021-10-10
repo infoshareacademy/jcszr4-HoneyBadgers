@@ -8,15 +8,15 @@ namespace HoneyBadgers.Logic
 {
     public class MovieDto
     {
-        public string Title;
-        public int Year;
-        public string Director;
-        public string Writer;
-        public string Actors;
-        public string Plot;
-        public string Genre;
-        public string Country;
-        public double imdbRating;
-        public List<Rating> Ratings;
+        public string Title { get; set; }
+        public int Year { get; set; }
+        public string Director { get; set; }
+        public string Writer { get; set; }
+        public string Actors { get; set; }
+        public string Plot { get; set; }
+        public string Genre { get; set; }
+        public string Country { get; set; }
+        public double ImdbRating { get; set; }
+        public List<Rating> Ratings { get; set; }
     }
 }
