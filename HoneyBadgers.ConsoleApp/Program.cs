@@ -9,8 +9,9 @@ namespace HoneyBadgers.ConsoleApp
         {
             var data = new Data();
             data.LoadData();
-            Test t = new(data);
-            t.Run();
+
+            ApplicationStart ourApplicationStart = new ApplicationStart();
+            ourApplicationStart.Start();
         }
     }
 }
