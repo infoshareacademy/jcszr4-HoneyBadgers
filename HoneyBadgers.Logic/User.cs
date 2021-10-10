@@ -8,10 +8,10 @@ namespace HoneyBadgers.Logic
 {
     public class User
     {
-        public string Id;
-        public string FirstName;
-        public string LastName;
-        public string Email;
-        public List<Movie> Movies;
+        public string Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public List<Movie> Movies { get; set; }
     }
 }
