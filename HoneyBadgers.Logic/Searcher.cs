@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Security.Cryptography.X509Certificates;
+
 
 namespace HoneyBadgers.Logic
 {
@@ -15,19 +13,19 @@ namespace HoneyBadgers.Logic
             foreach (var itemDB in db.Movies)
             {
                 var movieTitle = itemDB.Title.ToLower();
-                var searchMatched = 0; //TODO: Dobrać odpowiednią nazwę!!
+                var precision = 0;
                 foreach (var partInput in inputParts)
                 {
                     if (movieTitle.Contains(partInput.ToLower()))
                     {
-                        searchMatched += 1;
+                        precision += 1;
                     }
                 }
                 
-                if (searchMatched > 0)
+                if (precision > 0)
                 {
                     
-                    results.Add(itemDB,searchMatched);
+                    results.Add(itemDB,precision);
                 } 
             }
 
