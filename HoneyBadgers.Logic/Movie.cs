@@ -26,9 +26,9 @@ namespace HoneyBadgers.Logic
         public double? Rating { get; set; }
         public List<Rating> Ratings { get; set; }
 
-        public Movie()
-        {
-            
-        }
+        // public Movie()
+        // {
+        //     
+        // }
     }
 }

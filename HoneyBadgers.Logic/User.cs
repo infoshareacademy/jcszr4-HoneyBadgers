@@ -13,5 +13,7 @@ namespace HoneyBadgers.Logic
         public string LastName { get; set; }
         public string Email { get; set; }
         public List<Movie> Movies { get; set; }
+
+        public Dictionary<string, string> UserMovieStatus = new Dictionary<string, string>();
     }
 }

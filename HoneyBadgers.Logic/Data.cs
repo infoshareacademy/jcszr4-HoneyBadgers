@@ -12,10 +12,10 @@ namespace HoneyBadgers.Logic
         public List<User> Users { get; set; } = new();
         public List<Movie> Movies { get; set; } = new();
 
-        public Data()
-        {
-            
-        }
+        // public Data()
+        // {
+        //     
+        // }
 
         public void LoadData()
         {
@@ -90,17 +90,25 @@ namespace HoneyBadgers.Logic
         private void InitMockData()
         {
             var random = new Random();
+
+            
             foreach (var user in Users)
             {
-                var movie = Movies[random.Next(0, Movies.Count)];
-                if (movie != null)
+                // var movie = Movies[random.Next(0, Movies.Count)];
+                // if (movie != null)
+                // {
+                //     movie.Status = MovieStatus.Watched;
+                //     movie.Rating = random.Next(1, 10);
+                //     user.Movies = new List<Movie> { movie };
+                // }
+                foreach (var movie in Movies)
                 {
-                    movie.Status = MovieStatus.Watched;
-                    movie.Rating = random.Next(1, 10);
-                    user.Movies = new List<Movie> { movie };
+                    Array valuesArray = Enum.GetValues(typeof(MovieStatus));
+                    MovieStatus movieStatus = (MovieStatus) valuesArray.GetValue(random.Next(valuesArray.Length));
+
+                    user.UserMovieStatus.Add(movie.Title, movieStatus.ToString());
                 }
             }
-            
         }
 
         private void RatingMovie(Movie movie)
