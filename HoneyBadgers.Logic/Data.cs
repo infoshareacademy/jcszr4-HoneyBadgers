@@ -8,19 +8,14 @@ namespace HoneyBadgers.Logic
 {
     public class Data
     {
-        public List<User> Users { get; set; } = new();
-        public List<Movie> Movies { get; set; } = new();
+        public static List<User> Users { get; set; } = new();
+        public static List<Movie> Movies { get; set; } = new();
 
         public void LoadData()
         {
             LoadUsers("Resources/users.json");
             LoadMovies("Resources/movies.json");
             InitMockData();
-        }
-
-        public void AddMovie(Movie movie)
-        {
-            Movies.Add(movie);
         }
 
         private void LoadUsers(string fileName)

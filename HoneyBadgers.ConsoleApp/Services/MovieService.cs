@@ -7,10 +7,10 @@ namespace HoneyBadgers.Logic
 {
     public class MovieService
     {
-        public void AddMovie(Data data)
+        public void AddMovie()
         {
             var movie = GetMovieFromUser();
-            data.AddMovie(movie);
+            Data.Movies.Add(movie);
 
             Console.WriteLine("The video has been added correctly");
         }
