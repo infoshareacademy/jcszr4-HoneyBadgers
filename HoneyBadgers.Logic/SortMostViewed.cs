@@ -1,7 +1,6 @@
 ﻿namespace HoneyBadgers.Logic
 {
-    public class WatchedMovies
+    internal class SortMostViewed
     {
-        
     }
 }

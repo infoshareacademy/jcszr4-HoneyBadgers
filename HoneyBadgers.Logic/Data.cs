@@ -105,8 +105,8 @@ namespace HoneyBadgers.Logic
                 {
                     Array valuesArray = Enum.GetValues(typeof(MovieStatus));
                     MovieStatus movieStatus = (MovieStatus) valuesArray.GetValue(random.Next(valuesArray.Length));
-
                     user.UserMovieStatus.Add(movie.Title, movieStatus.ToString());
+                    movie.Rating = random.Next(1, 10);
                 }
             }
         }

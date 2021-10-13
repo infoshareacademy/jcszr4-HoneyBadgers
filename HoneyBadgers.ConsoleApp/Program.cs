@@ -13,13 +13,18 @@ namespace HoneyBadgers.ConsoleApp
             // ApplicationStart ourApplicationStart = new ApplicationStart();
             // ourApplicationStart.Start();
 
-            foreach (var user in data.Users)
-            {
-                foreach (var movie in user.UserMovieStatus)
-                {
-                    Console.WriteLine($"{user.FirstName} | {movie.Key} | {movie.Value}");
-                }
-            }
+            //      STATUS FILMÓW
+            // foreach (var user in data.Users)
+            // {
+            //     foreach (var movie in user.UserMovieStatus)
+            //     {
+            //         Console.WriteLine($"{user.FirstName} | {movie.Key} | {movie.Value}");
+            //     }
+            // }
+
+            MostViewedSearch mostViewedSearch = new MostViewedSearch(data);
+            mostViewedSearch.MostViewed();
+
         }
     }
 }
