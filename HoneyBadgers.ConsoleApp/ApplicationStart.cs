@@ -28,6 +28,7 @@ namespace HoneyBadgers.Logic
                         |___/                          |___/               
 Welcome to the Honey-Badgers application. What would you like to do?
 (Use the arrows keys to cycle through options and press enter to select an option.)";
+
             string[] options = {"Continue as guest", "Information", "Exit"};
             Menu mainMenu = new Menu(prompt, options);
             int selectedIndex = mainMenu.Run();
