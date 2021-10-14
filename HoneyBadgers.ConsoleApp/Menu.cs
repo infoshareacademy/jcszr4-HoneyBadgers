@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Console;
 
-namespace HoneyBadgers.Logic
+namespace HoneyBadgers.ConsoleApp
 {
     class Menu
     {
