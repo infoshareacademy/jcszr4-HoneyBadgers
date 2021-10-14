@@ -35,7 +35,7 @@ Welcome to the Honey-Badgers application. What would you like to do?
                 switch (selectedIndex)
                 {
                     case 0:
-                        MetodaTest();
+                        SearchByTheName();
                         RunMainMenu();
                         break;
                     case 1:
@@ -62,13 +62,15 @@ Welcome to the Honey-Badgers application. What would you like to do?
                 "It simply allows you to search for movies by their name, rating or even by the most frequent assignments to users.");
             WriteLine("You can also put a movie in the list of movies you want to see in the future.");
             WriteLine("Finally, you are able to check if you have already watched the movie!");
-            WriteLine("Have fun!:)");
+            WriteLine("Have fun!:)\n");
+            WriteLine("Credits goes to: Beata Giełbaga, Patryk Wiśniewski, Sebastian Leszczyński and Maciej Tomala");
             WriteLine("\nPress any key to return to the main menu.");
+            
             ReadKey(true);
             RunMainMenu();
         }
 
-        private void MetodaTest()
+        private void SearchByTheName()
         {
             Data db = new Data();
             db.LoadData();
