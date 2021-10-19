@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 
@@ -26,7 +27,7 @@ namespace HoneyBadgers.Logic
                 {
                     
                     results.Add(itemDB,precision);
-                } 
+                }
             }
 
             results.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);

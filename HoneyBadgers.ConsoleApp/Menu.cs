@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Console;
 
-namespace HoneyBadgers.Logic
+namespace HoneyBadgers.ConsoleApp
 {
     class Menu
     {
@@ -23,6 +23,7 @@ namespace HoneyBadgers.Logic
         private void DisplayOptions()
         {
             WriteLine(Prompt);
+            WriteLine("");
             for (int i = 0; i < Options.Length; i++)
             {
                 string currentOption = Options[i];
