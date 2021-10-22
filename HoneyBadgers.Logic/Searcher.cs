@@ -9,11 +9,12 @@ namespace HoneyBadgers.Logic
     {
         public static Dictionary<Movie,int> FindByName(Data db, string searchInput)
         {
+            //TODO: Jak się pozbyć Dictionary?! :o 
             var inputParts = searchInput.Split(" "); 
             var results = new Dictionary<Movie, int>();
-            foreach (var itemDB in db.Movies)
+            foreach (var itemDb in db.Movies)
             {
-                var movieTitle = itemDB.Title.ToLower();
+                var movieTitle = itemDb.Title.ToLower();
                 var precision = 0;
                 foreach (var partInput in inputParts)
                 {
@@ -26,7 +27,7 @@ namespace HoneyBadgers.Logic
                 if (precision > 0)
                 {
                     
-                    results.Add(itemDB,precision);
+                    results.Add(itemDb,precision);
                 }
             }
 
