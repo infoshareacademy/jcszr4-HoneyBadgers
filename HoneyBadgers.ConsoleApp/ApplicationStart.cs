@@ -59,8 +59,7 @@ Welcome to the Honey-Badgers application. What would you like to do?
         {
             Clear();
             WriteLine("This application have been created by Honey-Badgers team.");
-            WriteLine(
-                "It simply allows you to search for movies by their name, rating or even by the most frequent assignments to users.");
+            WriteLine("It simply allows you to search for movies by their name, rating or even by the most frequent assignments to users.");
             WriteLine("You can also put a movie in the list of movies you want to see in the future.");
             WriteLine("Finally, you are able to check if you have already watched the movie!");
             WriteLine("Have fun!:)\n");
@@ -73,26 +72,8 @@ Welcome to the Honey-Badgers application. What would you like to do?
 
         private void SearchByTheName()
         {
-            Data db = new Data();
-            db.LoadData();
-            Clear();
-            WriteLine("What movie are you looking for?\n(click ESC button if u wish to return to the main menu)\n");
-            while (true)
-            {
-                if (ReadKey().Key == ConsoleKey.Escape)
-                {
-                    break;
-                }
-                {
-                    var input = ReadLine();
-                    var outData = Searcher.FindByName(db, input);
-                    foreach (var item in outData)
-                    {
-                        WriteLine($"{item.Key.Title}, {item.Value}");
-                    }
-                    WriteLine("\nPress ESC if u wish to return to the main menu or continue to search by typing another text \n");
-                }
-            }
+            SearchMenu sm = new();
+            sm.SearchTitle();
         }
     }
 }
