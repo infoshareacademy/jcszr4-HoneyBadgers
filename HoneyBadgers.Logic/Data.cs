@@ -9,13 +9,8 @@ namespace HoneyBadgers.Logic
 {
     public class Data
     {
-        public List<User> Users { get; set; } = new();
-        public List<Movie> Movies { get; set; } = new();
-
-        public Data()
-        {
-            
-        }
+        public static List<User> Users { get; set; } = new();
+        public static List<Movie> Movies { get; set; } = new();
 
         public void LoadData()
         {
