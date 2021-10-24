@@ -9,13 +9,14 @@ namespace HoneyBadgers.Logic
     {
         public void AddMovie()
         {
-            var movie = GetMovieFromUser();
+            Console.WriteLine("Adding new movie\n\n");
+            var movie = GetNewMovieData();
             Data.Movies.Add(movie);
 
             Console.WriteLine("The video has been added correctly");
         }
 
-        private Movie GetMovieFromUser()
+        private Movie GetNewMovieData()
         {
             var type = typeof(MovieDto);
             var properties = type.GetProperties();
@@ -29,7 +30,7 @@ namespace HoneyBadgers.Logic
                 Console.WriteLine($"Enter {property.Name.ToLower()}");
                 if (property.Name == "Year")
                 {
-                    var intValue = IntValidation();
+                    var intValue = YearValidation();
                     property.SetValue(movie, intValue);
                 }
                 else
@@ -42,7 +43,7 @@ namespace HoneyBadgers.Logic
             return new Movie(movie);
         }
 
-        private int IntValidation()
+        private int YearValidation()
         {
             var valid = false;
             var input = 0;

@@ -11,14 +11,15 @@ namespace HoneyBadgers.Logic
         public static List<User> Users { get; set; } = new();
         public static List<Movie> Movies { get; set; } = new();
 
-        public void LoadData()
+        public bool LoadData()
         {
-            LoadUsers("Resources/users.json");
-            LoadMovies("Resources/movies.json");
+            var isUsersLoaded = LoadUsers("Resources/users.json");
+            var isMoviesLoaded = LoadMovies("Resources/movies.json");
             InitMockData();
+            return isUsersLoaded && isMoviesLoaded;
         }
 
-        private void LoadUsers(string fileName)
+        private bool LoadUsers(string fileName)
         {
             try
             {
@@ -27,15 +28,18 @@ namespace HoneyBadgers.Logic
                 if (users != null && users.Count > 0)
                 {
                     Users = users;
+                    return true;
                 }
+                return false;
             }
             catch (Exception e)
             {
-                Console.WriteLine("Problem reading users.json file");
+                Console.WriteLine($"Problem reading users.json file {e.Message}");
+                return false;
             }
         }
 
-        private void LoadMovies(string fileName)
+        private bool LoadMovies(string fileName)
         {
             try
             {
@@ -44,11 +48,14 @@ namespace HoneyBadgers.Logic
                 if (movies != null && movies.Count > 0)
                 {
                     Movies = movies.Select(m => new Movie(m)).ToList();
+                    return true;
                 }
+                return false;
             }
             catch (Exception e)
             {
                 Console.WriteLine("Problem reading movies.json file");
+                return false;
             }
         }
 

@@ -12,13 +12,14 @@ namespace HoneyBadgers.ConsoleApp.Services
     {
         public void AddUser()
         {
-            var user = GetUserFromConsole();
+            Console.WriteLine("Adding new user\n\n");
+            var user = GetUserData();
             Data.Users.Add(user);
 
             Console.WriteLine("The user has been added correctly");
         }
 
-        public User GetUserFromConsole()
+        public User GetUserData()
         {
             var type = typeof(User);
             var properties = type.GetProperties();
@@ -54,7 +55,7 @@ namespace HoneyBadgers.ConsoleApp.Services
             var email = "";
             while (!valid)
             {
-                valid = MailAddress.TryCreate(Console.ReadLine()!, out var input);
+                valid = MailAddress.TryCreate(Console.ReadLine(), out var input);
                 if (!valid)
                 {
                     Console.WriteLine("The given value is incorrect. The value provided should be of the form name@something.domain. Try again:");

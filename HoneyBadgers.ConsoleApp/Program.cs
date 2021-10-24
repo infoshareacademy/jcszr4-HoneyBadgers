@@ -8,10 +8,13 @@ namespace HoneyBadgers.ConsoleApp
         static void Main(string[] args)
         {
             var data = new Data();
-            data.LoadData();
+            var isDataLoaded = data.LoadData();
 
-            ApplicationStart ourApplicationStart = new ApplicationStart();
-            ourApplicationStart.Start();
+            if (isDataLoaded)
+            {
+                ApplicationStart ourApplicationStart = new ApplicationStart();
+                ourApplicationStart.Start();
+            }
         }
     }
 }
