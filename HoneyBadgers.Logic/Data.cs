@@ -34,7 +34,7 @@ namespace HoneyBadgers.Logic
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Problem reading users.json file {e.Message}");
+                Console.WriteLine($"Problem reading users.json file - {e.Message}");
                 return false;
             }
         }
@@ -54,7 +54,7 @@ namespace HoneyBadgers.Logic
             }
             catch (Exception e)
             {
-                Console.WriteLine("Problem reading movies.json file");
+                Console.WriteLine($"Problem reading movies.json file - {e.Message}");
                 return false;
             }
         }
