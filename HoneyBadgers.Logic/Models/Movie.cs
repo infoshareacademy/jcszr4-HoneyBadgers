@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HoneyBadgers.Logic
 {
     public enum MovieStatus
     {
+        NoStatus,
         Watched,
-        WantToWatch,
-        NoStatus
+        WantToWatch
+        
     }
     public class Movie
     {
@@ -26,9 +24,19 @@ namespace HoneyBadgers.Logic
         public double? Rating { get; set; }
         public List<Rating> Ratings { get; set; }
 
-        public Movie()
+        public Movie(MovieDto movieDto)
         {
-            
+            Title = movieDto.Title;
+            Year = movieDto.Year;
+            Director = movieDto.Director;
+            Writer = movieDto.Writer;
+            Actors = movieDto.Actors.Split(",").Select(p => p.Trim()).ToList();
+            Plot = movieDto.Plot;
+            Genre = movieDto.Genre.Split(",").Select(p => p.Trim()).ToList();
+            Country = movieDto.Country;
+            Status = MovieStatus.NoStatus;
+            Rating = null;
+            Ratings = movieDto.Ratings;
         }
     }
 }

@@ -7,11 +7,11 @@ namespace HoneyBadgers.Logic
 {
     public static class Searcher
     {
-        public static Dictionary<Movie,int> FindByName(Data db, string searchInput)
+        public static Dictionary<Movie,int> FindByName(string searchInput)
         {
             var inputParts = searchInput.Split(" "); 
             var results = new Dictionary<Movie, int>();
-            foreach (var itemDB in db.Movies)
+            foreach (var itemDB in Data.Movies)
             {
                 var movieTitle = itemDB.Title.ToLower();
                 var precision = 0;
