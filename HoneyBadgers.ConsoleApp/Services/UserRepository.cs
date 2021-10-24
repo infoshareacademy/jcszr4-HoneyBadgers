@@ -8,7 +8,7 @@ using HoneyBadgers.Logic;
 
 namespace HoneyBadgers.ConsoleApp.Services
 {
-    public class UserRepository : IUserRepository<User>
+    public class UserRepository : IUserRepositor
     {
         public List<User> Users { get; private set; } = new List<User>();
 
