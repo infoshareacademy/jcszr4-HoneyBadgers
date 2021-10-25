@@ -14,7 +14,7 @@ namespace HoneyBadgers.Logic
 
         public void AddMovie()
         {
-            Console.WriteLine("Adding new movie\n\n");
+            Console.WriteLine("Adding new movie\n");
             var movie = GetNewMovieData();
             Movies.Add(movie);
 
@@ -23,29 +23,32 @@ namespace HoneyBadgers.Logic
 
         private Movie GetNewMovieData()
         {
-            var type = typeof(MovieDto);
-            var properties = type.GetProperties();
-            var movie = new MovieDto();
-            foreach (var property in properties)
-            {
-                if (property.Name is "ImdbRating" or "Ratings")
-                {
-                    continue;
-                }
-                Console.WriteLine($"Enter {property.Name.ToLower()}");
-                if (property.Name == "Year")
-                {
-                    var intValue = YearValidation();
-                    property.SetValue(movie, intValue);
-                }
-                else
-                {
-                    var input = Console.ReadLine();
-                    property.SetValue(movie, input ?? "");
-                }
-            }
-            Console.WriteLine();
-            return new Movie(movie);
+            var movie = new Movie();
+            Console.WriteLine("Enter title:");
+            movie.Title = Console.ReadLine() ?? "";
+
+            Console.WriteLine("\nEnter year:");
+            movie.Year = YearValidation();
+
+            Console.WriteLine("\nEnter director");
+            movie.Director = Console.ReadLine() ?? "";
+
+            Console.WriteLine("\nEnter writer:");
+            movie.Writer = Console.ReadLine() ?? "";
+
+            Console.WriteLine("\nEnter actors:");
+            movie.Actors = Console.ReadLine() ?? "";
+
+            Console.WriteLine("\nEnter plot:");
+            movie.Plot = Console.ReadLine() ?? "";
+
+            Console.WriteLine("\nEnter genre");
+            movie.Genre = Console.ReadLine() ?? "";
+
+            Console.WriteLine("\nEnter country");
+            movie.Country = Console.ReadLine() ?? "";
+
+            return movie;
         }
 
         private int YearValidation()
