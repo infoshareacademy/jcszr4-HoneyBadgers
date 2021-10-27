@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace HoneyBadgers.Logic
 {
-    public class MovieService
+    public class MovieRepository : IMovieRepository
     {
+        public List<Movie> Movies { get; private set; } = new List<Movie>();
+
+        public MovieRepository()
+        {
+            Movies.AddRange(FileDataReader.LoadMovies());
+        }
+
         public void AddMovie()
         {
             Console.WriteLine("Adding new movie\n\n");
             var movie = GetNewMovieData();
-            Data.Movies.Add(movie);
+            Movies.Add(movie);
 
             Console.WriteLine("The video has been added correctly");
         }

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data;
+using HoneyBadgers.ConsoleApp.Services;
 using HoneyBadgers.Logic;
 
 namespace HoneyBadgers.ConsoleApp
@@ -8,14 +8,11 @@ namespace HoneyBadgers.ConsoleApp
     {
         static void Main(string[] args)
         {
-            var data = new Data();
-            var isDataLoaded = data.LoadData();
+            var userRepository = new UserRepository();
+            var movieRepository = new MovieRepository();
 
-            if (isDataLoaded)
-            {
-                ApplicationStart ourApplicationStart = new ApplicationStart();
-                ourApplicationStart.Start();
-            }
+            ApplicationStart ourApplicationStart = new ApplicationStart(userRepository, movieRepository);
+            ourApplicationStart.Start();
         }
     }
 }

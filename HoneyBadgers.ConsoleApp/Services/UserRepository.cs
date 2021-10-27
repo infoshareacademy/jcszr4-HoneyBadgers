@@ -8,14 +8,25 @@ using HoneyBadgers.Logic;
 
 namespace HoneyBadgers.ConsoleApp.Services
 {
-    public class UserService
+    public class UserRepository : IUserRepository
     {
+        public List<User> Users { get; private set; } = new List<User>();
+
+        public UserRepository()
+        {
+            Users.AddRange(FileDataReader.LoadUsers());
+        }
+
+        public void IOnlyExistInConcreteImplementation()
+        {
+
+        }
+
         public void AddUser()
         {
             Console.WriteLine("Adding new user\n\n");
             var user = GetUserData();
-            Data.Users.Add(user);
-
+            Users.Add(user);
             Console.WriteLine("The user has been added correctly");
         }
 
