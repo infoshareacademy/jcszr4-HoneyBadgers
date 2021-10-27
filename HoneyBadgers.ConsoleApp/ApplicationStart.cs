@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using HoneyBadgers.ConsoleApp.Services;
 using HoneyBadgers.Logic;
 
@@ -102,6 +103,28 @@ namespace HoneyBadgers.ConsoleApp
                 }
             }
         }
+        private void SearchTitle(IEnumerable<Movie> movies)
+        {
+            Console.Clear();
+            Console.WriteLine("What movie are you looking for?\n(click ESC button if u wish to return to the main menu)");
+            while (true)
+            {
+                if (Console.ReadKey().Key == ConsoleKey.Escape)
+                {
+                    break;
+                }
+                {
+                    var input = Console.ReadLine();
+                    var findedMovies = Searcher.FindByName(movies, input);
+                    foreach (var movie in findedMovies)
+                    {
+                        Console.WriteLine($"{movie.Key.Title}");
+                    }
+                    Console.WriteLine("\nPress ESC if u wish to return to the main menu or continue to search by typing another text");
+                }
+            }
+
+        }
 
         private void RunAddUserMenu()
         {
@@ -116,9 +139,9 @@ namespace HoneyBadgers.ConsoleApp
         private void RunAddMovieMenu()
         {
             Console.Clear();
-            var movieService = new MovieRepository();
-            movieService.AddMovie();
-
+            var movieRepository = new MovieRepository();
+            //movieService.AddMovie();
+            //TODO: POPRAWIC
             Console.WriteLine("\nPress any key to return to the main menu.");
             Console.ReadKey(true);
             RunMainMenu();

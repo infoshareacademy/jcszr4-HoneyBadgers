@@ -7,7 +7,7 @@ namespace HoneyBadgers.Logic
 {
     public static class Searcher
     {
-        public static Dictionary<Movie,int> FindByName(List<Movie> movies, string searchInput)
+        public static Dictionary<Movie,int> FindByName(IEnumerable<Movie> movies, string searchInput)
         {
             //TODO: Jak się pozbyć Dictionary?! :o 
             var inputParts = searchInput.Split(" "); 
@@ -35,24 +35,24 @@ namespace HoneyBadgers.Logic
             return results;
         }
 
-        public static List<Movie> FindMovieWithRatingBetweenLowerHigher(List<Movie> movies, double lowestRating, double highestRating)
+        public static List<Movie> FindMovieWithRatingBetweenLowerHigher(IEnumerable<Movie> movies, double lowestRating, double highestRating)
         {
             return movies.Where(movie => movie.Rating >= lowestRating && movie.Rating <= highestRating).ToList();
         }
 
-        public static List<Movie> FindMovieWithRatingLowerThan(List<Movie> movies,double highestRating)
+        public static List<Movie> FindMovieWithRatingLowerThan(IEnumerable<Movie> movies,double highestRating)
         {
             return movies.Where(movie => movie.Rating <= highestRating).ToList();
         }
-        public static List<Movie> FindMovieWithRatingHigherThan(List<Movie> movies, double lowestRating)
+        public static List<Movie> FindMovieWithRatingHigherThan(IEnumerable<Movie> movies, double lowestRating)
         {
             return movies.Where(movie => movie.Rating >= lowestRating).ToList();
         }
-        public static List<Movie> SortMoviesByRatingFromHighest(List<Movie> movies)
+        public static List<Movie> SortMoviesByRatingFromHighest(IEnumerable<Movie> movies)
         {
             return movies.OrderByDescending(movie => movie.Rating).ToList();
         }
-        public static List<Movie> SortMoviesByRatingFromLowest(List<Movie> movies)
+        public static List<Movie> SortMoviesByRatingFromLowest(IEnumerable<Movie> movies)
         {
             return movies.OrderBy(movie => movie.Rating).ToList();
         }
