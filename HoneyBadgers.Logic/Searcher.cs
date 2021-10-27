@@ -7,12 +7,12 @@ namespace HoneyBadgers.Logic
 {
     public static class Searcher
     {
-        public static Dictionary<Movie,int> FindByName(Data db, string searchInput)
+        public static Dictionary<Movie,int> FindByName(List<Movie> movies, string searchInput)
         {
             //TODO: Jak się pozbyć Dictionary?! :o 
             var inputParts = searchInput.Split(" "); 
             var results = new Dictionary<Movie, int>();
-            foreach (var itemDb in db.Movies)
+            foreach (var itemDB in movies)
             {
                 var movieTitle = itemDb.Title.ToLower();
                 var precision = 0;
