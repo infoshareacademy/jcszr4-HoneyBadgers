@@ -24,8 +24,6 @@ namespace HoneyBadgers.Logic
         public double? Rating { get; set; }
         public List<Rating> Ratings { get; set; }
 
-<<<<<<< HEAD:HoneyBadgers.Logic/Model/Movie.cs
-=======
         public Movie(MovieDto movieDto)
         {
             Title = movieDto.Title;
@@ -40,6 +38,5 @@ namespace HoneyBadgers.Logic
             Rating = null;
             Ratings = movieDto.Ratings;
         }
->>>>>>> master:HoneyBadgers.Logic/Models/Movie.cs
     }
 }

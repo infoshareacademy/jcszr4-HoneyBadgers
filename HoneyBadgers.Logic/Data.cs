@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json.Serialization;
 
 namespace HoneyBadgers.Logic
 {
@@ -12,74 +11,52 @@ namespace HoneyBadgers.Logic
         public static List<User> Users { get; set; } = new();
         public static List<Movie> Movies { get; set; } = new();
 
-        public void LoadData()
+        public bool LoadData()
         {
-            LoadUsers("/Resources/users.json");
-            LoadMovies("/Resources/movies.json");
+            var isUsersLoaded = LoadUsers("Resources/users.json");
+            var isMoviesLoaded = LoadMovies("Resources/movies.json");
             InitMockData();
+            return isUsersLoaded && isMoviesLoaded;
         }
-        public void LoadUsers(string fileName)
+
+        private bool LoadUsers(string fileName)
         {
-            var path = Directory.GetCurrentDirectory() + fileName;
-            using var file = new StreamReader(path);
             try
             {
-                var json = file.ReadToEnd();
-                var serializerSettings = new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
-                };
-                var users = JsonConvert.DeserializeObject<List<User>>(json, serializerSettings);
+                var fileText = File.ReadAllText(fileName);
+                var users = JsonConvert.DeserializeObject<List<User>>(fileText);
                 if (users != null && users.Count > 0)
                 {
                     Users = users;
+                    return true;
                 }
+                return false;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Console.WriteLine("Problem reading users.json file");
+                Console.WriteLine($"Problem reading users.json file - {e.Message}");
+                return false;
             }
         }
 
-        public void LoadMovies(string fileName)
+        private bool LoadMovies(string fileName)
         {
-            var path = Directory.GetCurrentDirectory() + fileName;
-            using var file = new StreamReader(path);
             try
             {
-                var json = file.ReadToEnd();
-                var serializerSettings = new JsonSerializerSettings
+                var fileText = File.ReadAllText(fileName);
+                var movies = JsonConvert.DeserializeObject<List<MovieDto>>(fileText);
+                if (movies != null && movies.Count > 0)
                 {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
-                };
-                var moviesDto = JsonConvert.DeserializeObject<List<MovieDto>>(json, serializerSettings);
-                if (moviesDto != null && moviesDto.Count > 0)
-                {
-                    Movies = moviesDto.Select(MapMovie).ToList();
+                    Movies = movies.Select(m => new Movie(m)).ToList();
+                    return true;
                 }
+                return false;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Console.WriteLine("Problem reading movies.json file");
+                Console.WriteLine($"Problem reading movies.json file - {e.Message}");
+                return false;
             }
-        }
-
-        private Movie MapMovie(MovieDto movieDto)
-        {
-            return new Movie
-            {
-                Title = movieDto.Title,
-                Year = movieDto.Year,
-                Director = movieDto.Director,
-                Writer = movieDto.Writer,
-                Actors = movieDto.Actors.Split(",").Select(p => p.Trim()).ToList(),
-                Plot = movieDto.Plot,
-                Genre = movieDto.Genre.Split(",").Select(p => p.Trim()).ToList(),
-                Country = movieDto.Country,
-                Status = MovieStatus.NoStatus,
-                Rating = null,
-                Ratings = movieDto.Ratings
-            };
         }
 
         private void InitMockData()
@@ -95,7 +72,6 @@ namespace HoneyBadgers.Logic
                     user.Movies = new List<Movie> { movie };
                 }
             }
-            
         }
 
         private void RatingMovie(Movie movie)
@@ -117,7 +93,7 @@ namespace HoneyBadgers.Logic
             if (rates.Count > 0)
             {
                 var sumRates = rates.Sum();
-                var rate = (double)sumRates / rates.Count();
+                var rate = (double)sumRates / rates.Count;
                 movie.Ratings.Add(new Rating("User votes", rate.ToString()));
             }
            

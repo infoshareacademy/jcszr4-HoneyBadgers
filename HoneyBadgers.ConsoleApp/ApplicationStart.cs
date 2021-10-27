@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HoneyBadgers.ConsoleApp.Services;
 using HoneyBadgers.Logic;
 using static System.Console;
 
@@ -30,7 +31,7 @@ namespace HoneyBadgers.ConsoleApp
                         |___/                          |___/               
 Welcome to the Honey-Badgers application. What would you like to do?
 (Use the arrows keys to cycle through options and press enter to select an option.)";
-                string[] options = {"Search movie by the name", "Information", "Exit"};
+                string[] options = {"Search movie by the name", "Add new user", "Add new movie", "Information", "Exit"};
                 Menu mainMenu = new Menu(prompt, options);
                 int selectedIndex = mainMenu.Run();
                 switch (selectedIndex)
@@ -40,9 +41,15 @@ Welcome to the Honey-Badgers application. What would you like to do?
                         RunMainMenu();
                         break;
                     case 1:
-                        DisplayInformation();
+                        AddUser();
                         break;
                     case 2:
+                        AddMovie();
+                        break;
+                    case 3:
+                        DisplayInformation();
+                        break;
+                    case 4:
                         QuitApp();
                         break;
                 }
@@ -50,8 +57,6 @@ Welcome to the Honey-Badgers application. What would you like to do?
         }
         private void QuitApp()
         {
-            WriteLine("\nPress any key to exit");
-            ReadKey(true);
             Environment.Exit(0);
         }
 
