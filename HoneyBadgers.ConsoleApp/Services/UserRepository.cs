@@ -17,11 +17,6 @@ namespace HoneyBadgers.ConsoleApp.Services
             Users.AddRange(FileDataReader.LoadUsers());
         }
 
-        public void IOnlyExistInConcreteImplementation()
-        {
-
-        }
-
         public void AddUser()
         {
             Console.WriteLine("Adding new user\n\n");
@@ -32,28 +27,17 @@ namespace HoneyBadgers.ConsoleApp.Services
 
         public User GetUserData()
         {
-            var type = typeof(User);
-            var properties = type.GetProperties();
+
             var user = new User();
-            foreach (var property in properties)
-            {
-                if (property.Name is "Id" or "Movies")
-                {
-                    continue;
-                }
-                Console.WriteLine($"Enter {property.Name.ToLower()}");
-                if (property.Name == "Email")
-                {
-                    var email = EmailValidation();
-                    property.SetValue(user, email);
-                }
-                else
-                {
-                    var input = Console.ReadLine();
-                    property.SetValue(user, input ?? "");
-                }
-            }
-            Console.WriteLine();
+            Console.WriteLine("\nEnter director");
+            user.FirstName = Console.ReadLine() ?? "";
+
+            Console.WriteLine("\nEnter writer:");
+            user.LastName = Console.ReadLine() ?? "";
+
+            Console.WriteLine("\nEnter actors:");
+            user.Email = EmailValidation();
+
             user.Id = GenerateId();
             user.Movies = new List<Movie>();
 
@@ -62,18 +46,25 @@ namespace HoneyBadgers.ConsoleApp.Services
 
         private string EmailValidation()
         {
-            var valid = false;
             var email = "";
-            while (!valid)
+            while (true)
             {
-                valid = MailAddress.TryCreate(Console.ReadLine(), out var input);
+                var valid = MailAddress.TryCreate(Console.ReadLine(), out var input);
                 if (!valid)
                 {
                     Console.WriteLine("The given value is incorrect. The value provided should be of the form name@something.domain. Try again:");
                 }
                 else
                 {
-                    email = input.ToString();
+                    if (Users.Any(u => u.Email == input.ToString()))
+                    {
+                        Console.WriteLine("There is already a user with the given email");
+                    }
+                    else
+                    {
+                        email = input.ToString();
+                        break;
+                    }
                 }
             }
             return email;

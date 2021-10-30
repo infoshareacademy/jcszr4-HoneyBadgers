@@ -12,49 +12,44 @@ namespace HoneyBadgers.Logic
             Movies.AddRange(FileDataReader.LoadMovies());
         }
 
-        public void AddMovie(Movie movie)
+        public void AddMovie()
         {
-            Console.WriteLine("Adding new movie\n\n");
+            Console.WriteLine("Adding new movie\n");
+            var movie = GetNewMovieData();
             Movies.Add(movie);
 
             Console.WriteLine("The video has been added correctly");
         }
-        public void RemoveMovie(Movie movie)
-        {
-            //TODO: dodać implementacje
-        }
 
-        public void EditMovie(Movie movie)
+        private Movie GetNewMovieData()
         {
-            //TODO: dodać implementację
-        }
+            var movie = new Movie();
+            Console.WriteLine("Enter title:");
+            movie.Title = Console.ReadLine() ?? "";
 
-        //private Movie GetNewMovieData()
-        //{
-        //    var type = typeof(MovieDto);
-        //    var properties = type.GetProperties();
-        //    var movie = new MovieDto();
-        //    foreach (var property in properties)
-        //    {
-        //        if (property.Name is "ImdbRating" or "Ratings")
-        //        {
-        //            continue;
-        //        }
-        //        Console.WriteLine($"Enter {property.Name.ToLower()}");
-        //        if (property.Name == "Year")
-        //        {
-        //            var intValue = YearValidation();
-        //            property.SetValue(movie, intValue);
-        //        }
-        //        else
-        //        {
-        //            var input = Console.ReadLine();
-        //            property.SetValue(movie, input ?? "");
-        //        }
-        //    }
-        //    Console.WriteLine();
-        //    return new Movie(movie);
-        //}
+            Console.WriteLine("\nEnter year:");
+            movie.Year = YearValidation();
+
+            Console.WriteLine("\nEnter director");
+            movie.Director = Console.ReadLine() ?? "";
+
+            Console.WriteLine("\nEnter writer:");
+            movie.Writer = Console.ReadLine() ?? "";
+
+            Console.WriteLine("\nEnter actors:");
+            movie.Actors = Console.ReadLine() ?? "";
+
+            Console.WriteLine("\nEnter plot:");
+            movie.Plot = Console.ReadLine() ?? "";
+
+            Console.WriteLine("\nEnter genre");
+            movie.Genre = Console.ReadLine() ?? "";
+
+            Console.WriteLine("\nEnter country");
+            movie.Country = Console.ReadLine() ?? "";
+
+            return movie;
+        }
 
         private int YearValidation()
         {
@@ -65,8 +60,7 @@ namespace HoneyBadgers.Logic
                 valid = int.TryParse(Console.ReadLine(), out input) && input > 1900;
                 if (!valid)
                 {
-                    //Console.WriteLine("The given value is incorrect. The value provided should be a positive number greater then 1900. Try again:");
-                    //Exception? 
+                    Console.WriteLine("The given value is incorrect. The value provided should be a positive number greater then 1900. Try again:");
                 }
             }
             return input;
