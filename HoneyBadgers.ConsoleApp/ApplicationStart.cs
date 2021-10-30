@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using HoneyBadgers.ConsoleApp.Services;
 using HoneyBadgers.Logic;
 using static System.Console;
@@ -11,6 +8,15 @@ namespace HoneyBadgers.ConsoleApp
 {
     public class ApplicationStart
     {
+        private IUserRepository _usersRepository;
+        private IMovieRepository _movieRepository;
+
+        public ApplicationStart(IUserRepository usersRepository, IMovieRepository movieRepository)
+        {
+            _usersRepository = usersRepository;
+            _movieRepository = movieRepository;
+        }
+
         public void Start()
         {
             Title = "Honey-Badgers - Simple application to search for movies";
@@ -88,7 +94,7 @@ Welcome to the Honey-Badgers application. What would you like to do?
                 }
                 {
                     var input = ReadLine();
-                    var outData = Searcher.FindByName(input);
+                    var outData = Searcher.FindByName(_movieRepository.Movies, input);
                     foreach (var item in outData)
                     {
                         WriteLine($"{item.Key.Title}, {item.Value}");
@@ -101,7 +107,7 @@ Welcome to the Honey-Badgers application. What would you like to do?
         private void AddUser()
         {
             Clear();
-            var userService = new UserService();
+            var userService = new UserRepository();
             userService.AddUser();
 
             WriteLine("\nPress any key to return to the main menu.");
@@ -111,7 +117,7 @@ Welcome to the Honey-Badgers application. What would you like to do?
         private void AddMovie()
         {
             Clear();
-            var movieService = new MovieService();
+            var movieService = new MovieRepository();
             movieService.AddMovie();
 
             WriteLine("\nPress any key to return to the main menu.");
