@@ -43,7 +43,7 @@ namespace HoneyBadgers.Logic
         public static List<Movie> FindMovieWithRatingLowerThan(IEnumerable<Movie> movies,double highestRating)
         {
             return movies.Where(movie => movie.Rating <= highestRating).ToList();
-        }
+    }
         public static List<Movie> FindMovieWithRatingHigherThan(IEnumerable<Movie> movies, double lowestRating)
         {
             return movies.Where(movie => movie.Rating >= lowestRating).ToList();

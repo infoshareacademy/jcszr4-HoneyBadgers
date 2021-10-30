@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using HoneyBadgers.ConsoleApp.Services;
 using HoneyBadgers.Logic;
 
@@ -10,15 +11,14 @@ namespace HoneyBadgers.ConsoleApp
         private IUserRepository _usersRepository;
         private IMovieRepository _movieRepository;
 
-        private readonly string _logo = @"
-                                     _   _                               _____           _                     
-                                    | | | |                             | ___ \         | |                    
-                                    | |_| | ___ _ __ ___ _ _ _____      | |_/ / __ _  __| | __ _  ___ _ __ ___ 
-                                    |  _  |/ _ \| '_ \ / _ \ | | |      | ___ \/ _` |/ _` |/ _` |/ _ \ '__/ __|
-                                    | | | | (_) | | | |  __/ |_| |      | |_/ / (_| | (_| | (_| |  __/ |  \__ \
-                                    \_| |_/\___/|_| |_|\___|\__, |      \____/ \__,_|\__,_|\__, |\___|_|  |___/
-                                                             __/ |                          __/ |              
-                                                            |___/                          |___/               ";
+        private readonly string _logo = @" _   _                               _____           _                     
+| | | |                             | ___ \         | |                    
+| |_| | ___ _ __ ___ _ _ _____      | |_/ / __ _  __| | __ _  ___ _ __ ___ 
+|  _  |/ _ \| '_ \ / _ \ | | |      | ___ \/ _` |/ _` |/ _` |/ _ \ '__/ __|
+| | | | (_) | | | |  __/ |_| |      | |_/ / (_| | (_| | (_| |  __/ |  \__ \
+\_| |_/\___/|_| |_|\___|\__, |      \____/ \__,_|\__,_|\__, |\___|_|  |___/
+                         __/ |                          __/ |              
+                        |___/                          |___/               ";
 
         public ApplicationStart(IUserRepository usersRepository, IMovieRepository movieRepository)
         {
@@ -37,9 +37,9 @@ namespace HoneyBadgers.ConsoleApp
             {
                 while (true)
                 {
-                    string prompt = "\nWelcome to the Honey-Badgers application. What would you like to do? \n(Use the arrows keys to cycle through options and press enter to select an option.)";
+                    string prompt = _logo + "\nWelcome to the Honey-Badgers application. What would you like to do? \n(Use the arrows keys to cycle through options and press enter to select an option.)";
                     string[] options = { "Search movie by the name", "Add new user", "Add new movie", "Information", "Exit" };
-                    Menu mainMenu = new Menu(_logo + prompt, options);
+                    Menu mainMenu = new Menu(prompt, options);
                     int selectedIndex = mainMenu.Run();
                     switch (selectedIndex)
                     {
@@ -79,53 +79,36 @@ namespace HoneyBadgers.ConsoleApp
             Console.WriteLine("\nPress any key to return to the main menu.");
 
             Console.ReadKey(true);
-            RunMainMenu();
         }
 
         private void RunSearchMenu()
         {
             Console.Clear();
-            Console.WriteLine("What movie are you looking for?\n(click ESC button if u wish to return to the main menu)\n");
-            while (true)
+            string prompt = _logo + "\nHow you want to search?";
+            string[] options = { "Search by title",
+                "Search by rating lower than",
+                "Search by rating higher than",
+                "Search by rating between lower and higher" };
+            Menu menu = new Menu(prompt, options);
+            var selectedItem = menu.Run();
+            switch (selectedItem)
             {
-                if (Console.ReadKey().Key == ConsoleKey.Escape)
-                {
+                case 0:
+                    RunSearchByTitle();
                     break;
-                }
-                {
-                    var input = Console.ReadLine();
-                    var outData = Searcher.FindByName(_movieRepository.Movies, input);
-                    foreach (var item in outData)
-                    {
-                        Console.WriteLine($"{item.Key.Title}, {item.Value}");
-                    }
-                    Console.WriteLine("\nPress ESC if u wish to return to the main menu or continue to search by typing another text \n");
-                }
-            }
-        }
-        private void SearchTitle(IEnumerable<Movie> movies)
-        {
-            Console.Clear();
-            Console.WriteLine("What movie are you looking for?\n(click ESC button if u wish to return to the main menu)");
-            while (true)
-            {
-                if (Console.ReadKey().Key == ConsoleKey.Escape)
-                {
+                case 1:
+                    RunSearchByRatingLowerThan();
                     break;
-                }
-                {
-                    var input = Console.ReadLine();
-                    var findedMovies = Searcher.FindByName(movies, input);
-                    foreach (var movie in findedMovies)
-                    {
-                        Console.WriteLine($"{movie.Key.Title}");
-                    }
-                    Console.WriteLine("\nPress ESC if u wish to return to the main menu or continue to search by typing another text");
-                }
+                case 2:
+                    RunSearchByRatingHigherThan();
+                    break;
+                case 3:
+
+                    break;
+
             }
-
+            
         }
-
         private void RunAddUserMenu()
         {
             Console.Clear();
@@ -134,17 +117,88 @@ namespace HoneyBadgers.ConsoleApp
 
             Console.WriteLine("\nPress any key to return to the main menu.");
             Console.ReadKey(true);
-            RunMainMenu();
         }
         private void RunAddMovieMenu()
         {
             Console.Clear();
             var movieRepository = new MovieRepository();
-            //movieService.AddMovie();
-            //TODO: POPRAWIC
+            //movieService.AddMovie();TODO: POPRAWIC
             Console.WriteLine("\nPress any key to return to the main menu.");
             Console.ReadKey(true);
-            RunMainMenu();
         }
+
+        private void RunSearchByTitle()
+        {
+            Console.WriteLine("What movie are you looking for?\n(click ESC button if u wish to return to the main menu)\n");
+            while (true)
+            {
+                if (Console.ReadKey().Key == ConsoleKey.Escape) break;
+                {
+                    var input = Console.ReadLine();
+                    var outData = Searcher.FindByName(_movieRepository.Movies, input);
+                    foreach (var item in outData)
+                    {
+                        Console.WriteLine($"{item.Key.Title}, {item.Value}");
+                    }
+                    Console.WriteLine("\nPress ENTER if u wish to return to the main menu\n");
+                    if (Console.ReadKey(true).Key == ConsoleKey.Enter) return;
+
+                }
+            }
+        }
+
+        private void RunSearchByRatingLowerThan()
+        {
+            Console.WriteLine("Type highest Rating movie u want to see\n(click ESC button if u wish to return to the main menu)\n");
+            Console.WriteLine(@"Type rating from 0-10, like 5.3, 2.56 etc. ");
+            while (true)
+            {
+                if (Console.ReadKey().Key == ConsoleKey.Escape) break;
+                string input = Console.ReadLine();
+                input.Replace('.', ',');
+                if (double.TryParse(input, out double highestRating))
+                {
+                    var outData = Searcher.FindMovieWithRatingLowerThan(_movieRepository.Movies, highestRating);
+                    foreach (var item in outData)
+                    {
+                        Console.WriteLine($"{item.Title}");
+                    }
+                    Console.WriteLine("\nPress ENTER if u wish to return to the main menu\n");
+                    if (Console.ReadKey(true).Key == ConsoleKey.Enter) return;
+                }
+                else
+                {
+                    Console.WriteLine("Wrong input");
+                }
+            }
+        }
+
+        private void RunSearchByRatingHigherThan()
+        {
+            Console.WriteLine("Type highest Rating movie u want to see\n(click ESC button if u wish to return to the main menu)\n");
+            while (true)
+            {
+                if (Console.ReadKey().Key == ConsoleKey.Escape) break;
+                {
+                    var input = Console.ReadLine();
+                    double lowerRating = 0.0;
+                    while (true)
+                    {
+                        if (Double.TryParse(input, out lowerRating)) break;
+                        Console.WriteLine(@"Type rating from 0-10, like 5.3, 2.56 etc. ");
+                        input = Console.ReadLine();
+                    }
+
+                    var outData = Searcher.FindMovieWithRatingHigherThan(_movieRepository.Movies, lowerRating);
+                    foreach (var item in outData)
+                    {
+                        Console.WriteLine($"{item.Title}");
+                    }
+                    Console.WriteLine("\nPress ENTER if u wish to return to the main menu\n");
+                    if (Console.ReadKey(true).Key == ConsoleKey.Enter) return;
+                }
+            }
+        }
+
     }
 }
