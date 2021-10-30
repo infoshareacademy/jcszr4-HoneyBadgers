@@ -38,7 +38,11 @@ namespace HoneyBadgers.ConsoleApp
                 while (true)
                 {
                     string prompt = _logo + "\nWelcome to the Honey-Badgers application. What would you like to do? \n(Use the arrows keys to cycle through options and press enter to select an option.)";
-                    string[] options = { "Search movie by the name", "Add new user", "Add new movie", "Information", "Exit" };
+                    string[] options = { "Search movie by the name", 
+                                        "Add new user", 
+                                        "Add new movie", 
+                                        "Information", 
+                                        "Exit" };
                     Menu mainMenu = new Menu(prompt, options);
                     int selectedIndex = mainMenu.Run();
                     switch (selectedIndex)
@@ -86,9 +90,10 @@ namespace HoneyBadgers.ConsoleApp
             Console.Clear();
             string prompt = _logo + "\nHow you want to search?";
             string[] options = { "Search by title",
-                "Search by rating lower than",
-                "Search by rating higher than",
-                "Search by rating between lower and higher" };
+                                "Search by rating lower than",
+                                "Search by rating higher than",
+                                "Search by rating between lower and higher",
+                                "Back to Main menu"};
             Menu menu = new Menu(prompt, options);
             var selectedItem = menu.Run();
             switch (selectedItem)
@@ -103,9 +108,11 @@ namespace HoneyBadgers.ConsoleApp
                     RunSearchByRatingHigherThan();
                     break;
                 case 3:
+                    RunSearchByRatingBetweenLowerAndHigher();
+                    break;
+                case 4:
 
                     break;
-
             }
             
         }
@@ -132,7 +139,7 @@ namespace HoneyBadgers.ConsoleApp
             Console.WriteLine("What movie are you looking for?\n(click ESC button if u wish to return to the main menu)\n");
             while (true)
             {
-                if (Console.ReadKey().Key == ConsoleKey.Escape) break;
+                if (Console.ReadKey(true).Key == ConsoleKey.Escape) break;
                 {
                     var input = Console.ReadLine();
                     var outData = Searcher.FindByName(_movieRepository.Movies, input);
@@ -149,11 +156,12 @@ namespace HoneyBadgers.ConsoleApp
 
         private void RunSearchByRatingLowerThan()
         {
-            Console.WriteLine("Type highest Rating movie u want to see\n(click ESC button if u wish to return to the main menu)\n");
+            Console.WriteLine("Type highest ImdbRating movie u want to see" +
+                                "\n(click ESC button if u wish to return to the main menu)\n");
             Console.WriteLine(@"Type rating from 0-10, like 5.3, 2.56 etc. ");
             while (true)
             {
-                if (Console.ReadKey().Key == ConsoleKey.Escape) break;
+                if (Console.ReadKey(true).Key == ConsoleKey.Escape) break;
                 string input = Console.ReadLine();
                 input.Replace('.', ',');
                 if (double.TryParse(input, out double highestRating))
@@ -161,7 +169,7 @@ namespace HoneyBadgers.ConsoleApp
                     var outData = Searcher.FindMovieWithRatingLowerThan(_movieRepository.Movies, highestRating);
                     foreach (var item in outData)
                     {
-                        Console.WriteLine($"{item.Title}");
+                        Console.WriteLine($"{item.Title} || {item.ImdbRating}");
                     }
                     Console.WriteLine("\nPress ENTER if u wish to return to the main menu\n");
                     if (Console.ReadKey(true).Key == ConsoleKey.Enter) return;
@@ -175,10 +183,11 @@ namespace HoneyBadgers.ConsoleApp
 
         private void RunSearchByRatingHigherThan()
         {
-            Console.WriteLine("Type highest Rating movie u want to see\n(click ESC button if u wish to return to the main menu)\n");
+            Console.WriteLine("Type lowest ImdbRating movie u want to see\n" +
+                                "(click ESC button if u wish to return to the main menu)\n");
             while (true)
             {
-                if (Console.ReadKey().Key == ConsoleKey.Escape) break;
+                if (Console.ReadKey(true).Key == ConsoleKey.Escape) break;
                 {
                     var input = Console.ReadLine();
                     double lowerRating = 0.0;
@@ -192,13 +201,48 @@ namespace HoneyBadgers.ConsoleApp
                     var outData = Searcher.FindMovieWithRatingHigherThan(_movieRepository.Movies, lowerRating);
                     foreach (var item in outData)
                     {
-                        Console.WriteLine($"{item.Title}");
+                        Console.WriteLine($"{item.Title} || {item.ImdbRating}");
                     }
                     Console.WriteLine("\nPress ENTER if u wish to return to the main menu\n");
                     if (Console.ReadKey(true).Key == ConsoleKey.Enter) return;
                 }
             }
         }
-
+        private void RunSearchByRatingBetweenLowerAndHigher()
+        {
+            Console.WriteLine("Type lower Rating movie u want to see" +
+                                "\n(click ESC button if u wish to return to the main menu)\n");
+            while (true)
+            {
+                if (Console.ReadKey().Key == ConsoleKey.Escape) break;
+                {
+                    var input = Console.ReadLine();
+                    double lowerRating = 0.0;
+                    while (true)
+                    {
+                        //, CultureInfo.InvariantCulture
+                        if (Double.TryParse(input,out lowerRating)) break;
+                        Console.WriteLine(@"Type rating from 0-10, like 5.3, 2.56 etc. ");
+                        input = Console.ReadLine();
+                    }
+                    Console.WriteLine("Type lower Rating movie u want to see");
+                    input = Console.ReadLine();
+                    double higherRating = 0.0;
+                    while (true)
+                    {
+                        if (Double.TryParse(input, out higherRating)) break;
+                        Console.WriteLine(@"Type rating from 0-10, like 5.3, 2.56 etc. ");
+                        input = Console.ReadLine();
+                    }
+                    var outData = Searcher.FindMovieWithRatingBetweenLowerHigher(_movieRepository.Movies, lowerRating, higherRating);
+                    foreach (var item in outData)
+                    {
+                        Console.WriteLine($"{item.Title} || {item.ImdbRating}");
+                    }
+                    Console.WriteLine("\nPress ENTER if u wish to return to the main menu\n");
+                    if (Console.ReadKey(true).Key == ConsoleKey.Enter) return;
+                }
+            }
+        }
     }
 }
