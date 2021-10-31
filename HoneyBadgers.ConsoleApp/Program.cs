@@ -1,5 +1,5 @@
 ﻿using System;
-using HoneyBadgers.ConsoleApp.Services;
+using HoneyBadgers.ConsoleApp.Repositories;
 using HoneyBadgers.Logic;
 
 namespace HoneyBadgers.ConsoleApp

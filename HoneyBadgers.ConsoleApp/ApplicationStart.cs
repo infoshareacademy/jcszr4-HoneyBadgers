@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using HoneyBadgers.ConsoleApp.Services;
 using HoneyBadgers.ConsoleApp.UI;
 using HoneyBadgers.Logic;
 
@@ -95,17 +92,14 @@ namespace HoneyBadgers.ConsoleApp
         private void RunAddUserMenu()
         {
             Console.Clear();
-            var userService = new UserRepository();
-            userService.AddUser();
-
+            _usersRepository.AddUser();
             Console.WriteLine("\nPress any key to return to the main menu.");
             Console.ReadKey(true);
         }
         private void RunAddMovieMenu()
         {
             Console.Clear();
-            var movieRepository = new MovieRepository();
-            movieRepository.AddMovie();
+            _movieRepository.AddMovie();
             Console.WriteLine("\nPress any key to return to the main menu.");
             Console.ReadKey(true);
         }

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 using HoneyBadgers.Logic;
+using HoneyBadgers.Logic.Helpers;
 
-namespace HoneyBadgers.ConsoleApp.Services
+namespace HoneyBadgers.ConsoleApp.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -19,7 +18,7 @@ namespace HoneyBadgers.ConsoleApp.Services
 
         public void AddUser()
         {
-            Console.WriteLine("Adding new user\n\n");
+            Console.WriteLine("Adding new user");
             var user = GetUserData();
             Users.Add(user);
             Console.WriteLine("The user has been added correctly");
@@ -29,13 +28,13 @@ namespace HoneyBadgers.ConsoleApp.Services
         {
 
             var user = new User();
-            Console.WriteLine("\nEnter director");
-            user.FirstName = Console.ReadLine() ?? "";
+            Console.WriteLine("\nEnter firstname");
+            user.FirstName = StringValidation(2, 30);
 
-            Console.WriteLine("\nEnter writer:");
-            user.LastName = Console.ReadLine() ?? "";
+            Console.WriteLine("\nEnter lastname:");
+            user.FirstName = StringValidation(2, 30);
 
-            Console.WriteLine("\nEnter actors:");
+            Console.WriteLine("\nEnter email:");
             user.Email = EmailValidation();
 
             user.Id = GenerateId();
@@ -73,6 +72,23 @@ namespace HoneyBadgers.ConsoleApp.Services
         private string GenerateId()
         {
             return Guid.NewGuid().ToString("N");
+        }
+
+        private string StringValidation(int minLength, int maxLength)
+        {
+            var valid = false;
+            string input = "";
+            while (!valid)
+            {
+                input = Console.ReadLine();
+                valid = Validators.StringValidator(input, minLength, maxLength) && !(input.Any(char.IsDigit));
+                if (!valid)
+                {
+                    Console.WriteLine("The given value is incorrect. The provided value should be a word from 2 to 30 characters which does not contain numbers.");
+                }
+            }
+
+            return input;
         }
     }
 }
