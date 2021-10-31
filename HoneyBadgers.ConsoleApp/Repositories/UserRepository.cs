@@ -45,26 +45,36 @@ namespace HoneyBadgers.ConsoleApp.Repositories
 
         private string EmailValidation()
         {
-            var email = "";
+            string email;
             while (true)
             {
-                var valid = MailAddress.TryCreate(Console.ReadLine(), out var input);
-                if (!valid)
+
+                var input = Console.ReadLine();
+                if (String.IsNullOrEmpty(input))
                 {
                     Console.WriteLine("The given value is incorrect. The value provided should be of the form name@something.domain. Try again:");
                 }
                 else
                 {
-                    if (Users.Any(u => u.Email == input.ToString()))
+                    var valid = MailAddress.TryCreate(input, out var result);
+                    if (!valid)
                     {
-                        Console.WriteLine("There is already a user with the given email");
+                        Console.WriteLine("The given value is incorrect. The value provided should be of the form name@something.domain. Try again:");
                     }
                     else
                     {
-                        email = input.ToString();
-                        break;
+                        if (Users.Any(u => u.Email == result.ToString()))
+                        {
+                            Console.WriteLine("There is already a user with the given email");
+                        }
+                        else
+                        {
+                            email = result.ToString();
+                            break;
+                        }
                     }
                 }
+                
             }
             return email;
         }

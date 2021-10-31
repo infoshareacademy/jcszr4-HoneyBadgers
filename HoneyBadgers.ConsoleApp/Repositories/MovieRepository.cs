@@ -20,7 +20,7 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             Console.WriteLine("Adding new movie\n");
             var movie = GetNewMovieData();
             Movies.Add(movie);
-            Console.WriteLine("The video has been added correctly");
+            Console.WriteLine("The movie has been added correctly");
         }
 
         private Movie GetNewMovieData()
