@@ -48,9 +48,11 @@ namespace HoneyBadgers.ConsoleApp
 
         private void RunSearchByTitle()
         {
-            Console.WriteLine("What movie are you looking for?\n(click ESC button if u wish to return to the main menu)\n");
             while (true)
             {
+                Console.WriteLine("What movie are you looking for?\n" +
+                                  "(click ESC button if u wish to return to the main menu)\n");
+
                 if (Console.ReadKey(true).Key == ConsoleKey.Escape) break;
                 {
                     var input = Console.ReadLine();
@@ -59,8 +61,8 @@ namespace HoneyBadgers.ConsoleApp
                     {
                         Console.WriteLine($"{item.Key.Title}, {item.Value}");
                     }
-                    Console.WriteLine("\nPress ENTER if u wish to return to the main menu\n");
-                    if (Console.ReadKey(true).Key == ConsoleKey.Enter) return;
+                    Console.WriteLine("\nPress ESC if u wish to return to the main menu\nPress any other key to try again...");
+                    if (Console.ReadKey(true).Key == ConsoleKey.Escape) return;
 
                 }
             }
@@ -68,14 +70,16 @@ namespace HoneyBadgers.ConsoleApp
 
         private void RunSearchByRatingLowerThan()
         {
-            Console.WriteLine("Type highest ImdbRating movie u want to see" +
-                                "\n(click ESC button if u wish to return to the main menu)\n");
-            Console.WriteLine(@"Type rating from 0-10, like 5.3, 2.56 etc. ");
             while (true)
             {
+                Console.Clear();
+                Console.WriteLine("Type highest ImdbRating movie u want to see" +
+                                "\n(click ESC button if u wish to return to the main menu)\n");
+                Console.WriteLine(@"Type rating from 0-10, like 5.3, 2.56 etc. ");
+            
                 if (Console.ReadKey(true).Key == ConsoleKey.Escape) break;
                 string input = Console.ReadLine();
-                input.Replace('.', ',');
+                input = input.Replace('.', ',');
                 if (double.TryParse(input, out double highestRating))
                 {
                     var outData = Searcher.FindMovieWithRatingLowerThan(_movieRepository.Movies, highestRating);
@@ -83,8 +87,8 @@ namespace HoneyBadgers.ConsoleApp
                     {
                         Console.WriteLine($"{item.Title} || {item.ImdbRating}");
                     }
-                    Console.WriteLine("\nPress ENTER if u wish to return to the main menu\n");
-                    if (Console.ReadKey(true).Key == ConsoleKey.Enter) return;
+                    Console.WriteLine("\nPress ESC if u wish to return to the main menu\nPress any other key to try again...");
+                    if (Console.ReadKey(true).Key == ConsoleKey.Escape) return;
                 }
                 else
                 {
@@ -102,6 +106,7 @@ namespace HoneyBadgers.ConsoleApp
                 if (Console.ReadKey(true).Key == ConsoleKey.Escape) break;
                 {
                     var input = Console.ReadLine();
+                    input = input.Replace('.', ',');
                     double lowerRating = 0.0;
                     while (true)
                     {
@@ -129,6 +134,7 @@ namespace HoneyBadgers.ConsoleApp
                 if (Console.ReadKey().Key == ConsoleKey.Escape) break;
                 {
                     var input = Console.ReadLine();
+                    input = input.Replace('.', ',');
                     double lowerRating = 0.0;
                     while (true)
                     {
