@@ -9,7 +9,7 @@ namespace HoneyBadgers.Logic
     {
         public static Dictionary<Movie,int> FindByName(IEnumerable<Movie> movies, string searchInput)
         {
-            //TODO: Jak się pozbyć Dictionary?! :o 
+            //TODO: Jak się pozbyć Dictionary?! :o ZAPYTAĆ PATRYK NA PROJEKCJIE, CZY NOWA KLASA TU UJDZIE (Patrz praca domowa 4)
             var inputParts = searchInput.Split(" "); 
             var results = new Dictionary<Movie, int>();
             foreach (var movie in movies)
@@ -37,24 +37,32 @@ namespace HoneyBadgers.Logic
 
         public static List<Movie> FindMovieWithRatingBetweenLowerHigher(IEnumerable<Movie> movies, double lowestRating, double highestRating)
         {
-            return movies.Where(movie => movie.ImdbRating >= lowestRating && movie.ImdbRating <= highestRating).ToList();
+            return movies.Where(movie => movie.ImdbRating >= lowestRating && movie.ImdbRating <= highestRating)
+                .OrderByDescending(movie => movie.ImdbRating)
+                .ToList();
         }
 
         public static List<Movie> FindMovieWithRatingLowerThan(IEnumerable<Movie> movies,double highestRating)
         {
-            return movies.Where(movie => movie.ImdbRating <= highestRating).ToList();
+            return movies.Where(movie => movie.ImdbRating <= highestRating)
+                .OrderByDescending(movie => movie.ImdbRating)
+                .ToList();
     }
         public static List<Movie> FindMovieWithRatingHigherThan(IEnumerable<Movie> movies, double lowestRating)
         {
-            return movies.Where(movie => movie.ImdbRating >= lowestRating).ToList();
+            return movies.Where(movie => movie.ImdbRating >= lowestRating)
+                .OrderBy(movie => movie.ImdbRating)
+                .ToList();
         }
         public static List<Movie> SortMoviesByRatingFromHighest(IEnumerable<Movie> movies)
         {
-            return movies.OrderByDescending(movie => movie.ImdbRating).ToList();
+            return movies.OrderByDescending(movie => movie.ImdbRating)
+                .ToList();
         }
         public static List<Movie> SortMoviesByRatingFromLowest(IEnumerable<Movie> movies)
         {
-            return movies.OrderBy(movie => movie.ImdbRating).ToList();
+            return movies.OrderBy(movie => movie.ImdbRating)
+                .ToList();
         }
     }
 }
