@@ -12,6 +12,7 @@ namespace HoneyBadgers.Logic
     }
     public class Movie
     {
+
         public string Title { get; set; }
         public int Year { get; set; }
         public string Director { get; set; }
@@ -20,8 +21,7 @@ namespace HoneyBadgers.Logic
         public string Plot { get; set; }
         public string Genre { get; set; }
         public string Country { get; set; }
-        public MovieStatus Status { get; set; }
-        public double? Rating { get; set; }
+        public double ImdbRating { get; set; }
         public List<Rating> Ratings { get; set; }
 
     }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using HoneyBadgers.Logic;
 
-namespace HoneyBadgers.ConsoleApp.Services
+namespace HoneyBadgers
 {
     public interface IUserRepository
     {
