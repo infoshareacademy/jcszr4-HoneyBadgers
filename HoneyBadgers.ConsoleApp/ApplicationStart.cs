@@ -39,7 +39,7 @@ namespace HoneyBadgers.ConsoleApp
                 while (true)
                 {
                     string prompt = _logo + "\nWelcome to the Honey-Badgers application. What would you like to do? \n(Use the arrows keys to cycle through options and press enter to select an option.)";
-                    string[] options = { "Search movie by the name", 
+                    string[] options = { "Search movie by...", 
                                         "Search by most viewed",
                                         "Add new user", 
                                         "Add new movie", 

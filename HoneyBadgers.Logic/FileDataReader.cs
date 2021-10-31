@@ -35,9 +35,7 @@ namespace HoneyBadgers.Logic
             }
             catch (Exception e)
             {
-                Console.WriteLine($"An error has occurred while reading Users records. Ex: {e.Message}");
-                //TODO: jak pominąć console.write by dostać uniwersalną informacje o błędzie?
-                throw;
+                throw new Exception($"An error has occurred while reading Users records. Ex: {e.Message}");
             }
         }
 

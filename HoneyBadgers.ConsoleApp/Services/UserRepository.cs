@@ -14,7 +14,14 @@ namespace HoneyBadgers.ConsoleApp.Services
 
         public UserRepository()
         {
-            Users.AddRange(FileDataReader.LoadUsers());
+            try
+            {
+                Users.AddRange(FileDataReader.LoadUsers());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         public void AddUser()
