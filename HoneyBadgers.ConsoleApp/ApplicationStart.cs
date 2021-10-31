@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using HoneyBadgers.ConsoleApp.Services;
+using HoneyBadgers.ConsoleApp.UI;
 using HoneyBadgers.Logic;
 
 namespace HoneyBadgers.ConsoleApp
@@ -39,6 +40,7 @@ namespace HoneyBadgers.ConsoleApp
                 {
                     string prompt = _logo + "\nWelcome to the Honey-Badgers application. What would you like to do? \n(Use the arrows keys to cycle through options and press enter to select an option.)";
                     string[] options = { "Search movie by the name", 
+                                        "Search by most viewed",
                                         "Add new user", 
                                         "Add new movie", 
                                         "Information", 
@@ -46,21 +48,26 @@ namespace HoneyBadgers.ConsoleApp
                     Menu mainMenu = new Menu(prompt, options);
                     int selectedIndex = mainMenu.Run();
                     SearchConsoleMenu searchMenu = new (_movieRepository);
+                    SortMovieMenu sortMovieMenu = new SortMovieMenu(_usersRepository, _movieRepository);
+                    
                     switch (selectedIndex)
                     {
                         case 0:
                             searchMenu.RunSearchMenu();
                             break;
                         case 1:
-                            RunAddUserMenu();
+                            sortMovieMenu.RunSortMenu();
                             break;
                         case 2:
-                            RunAddMovieMenu();
+                            RunAddUserMenu();
                             break;
                         case 3:
-                            DisplayInformation();
+                            RunAddMovieMenu();
                             break;
                         case 4:
+                            DisplayInformation();
+                            break;
+                        case 5:
                             QuitApp();
                             break;
                     }
