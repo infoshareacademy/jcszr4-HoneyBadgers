@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using HoneyBadgers.Logic;
 
@@ -40,7 +41,6 @@ namespace HoneyBadgers.ConsoleApp
                     RunSearchByRatingBetweenLowerAndHigher();
                     break;
                 case 4:
-
                     break;
             }
 
@@ -48,19 +48,23 @@ namespace HoneyBadgers.ConsoleApp
 
         private void RunSearchByTitle()
         {
-            Console.WriteLine("What movie are you looking for?\n(click ESC button if u wish to return to the main menu)\n");
             while (true)
             {
+                Console.WriteLine("What movie are you looking for?");
+                Console.WriteLine("click ESC button if u wish to return to the main menu)");
+
                 if (Console.ReadKey(true).Key == ConsoleKey.Escape) break;
                 {
                     var input = Console.ReadLine();
+                    input = input.Trim();
                     var outData = Searcher.FindByName(_movieRepository.Movies, input);
                     foreach (var item in outData)
                     {
                         Console.WriteLine($"{item.Key.Title}, {item.Value}");
                     }
-                    Console.WriteLine("\nPress ENTER if u wish to return to the main menu\n");
-                    if (Console.ReadKey(true).Key == ConsoleKey.Enter) return;
+                    Console.WriteLine("Press ESC if u wish to return to the main menu");
+                    Console.WriteLine("Press any other key to try again...");
+                    if (Console.ReadKey(true).Key == ConsoleKey.Escape) return;
 
                 }
             }
@@ -68,91 +72,152 @@ namespace HoneyBadgers.ConsoleApp
 
         private void RunSearchByRatingLowerThan()
         {
-            Console.WriteLine("Type highest ImdbRating movie u want to see" +
-                                "\n(click ESC button if u wish to return to the main menu)\n");
-            Console.WriteLine(@"Type rating from 0-10, like 5.3, 2.56 etc. ");
             while (true)
             {
+                Console.Clear();
+                Console.WriteLine("Type highest ImdbRating movie u want to see");
+                Console.WriteLine("(click ESC button if u wish to return to the main menu)");
+                Console.WriteLine(@"Type rating from 0-10, like 5.3, 2.56 etc. ");
                 if (Console.ReadKey(true).Key == ConsoleKey.Escape) break;
                 string input = Console.ReadLine();
-                input.Replace('.', ',');
+                input = input.Replace('.', ',');
                 if (double.TryParse(input, out double highestRating))
                 {
                     var outData = Searcher.FindMovieWithRatingLowerThan(_movieRepository.Movies, highestRating);
-                    foreach (var item in outData)
+                    if (outData.Count != 0)
                     {
-                        Console.WriteLine($"{item.Title} || {item.ImdbRating}");
+                        foreach (var item in outData)
+                        {
+                            Console.WriteLine($"{item.Title} || {item.ImdbRating}");
+                        }
+                        Console.WriteLine("Press ESC if u wish to return to the main menu");
+                        Console.WriteLine("Press any other key to try again...");
+                        if (Console.ReadKey(true).Key == ConsoleKey.Escape) return;
                     }
-                    Console.WriteLine("\nPress ENTER if u wish to return to the main menu\n");
-                    if (Console.ReadKey(true).Key == ConsoleKey.Enter) return;
+                    else
+                    {
+                        Console.WriteLine("Movies not found, press ENTER to try again");
+                        Console.ReadLine();
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Wrong input");
+                    Console.WriteLine("Wrong input, press ENTER to try again");
+                    Console.ReadLine();
                 }
             }
         }
 
         private void RunSearchByRatingHigherThan()
         {
-            Console.WriteLine("Type lowest ImdbRating movie u want to see\n" +
-                                "(click ESC button if u wish to return to the main menu)\n");
             while (true)
             {
-                if (Console.ReadKey(true).Key == ConsoleKey.Escape) break;
-                {
-                    var input = Console.ReadLine();
-                    double lowerRating = 0.0;
-                    while (true)
-                    {
-                        if (Double.TryParse(input, out lowerRating)) break;
-                        Console.WriteLine(@"Type rating from 0-10, like 5.3, 2.56 etc. ");
-                        input = Console.ReadLine();
-                    }
+                Console.Clear();
+                Console.WriteLine("Type lowest ImdbRating movie u want to see");
+                Console.WriteLine("(click ESC button if u wish to return to the main menu)");
+                Console.WriteLine(@"Type rating from 0-10, like 5.3, 2.56 etc. ");
 
+                if (Console.ReadKey(true).Key == ConsoleKey.Escape) break;
+            
+                var input = Console.ReadLine();
+                input = input.Replace('.', ',');
+
+
+                if (Double.TryParse(input, out double lowerRating))
+                {
                     var outData = Searcher.FindMovieWithRatingHigherThan(_movieRepository.Movies, lowerRating);
-                    foreach (var item in outData)
+                    if (outData.Count != 0)
                     {
-                        Console.WriteLine($"{item.Title} || {item.ImdbRating}");
+                        foreach (var item in outData)
+                        {
+                            Console.WriteLine($"{item.Title} || {item.ImdbRating}");
+                        }
+                        Console.WriteLine("Press ESC if u wish to return to the main menu");
+                        Console.WriteLine("Press any other key to try again...");
+                        if (Console.ReadKey(true).Key == ConsoleKey.Escape) return;
                     }
-                    Console.WriteLine("\nPress ENTER if u wish to return to the main menu\n");
-                    if (Console.ReadKey(true).Key == ConsoleKey.Enter) return;
+                    else
+                    {
+                        Console.WriteLine("Movies not found, press ENTER to try again");
+                        Console.ReadLine();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Wrong input, press ENTER to try again");
+                    Console.ReadLine();
                 }
             }
         }
         private void RunSearchByRatingBetweenLowerAndHigher()
         {
-            Console.WriteLine("Type lower Rating movie u want to see" +
-                                "\n(click ESC button if u wish to return to the main menu)\n");
             while (true)
             {
-                if (Console.ReadKey().Key == ConsoleKey.Escape) break;
+                string input;
+                double lowerRating = 0.0;
+                do
                 {
-                    var input = Console.ReadLine();
-                    double lowerRating = 0.0;
-                    while (true)
-                    {
-                        if (Double.TryParse(input, out lowerRating)) break;
-                        Console.WriteLine(@"Type rating from 0-10, like 5.3, 2.56 etc. ");
-                        input = Console.ReadLine();
-                    }
-                    Console.WriteLine("Type lower Rating movie u want to see");
+                    Console.Clear();
+                    Console.WriteLine("Type lower ImdbRating movie u want to see");
+                    Console.WriteLine("click ESC button if u wish to return to the main menu)");
+                    Console.WriteLine(@"Type rating from 0-10, like 5.3, 2.56 etc. ");
+
+                    if (Console.ReadKey(true).Key == ConsoleKey.Escape) break;
+
                     input = Console.ReadLine();
-                    double higherRating = 0.0;
-                    while (true)
+                    input = input.Trim().Replace('.', ',');
+                    if (Double.TryParse(input, out lowerRating))
                     {
-                        if (Double.TryParse(input, out higherRating)) break;
-                        Console.WriteLine(@"Type rating from 0-10, like 5.3, 2.56 etc. ");
-                        input = Console.ReadLine();
+                        break;
                     }
-                    var outData = Searcher.FindMovieWithRatingBetweenLowerHigher(_movieRepository.Movies, lowerRating, higherRating);
+                    else
+                    {
+                        Console.WriteLine("Wrong input, press ENTER to try again");
+                        Console.ReadLine();
+                    }
+                } while (true);
+
+                double higherRating = 0.0;
+                do
+                {
+                    Console.Clear();
+                    Console.WriteLine("Type higher ImdbRating movie u want to see");
+                    Console.WriteLine("click ESC button if u wish to return to the main menu)");
+                    Console.WriteLine(@"Type rating from 0-10, like 5.3, 2.56 etc. ");
+                    if (Console.ReadKey(true).Key == ConsoleKey.Escape) break;
+
+                    input = Console.ReadLine();
+                    input = input.Trim().Replace('.', ',');
+                    if (Double.TryParse(input, out higherRating))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Wrong input, press ENTER to try again");
+                        Console.ReadLine();
+                    }
+
+
+                } while (true);
+
+                var outData = Searcher.FindMovieWithRatingBetweenLowerHigher(_movieRepository.Movies, lowerRating, higherRating);
+                if (outData.Count != 0)
+                {
                     foreach (var item in outData)
                     {
                         Console.WriteLine($"{item.Title} || {item.ImdbRating}");
                     }
-                    Console.WriteLine("\nPress ENTER if u wish to return to the main menu\n");
-                    if (Console.ReadKey(true).Key == ConsoleKey.Enter) return;
+                    Console.WriteLine("\nPress ESC if u wish to return to the main menu");
+                    Console.WriteLine("Press any other key to try again...");
+                    if (Console.ReadKey(true).Key == ConsoleKey.Escape) return;
                 }
+                else
+                {
+                    Console.WriteLine("Movies not found, press ENTER to try again");
+                    Console.ReadLine();
+                }
+
             }
         }
     }

@@ -8,6 +8,7 @@ namespace HoneyBadgers.ConsoleApp
     {
         private IUserRepository _usersRepository;
         private IMovieRepository _movieRepository;
+        private SortMovieMenu _sortMovieMenu;
 
         private readonly string _logo = @" _   _                               _____           _                     
 | | | |                             | ___ \         | |                    
@@ -22,6 +23,7 @@ namespace HoneyBadgers.ConsoleApp
         {
             _usersRepository = usersRepository;
             _movieRepository = movieRepository;
+            _sortMovieMenu = new SortMovieMenu(_usersRepository, _movieRepository);
         }
 
         public void Start()
@@ -36,8 +38,8 @@ namespace HoneyBadgers.ConsoleApp
                 while (true)
                 {
                     string prompt = _logo + "\nWelcome to the Honey-Badgers application. What would you like to do? \n(Use the arrows keys to cycle through options and press enter to select an option.)";
-                    string[] options = { "Search movie by the name", 
-                                        "Search by most viewed",
+                    string[] options = { "Search movie by...", 
+                                        "Search movie by most popular",
                                         "Add new user", 
                                         "Add new movie", 
                                         "Information", 
@@ -45,7 +47,7 @@ namespace HoneyBadgers.ConsoleApp
                     Menu mainMenu = new Menu(prompt, options);
                     int selectedIndex = mainMenu.Run();
                     SearchConsoleMenu searchMenu = new (_movieRepository);
-                    SortMovieMenu sortMovieMenu = new SortMovieMenu(_usersRepository, _movieRepository);
+                    
                     
                     switch (selectedIndex)
                     {
@@ -53,7 +55,7 @@ namespace HoneyBadgers.ConsoleApp
                             searchMenu.RunSearchMenu();
                             break;
                         case 1:
-                            sortMovieMenu.RunSortMenu();
+                            _sortMovieMenu.RunSortMenu();
                             break;
                         case 2:
                             RunAddUserMenu();
