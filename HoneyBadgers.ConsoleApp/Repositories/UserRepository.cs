@@ -19,12 +19,12 @@ namespace HoneyBadgers.ConsoleApp.Repositories
         public void AddUser()
         {
             Console.WriteLine("Adding new user");
-            var user = GetUserData();
+            var user = SetNewUser();
             Users.Add(user);
             Console.WriteLine("The user has been added correctly");
         }
 
-        public User GetUserData()
+        private User SetNewUser()
         {
 
             var user = new User();

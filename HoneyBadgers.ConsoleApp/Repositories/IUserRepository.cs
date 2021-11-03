@@ -7,6 +7,5 @@ namespace HoneyBadgers
     {
         List<User> Users { get; }
         void AddUser();
-        User GetUserData();
     }
 }
