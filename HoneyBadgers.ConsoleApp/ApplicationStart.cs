@@ -39,13 +39,15 @@ namespace HoneyBadgers.ConsoleApp
                     string[] options = { "Search movie by the name", 
                                         "Search by most viewed",
                                         "Add new user", 
-                                        "Add new movie", 
+                                        "Add new movie",
+                                        "Edit Data", 
                                         "Information", 
                                         "Exit" };
                     Menu mainMenu = new Menu(prompt, options);
                     int selectedIndex = mainMenu.Run();
                     SearchConsoleMenu searchMenu = new (_movieRepository);
                     SortMovieMenu sortMovieMenu = new SortMovieMenu(_usersRepository, _movieRepository);
+                    DataEditionMenu dataEditionMenu = new DataEditionMenu(_usersRepository, _movieRepository);
                     
                     switch (selectedIndex)
                     {
@@ -62,9 +64,12 @@ namespace HoneyBadgers.ConsoleApp
                             RunAddMovieMenu();
                             break;
                         case 4:
-                            DisplayInformation();
+                            dataEditionMenu.RunEditionMenu();
                             break;
                         case 5:
+                            DisplayInformation();
+                            break;
+                        case 6:
                             QuitApp();
                             break;
                     }

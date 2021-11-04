@@ -100,5 +100,65 @@ namespace HoneyBadgers.ConsoleApp.Repositories
 
             return input;
         }
+        public void PrintUsers()
+        {
+            Console.WriteLine("LIST OF USERS:");
+            foreach (var user in Users)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(
+                    $"ID: {user.Id} || FIRSTNAME: {user.FirstName} || LASTNAME: {user.LastName} || EMAIL: {user.Email}");
+                Console.ResetColor();
+            }
+        }
+        public void InputChangesInUserData()
+        {
+            Console.WriteLine("Enter Email of the user you wish to edit");
+            var input = Console.ReadLine();
+            var selectedUser = Users.FirstOrDefault(usr => usr.Email.Equals(input, StringComparison.OrdinalIgnoreCase));
+
+            if (selectedUser == null) return;
+
+
+            Console.WriteLine($"Current user name is: {selectedUser.FirstName}. Type new name or press enter to continue without changes");
+            var firstName = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(firstName.Trim()))
+            {
+                selectedUser.FirstName = firstName;
+            }
+
+            Console.WriteLine($"Current user last name is: {selectedUser.LastName}. Type new last name or press enter to continue without changes");
+            var lastName = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(lastName.Trim()))
+            {
+                selectedUser.LastName = lastName;
+            }
+            Console.WriteLine($"Current user email is: {selectedUser.Email}. Type new email or press enter to continue without changes");
+            var email = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(email.Trim()))
+            {
+                selectedUser.Email = email;
+            }
+        }
+
+        public void UserDataEdition()
+        {
+            Console.WriteLine("Would you like to edit any user data?");
+            Console.WriteLine("Press ENTER to print the list of users or any key to continue without...");
+
+            ConsoleKey choice = Console.ReadKey(true).Key;
+            if (choice == ConsoleKey.Enter)
+            {
+                PrintUsers();
+                InputChangesInUserData();
+            }
+            else
+            {
+                InputChangesInUserData();
+            }
+        }
     }
 }

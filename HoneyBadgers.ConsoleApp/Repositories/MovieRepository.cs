@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using HoneyBadgers.Logic;
 using HoneyBadgers.Logic.Helpers;
 
@@ -83,6 +84,122 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             }
 
             return input;
+        }
+        public void PrintMovies()
+        {
+            Console.WriteLine("LIST OF MOVIES:");
+            foreach (var movie in Movies)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(
+                    $"TITLE:{movie.Title}\nRELEASE YEAR: {movie.Year}\nDIRECTOR: {movie.Director}\nWRITER: {movie.Writer}\nACTORS: {movie.Actors}\nPLOT: {movie.Plot}\nGENRE: {movie.Genre}\nCOUNTRY: {movie.Country}\nRAITING: {movie.ImdbRating}");
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.ResetColor();
+            }
+        }
+        public void InputChangesInMovieData()
+        {
+            Console.WriteLine("Enter title of the movie you wish to edit");
+            var titleInput = Console.ReadLine();
+            var selectedMovie = Movies.FirstOrDefault(mov => mov.Title.Equals(titleInput, StringComparison.OrdinalIgnoreCase));
+
+            if (selectedMovie == null) return;
+
+
+            Console.WriteLine($"Current movie title is: {selectedMovie.Title}. Type new title or press enter to continue without changes");
+            var title = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(title.Trim()))
+            {
+                selectedMovie.Title = title;
+            }
+
+            Console.WriteLine($"Current movie year of release is: {selectedMovie.Year}. Type new year or press enter to continue without changes");
+            selectedMovie.Year = YearValidation();
+
+            Console.WriteLine($"Current director is: {selectedMovie.Director}. Type director or press enter to continue without changes");
+            var director = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(director.Trim()))
+            {
+                selectedMovie.Director = director;
+            }
+            Console.WriteLine($"Current writer is: {selectedMovie.Writer}. Type writer or press enter to continue without changes");
+            var writer = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(writer.Trim()))
+            {
+                selectedMovie.Writer = writer;
+            }
+            Console.WriteLine($"Current actors are: {selectedMovie.Actors}. Type new actors or press enter to continue without changes");
+            var actors = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(actors.Trim()))
+            {
+                selectedMovie.Actors = actors;
+            }
+            Console.WriteLine($"Current plot is: {selectedMovie.Plot}. Type new plot or press enter to continue without changes");
+            var plot = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(plot.Trim()))
+            {
+                selectedMovie.Plot = plot;
+            }
+            Console.WriteLine($"Current genre is: {selectedMovie.Genre}. Type new genre or press enter to continue without changes");
+            var genre = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(genre.Trim()))
+            {
+                selectedMovie.Genre = genre;
+            }
+            Console.WriteLine($"Current country is: {selectedMovie.Country}. Type new country or press enter to continue without changes");
+            var country = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(country.Trim()))
+            {
+                selectedMovie.Country = country;
+            }
+            Console.WriteLine($"Current rating is: {selectedMovie.ImdbRating}. Type new rating or press enter to continue without changes");
+            do
+            {
+                var ratingInput = Console.ReadLine();
+                double rating;
+                bool wasparsedSuccessfully = double.TryParse(ratingInput, out rating);
+                if (wasparsedSuccessfully == false)
+                {
+                    Console.WriteLine("Something went wrong! \nYou have not entered a numeric value.");
+                    break;
+                }
+                if (rating > 10)
+                {
+                    Console.WriteLine("Rating value can't be higher than 10.");
+                }
+                if (rating < 0)
+                {
+                    Console.WriteLine("Rating value can't be a negative value.");
+                }
+                else
+                {
+                    selectedMovie.ImdbRating = rating;
+                }
+            } while (true);
+        }
+        public void MovieDataEdition()
+        {
+            Console.WriteLine("Would you like to edit any user data?");
+            Console.WriteLine("Press ENTER to print the list of users or any key to continue without...");
+
+            ConsoleKey choice = Console.ReadKey(true).Key;
+            if (choice == ConsoleKey.Enter)
+            {
+                PrintMovies();
+                InputChangesInMovieData();
+            }
+            else
+            {
+               InputChangesInMovieData();
+            }
         }
     }
 }
