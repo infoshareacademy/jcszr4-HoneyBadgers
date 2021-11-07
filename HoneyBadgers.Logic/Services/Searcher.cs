@@ -10,6 +10,7 @@ namespace HoneyBadgers.Logic
         public static Dictionary<Movie,int> FindByName(IEnumerable<Movie> movies, string searchInput)
         {
             //TODO: Jak się pozbyć Dictionary?! :o ZAPYTAĆ PATRYK NA PROJEKCJIE, CZY NOWA KLASA TU UJDZIE (Patrz praca domowa 4)
+            searchInput = searchInput;
             var inputParts = searchInput.Split(" "); 
             var results = new Dictionary<Movie, int>();
             foreach (var movie in movies)
