@@ -32,10 +32,11 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             user.FirstName = StringValidation(2, 30);
 
             Console.WriteLine("\nEnter lastname:");
-            user.FirstName = StringValidation(2, 30);
+            user.LastName = StringValidation(2, 30);
 
             Console.WriteLine("\nEnter email:");
-            user.Email = EmailValidation();
+            var email = Console.ReadLine();
+            user.Email = EmailValidation(email);
 
             user.Id = GenerateId();
             user.Movies = new List<Movie>();
@@ -43,20 +44,17 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             return user;
         }
 
-        private string EmailValidation()
+        private string EmailValidation(string email)
         {
-            string email;
             while (true)
             {
-
-                var input = Console.ReadLine();
-                if (String.IsNullOrEmpty(input))
+                if (String.IsNullOrEmpty(email))
                 {
                     Console.WriteLine("The given value is incorrect. The value provided should be of the form name@something.domain. Try again:");
                 }
                 else
                 {
-                    var valid = MailAddress.TryCreate(input, out var result);
+                    var valid = MailAddress.TryCreate(email, out var result);
                     if (!valid)
                     {
                         Console.WriteLine("The given value is incorrect. The value provided should be of the form name@something.domain. Try again:");
@@ -74,7 +72,9 @@ namespace HoneyBadgers.ConsoleApp.Repositories
                         }
                     }
                 }
-                
+
+                email = Console.ReadLine();
+
             }
             return email;
         }
@@ -140,7 +140,7 @@ namespace HoneyBadgers.ConsoleApp.Repositories
 
             if (!string.IsNullOrWhiteSpace(email.Trim()))
             {
-                selectedUser.Email = EmailValidation();
+                selectedUser.Email = EmailValidation(email);
             }
         }
 
