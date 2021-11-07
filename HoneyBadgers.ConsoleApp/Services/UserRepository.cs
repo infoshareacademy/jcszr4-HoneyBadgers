@@ -32,6 +32,11 @@ namespace HoneyBadgers.ConsoleApp.Services
             Console.WriteLine("The user has been added correctly");
         }
 
+        public void UserDataEdition()
+        {
+            throw new NotImplementedException();
+        }
+
         public User GetUserData()
         {
 

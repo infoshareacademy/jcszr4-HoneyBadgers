@@ -6,5 +6,6 @@ namespace HoneyBadgers.Logic
     {
         List<Movie> Movies { get; }
         void AddMovie();
+        void MovieDataEdition();
     }
 }

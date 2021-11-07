@@ -32,10 +32,11 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             user.FirstName = StringValidation(2, 30);
 
             Console.WriteLine("\nEnter lastname:");
-            user.FirstName = StringValidation(2, 30);
+            user.LastName = StringValidation(2, 30);
 
             Console.WriteLine("\nEnter email:");
-            user.Email = EmailValidation();
+            var email = Console.ReadLine();
+            user.Email = EmailValidation(email);
 
             user.Id = GenerateId();
             user.Movies = new List<Movie>();
@@ -43,20 +44,17 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             return user;
         }
 
-        private string EmailValidation()
+        private string EmailValidation(string email)
         {
-            string email;
             while (true)
             {
-
-                var input = Console.ReadLine();
-                if (String.IsNullOrEmpty(input))
+                if (String.IsNullOrEmpty(email))
                 {
                     Console.WriteLine("The given value is incorrect. The value provided should be of the form name@something.domain. Try again:");
                 }
                 else
                 {
-                    var valid = MailAddress.TryCreate(input, out var result);
+                    var valid = MailAddress.TryCreate(email, out var result);
                     if (!valid)
                     {
                         Console.WriteLine("The given value is incorrect. The value provided should be of the form name@something.domain. Try again:");
@@ -74,7 +72,9 @@ namespace HoneyBadgers.ConsoleApp.Repositories
                         }
                     }
                 }
-                
+
+                email = Console.ReadLine();
+
             }
             return email;
         }
@@ -99,6 +99,60 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             }
 
             return input;
+        }
+        public void PrintUsers()
+        {
+            Console.WriteLine("LIST OF USERS:");
+            foreach (var user in Users)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(
+                    $"ID: {user.Id} || FIRSTNAME: {user.FirstName} || LASTNAME: {user.LastName} || EMAIL: {user.Email}");
+                Console.ResetColor();
+            }
+        }
+        private void EditUserData()
+        {
+            Console.WriteLine("Enter Email of the user you wish to edit");
+            var input = Console.ReadLine();
+            var selectedUser = Users.FirstOrDefault(usr => usr.Email.Equals(input, StringComparison.OrdinalIgnoreCase));
+
+            if (selectedUser == null) return;
+
+
+            Console.WriteLine($"Current user name is: {selectedUser.FirstName}. Type new name or press enter to continue without changes");
+            var firstName = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(firstName.Trim()))
+            {
+                selectedUser.FirstName = firstName;
+            }
+
+            Console.WriteLine($"Current user last name is: {selectedUser.LastName}. Type new last name or press enter to continue without changes");
+            var lastName = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(lastName.Trim()))
+            {
+                selectedUser.LastName = lastName;
+            }
+            Console.WriteLine($"Current user email is: {selectedUser.Email}. Type new email or press enter to continue without changes");
+            var email = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(email.Trim()))
+            {
+                selectedUser.Email = EmailValidation(email);
+            }
+        }
+
+        public void UserDataEdition()
+        {
+            Console.WriteLine("Would you like to edit any user data?");
+            Console.WriteLine("Press ENTER to print the list of users or any key to continue without...");
+
+            ConsoleKey choice = Console.ReadKey(true).Key;
+            if (choice == ConsoleKey.Enter) { PrintUsers(); }
+            EditUserData();
+            Console.WriteLine("Changes saved successfully");
         }
     }
 }
