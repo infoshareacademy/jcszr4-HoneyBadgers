@@ -152,6 +152,7 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             ConsoleKey choice = Console.ReadKey(true).Key;
             if (choice == ConsoleKey.Enter) { PrintUsers(); }
             EditUserData();
+            Console.WriteLine("Changes saved successfully");
         }
     }
 }
