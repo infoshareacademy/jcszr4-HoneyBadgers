@@ -111,7 +111,7 @@ namespace HoneyBadgers.ConsoleApp.Repositories
                 Console.ResetColor();
             }
         }
-        public void InputChangesInUserData()
+        private void EditUserData()
         {
             Console.WriteLine("Enter Email of the user you wish to edit");
             var input = Console.ReadLine();
@@ -140,7 +140,7 @@ namespace HoneyBadgers.ConsoleApp.Repositories
 
             if (!string.IsNullOrWhiteSpace(email.Trim()))
             {
-                selectedUser.Email = email;
+                selectedUser.Email = EmailValidation();
             }
         }
 
@@ -150,15 +150,8 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             Console.WriteLine("Press ENTER to print the list of users or any key to continue without...");
 
             ConsoleKey choice = Console.ReadKey(true).Key;
-            if (choice == ConsoleKey.Enter)
-            {
-                PrintUsers();
-                InputChangesInUserData();
-            }
-            else
-            {
-                InputChangesInUserData();
-            }
+            if (choice == ConsoleKey.Enter) { PrintUsers(); }
+            EditUserData();
         }
     }
 }

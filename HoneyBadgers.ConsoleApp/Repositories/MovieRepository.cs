@@ -92,13 +92,12 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(
-                    $"TITLE:{movie.Title}\nRELEASE YEAR: {movie.Year}\nDIRECTOR: {movie.Director}\nWRITER: {movie.Writer}\nACTORS: {movie.Actors}\nPLOT: {movie.Plot}\nGENRE: {movie.Genre}\nCOUNTRY: {movie.Country}\nRAITING: {movie.ImdbRating}");
-                Console.WriteLine("");
+                    $"TITLE:{movie.Title} RELEASE YEAR: {movie.Year}");
                 Console.WriteLine("");
                 Console.ResetColor();
             }
         }
-        public void InputChangesInMovieData()
+        private void EditMovieData()
         {
             Console.WriteLine("Enter title of the movie you wish to edit");
             var titleInput = Console.ReadLine();
@@ -171,7 +170,7 @@ namespace HoneyBadgers.ConsoleApp.Repositories
                     Console.WriteLine("Something went wrong! \nYou have not entered a numeric value.");
                     break;
                 }
-                if (rating > 10 || rating < 0)
+                if (rating > 10 && rating < 0)
                 {
                     Console.WriteLine("Rating value must be between 0-10");
                 }
@@ -186,15 +185,9 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             Console.WriteLine("Press ENTER to print the list of users or any key to continue without...");
 
             ConsoleKey choice = Console.ReadKey(true).Key;
-            if (choice == ConsoleKey.Enter)
-            {
-                PrintMovies();
-                InputChangesInMovieData();
-            }
-            else
-            {
-               InputChangesInMovieData();
-            }
+            if (choice == ConsoleKey.Enter) { PrintMovies(); }
+            EditMovieData();
+
         }
     }
 }
