@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoneyBadgers.ConsoleApp", "HoneyBadgers.ConsoleApp\HoneyBadgers.ConsoleApp.csproj", "{1FE17D87-2264-44E0-9686-9BEFDE01940B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyBadgers.ConsoleApp", "HoneyBadgers.ConsoleApp\HoneyBadgers.ConsoleApp.csproj", "{1FE17D87-2264-44E0-9686-9BEFDE01940B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoneyBadgers.Logic", "HoneyBadgers.Logic\HoneyBadgers.Logic.csproj", "{66F11CC3-2D82-4341-AC56-DD065B1EEA05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyBadgers.Logic", "HoneyBadgers.Logic\HoneyBadgers.Logic.csproj", "{66F11CC3-2D82-4341-AC56-DD065B1EEA05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoneyBadgers.WebApp", "HoneyBadgers.WebApp\HoneyBadgers.WebApp.csproj", "{4D70FACE-A879-41BD-A2DF-8B103F445FCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{66F11CC3-2D82-4341-AC56-DD065B1EEA05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66F11CC3-2D82-4341-AC56-DD065B1EEA05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66F11CC3-2D82-4341-AC56-DD065B1EEA05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D70FACE-A879-41BD-A2DF-8B103F445FCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D70FACE-A879-41BD-A2DF-8B103F445FCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D70FACE-A879-41BD-A2DF-8B103F445FCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D70FACE-A879-41BD-A2DF-8B103F445FCE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

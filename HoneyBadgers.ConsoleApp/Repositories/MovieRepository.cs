@@ -31,8 +31,6 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             movie.Title = StringValidation(2, 30);
 
             Console.WriteLine("\nEnter year:");
-            var movieYear = YearValidation();
-
             movie.Year = YearValidation();
 
             Console.WriteLine("\nEnter director:");
@@ -94,7 +92,7 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(
-                    $"TITLE:{movie.Title} RELEASE YEAR: {movie.Year}");
+                    $"TITLE: {movie.Title} || RELEASE YEAR: {movie.Year}");
                 Console.WriteLine("");
                 Console.ResetColor();
             }
@@ -148,7 +146,7 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             {
                 selectedMovie.Actors = actors;
             }
-            Console.WriteLine($"Current plot is: {selectedMovie.Plot}. Type new plot or press enter to continue without changes");
+            Console.WriteLine($"Current plot is: {selectedMovie.Plot}. \nType new plot or press enter to continue without changes");
             var plot = Console.ReadLine();
 
             if (!string.IsNullOrWhiteSpace(plot.Trim()))
@@ -169,38 +167,19 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             {
                 selectedMovie.Country = country;
             }
-            Console.WriteLine($"Current rating is: {selectedMovie.ImdbRating}. Type new rating or press enter to continue without changes");
-            do
-            {
-                var ratingInput = Console.ReadLine();
-                double rating;
-                bool wasparsedSuccessfully = double.TryParse(ratingInput, out rating);
-                if (wasparsedSuccessfully == false)
-                {
-                    Console.WriteLine("Something went wrong! \nYou have not entered a numeric value.");
-                    break;
-                }
-                if (rating > 10 && rating < 0)
-                {
-                    Console.WriteLine("Rating value must be between 0-10");
-                }
-                selectedMovie.ImdbRating = rating;
-                
-            } while (true);
-
+            
             return selectedMovie;
         }
         public void MovieDataEdition()
         {
             Console.WriteLine("Would you like to edit any movie data?");
-            Console.WriteLine("Press ENTER to print the list of users or any key to continue without...");
+            Console.WriteLine("Press ENTER to print the list of movies or any key to continue without...");
 
             ConsoleKey choice = Console.ReadKey(true).Key;
             if (choice == ConsoleKey.Enter) { PrintMovies(); }
             var editedMovie = EditMovieData();
             Console.Clear();
             Console.WriteLine($"Changes are saved for movie: {editedMovie.Title}");
-
         }
     }
 }
