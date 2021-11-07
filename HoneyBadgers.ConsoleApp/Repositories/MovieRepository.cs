@@ -171,15 +171,10 @@ namespace HoneyBadgers.ConsoleApp.Repositories
                     Console.WriteLine("Something went wrong! \nYou have not entered a numeric value.");
                     break;
                 }
-                if (rating > 10)
+                if (rating > 10 || rating < 0)
                 {
-                    Console.WriteLine("Rating value can't be higher than 10.");
+                    Console.WriteLine("Rating value must be between 0-10");
                 }
-                if (rating < 0)
-                {
-                    Console.WriteLine("Rating value can't be a negative value.");
-                }
-                else
                 {
                     selectedMovie.ImdbRating = rating;
                 }
@@ -187,7 +182,7 @@ namespace HoneyBadgers.ConsoleApp.Repositories
         }
         public void MovieDataEdition()
         {
-            Console.WriteLine("Would you like to edit any user data?");
+            Console.WriteLine("Would you like to edit any movie data?");
             Console.WriteLine("Press ENTER to print the list of users or any key to continue without...");
 
             ConsoleKey choice = Console.ReadKey(true).Key;
