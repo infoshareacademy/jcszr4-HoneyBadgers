@@ -1,6 +1,7 @@
-﻿using System;
-using HoneyBadgers.ConsoleApp.UI;
-using HoneyBadgers.Logic;
+﻿using HoneyBadgers.ConsoleApp.UI;
+using HoneyBadgers.Logic.Repositories;
+using System;
+using HoneyBadgers.ConsoleApp.ConsoleControl;
 
 namespace HoneyBadgers.ConsoleApp
 {
@@ -8,7 +9,7 @@ namespace HoneyBadgers.ConsoleApp
     {
         private IUserRepository _usersRepository;
         private IMovieRepository _movieRepository;
-        private SortMovieMenu _sortMovieMenu;
+        //private SortMovieMenu _sortMovieMenu;
 
         private readonly string _logo = @" _   _                               _____           _                     
 | | | |                             | ___ \         | |                    
@@ -23,7 +24,7 @@ namespace HoneyBadgers.ConsoleApp
         {
             _usersRepository = usersRepository;
             _movieRepository = movieRepository;
-            _sortMovieMenu = new SortMovieMenu(_usersRepository, _movieRepository);
+            //_sortMovieMenu = new SortMovieMenu(_usersRepository, _movieRepository); //TODO: Czemu dodatkowa lista? A nie sortowanie wszystkiego co mamy w pamięci? 
         }
 
         public void Start()
@@ -37,27 +38,29 @@ namespace HoneyBadgers.ConsoleApp
             {
                 while (true)
                 {
-                    string prompt = _logo + "\nWelcome to the Honey-Badgers application. What would you like to do? \n(Use the arrows keys to cycle through options and press enter to select an option.)";
-                    string[] options = { "Search movie by...", 
+                    string prompt = _logo + "\nWelcome to the Honey-Badgers application. What would you like to do? " +
+                                    "\n(Use the arrows keys to cycle through options and press enter to select an option.)";
+                    string[] options = { "Search movie by...",
                                         "Search movie by most popular",
-                                        "Add new user", 
+                                        "Add new user",
                                         "Add new movie",
-                                        "Edit Data", 
-                                        "Information", 
+                                        "Edit Data",
+                                        "Information",
                                         "Exit" };
                     Menu mainMenu = new Menu(prompt, options);
                     int selectedIndex = mainMenu.Run();
-                    SearchConsoleMenu searchMenu = new (_movieRepository);
-                    SortMovieMenu sortMovieMenu = new SortMovieMenu(_usersRepository, _movieRepository);
-                    DataEditionMenu dataEditionMenu = new DataEditionMenu(_usersRepository, _movieRepository);
-                    
+                    SearchConsoleMenu searchMenu = new(_movieRepository);
+                    SortMovieMenu sortMovieMenu = new (_usersRepository, _movieRepository); //TODO: DLACZEGO PRZYJMUJE REPO Userów? 
+                    DataEditionMenu dataEditionMenu = new DataEditionMenu(_usersRepository, _movieRepository); //TODO: DLACZEGO PRZYJMUJE REPO USERÓW? 
+
                     switch (selectedIndex)
                     {
                         case 0:
                             searchMenu.RunSearchMenu();
                             break;
                         case 1:
-                            _sortMovieMenu.RunSortMenu();
+                            Console.WriteLine("Available soon!");
+                            //_sortMovieMenu.RunSortMenu();
                             break;
                         case 2:
                             RunAddUserMenu();

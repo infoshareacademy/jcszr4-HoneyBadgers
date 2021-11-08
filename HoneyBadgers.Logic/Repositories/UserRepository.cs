@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
-using HoneyBadgers.Logic;
 using HoneyBadgers.Logic.Helpers;
+using HoneyBadgers.Logic.Models;
 
-namespace HoneyBadgers.ConsoleApp.Repositories
+namespace HoneyBadgers.Logic.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -39,7 +39,7 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             user.Email = EmailValidation(email);
 
             user.Id = GenerateId();
-            user.Movies = new List<Movie>();
+            user.MoviesWatched = new List<Movie>();
 
             return user;
         }

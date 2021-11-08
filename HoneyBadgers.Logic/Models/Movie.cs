@@ -1,18 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
-namespace HoneyBadgers.Logic
+namespace HoneyBadgers.Logic.Models
 {
-    public enum MovieStatus
-    {
-        NoStatus,
-        Watched,
-        WantToWatch
-        
-    }
+    
     public class Movie
     {
-
+        public string ImdbID { get; set; } //TODO: ZAIMPLEMENTOWAĆ
         public string Title { get; set; }
         public int Year { get; set; }
         public string Director { get; set; }

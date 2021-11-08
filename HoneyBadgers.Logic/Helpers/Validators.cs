@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HoneyBadgers.Logic.Helpers
+﻿namespace HoneyBadgers.Logic.Helpers
 {
     public static class Validators
     {
@@ -16,6 +10,12 @@ namespace HoneyBadgers.Logic.Helpers
             }
             var result = input.Trim();
             return result.Length >= minLength && result.Length <= maxLength;
+        }
+
+        public static bool YearValidation(int year,int minimalYear)
+        {
+            if (year > minimalYear) return true;
+            return false;
         }
     }
 }

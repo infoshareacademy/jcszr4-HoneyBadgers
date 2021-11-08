@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HoneyBadgers.Logic;
+using HoneyBadgers.Logic.Enums;
+using HoneyBadgers.Logic.Models;
+using HoneyBadgers.Logic.Repositories;
 
-namespace HoneyBadgers.ConsoleApp.UI
+namespace HoneyBadgers.ConsoleApp.ConsoleControl
 {
     class SortMovieMenu
     {
@@ -20,24 +20,24 @@ namespace HoneyBadgers.ConsoleApp.UI
 
             foreach (var user in _userRepository.Users)
             {
-                user.Movies = new List<Movie>();
+                user.MoviesWatched = new List<Movie>();
 
                 foreach (var movie in _movieRepository.Movies)
                 {
                     var movieStatus = new Random().Next(0, Enum.GetNames(typeof(MovieStatus)).Length);
                     if (movieStatus == (int)MovieStatus.Watched)
                     {
-                        user.Movies.Add(movie);
+                        user.MoviesWatched.Add(movie);
                     }
                 }
             }
             _userMoviesDictionary = GenerateUserRandomMovies();
         }
-        
+
         internal void RunSortMenu()
         {
             Console.Clear();
-            string promt = "How do you want to search?";
+            var promt = "How do you want to search?";
             string[] options =
             {
                 "Descending",
@@ -71,7 +71,7 @@ namespace HoneyBadgers.ConsoleApp.UI
 
                 foreach (var user in _userRepository.Users)
                 {
-                    if (user.Movies.Contains(movie))
+                    if (user.MoviesWatched.Contains(movie))
                     {
                         moviesDictionary[movie.Title] = counter++;
                     }

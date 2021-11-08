@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using HoneyBadgers.Logic.Models;
 
 
 namespace HoneyBadgers.Logic
 {
-    public static class Searcher
+    public static class SearchService
     {
         public static Dictionary<Movie,int> FindByName(IEnumerable<Movie> movies, string searchInput)
         {
-            //TODO: Jak się pozbyć Dictionary?! :o ZAPYTAĆ PATRYK NA PROJEKCJIE, CZY NOWA KLASA TU UJDZIE (Patrz praca domowa 4)
-            searchInput = searchInput;
+            searchInput = searchInput.Trim();
             var inputParts = searchInput.Split(" "); 
             var results = new Dictionary<Movie, int>();
             foreach (var movie in movies)

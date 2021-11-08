@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using HoneyBadgers.Logic;
+using HoneyBadgers.Logic.Repositories;
 
 namespace HoneyBadgers.ConsoleApp
 {
@@ -57,7 +58,7 @@ namespace HoneyBadgers.ConsoleApp
                 {
                     var input = Console.ReadLine();
                     input = input.Trim();
-                    var outData = Searcher.FindByName(_movieRepository.Movies, input);
+                    var outData = SearchService.FindByName(_movieRepository.Movies, input);
                     foreach (var item in outData)
                     {
                         Console.WriteLine($"{item.Key.Title}, {item.Value}");
@@ -83,7 +84,7 @@ namespace HoneyBadgers.ConsoleApp
                 input = input.Replace('.', ',');
                 if (double.TryParse(input, out double highestRating))
                 {
-                    var outData = Searcher.FindMovieWithRatingLowerThan(_movieRepository.Movies, highestRating);
+                    var outData = SearchService.FindMovieWithRatingLowerThan(_movieRepository.Movies, highestRating);
                     if (outData.Count != 0)
                     {
                         foreach (var item in outData)
@@ -96,7 +97,7 @@ namespace HoneyBadgers.ConsoleApp
                     }
                     else
                     {
-                        Console.WriteLine("Movies not found, press ENTER to try again");
+                        Console.WriteLine("MoviesWatched not found, press ENTER to try again");
                         Console.ReadLine();
                     }
                 }
@@ -125,7 +126,7 @@ namespace HoneyBadgers.ConsoleApp
 
                 if (Double.TryParse(input, out double lowerRating))
                 {
-                    var outData = Searcher.FindMovieWithRatingHigherThan(_movieRepository.Movies, lowerRating);
+                    var outData = SearchService.FindMovieWithRatingHigherThan(_movieRepository.Movies, lowerRating);
                     if (outData.Count != 0)
                     {
                         foreach (var item in outData)
@@ -138,7 +139,7 @@ namespace HoneyBadgers.ConsoleApp
                     }
                     else
                     {
-                        Console.WriteLine("Movies not found, press ENTER to try again");
+                        Console.WriteLine("MoviesWatched not found, press ENTER to try again");
                         Console.ReadLine();
                     }
                 }
@@ -201,7 +202,7 @@ namespace HoneyBadgers.ConsoleApp
 
                 } while (true);
 
-                var outData = Searcher.FindMovieWithRatingBetweenLowerHigher(_movieRepository.Movies, lowerRating, higherRating);
+                var outData = SearchService.FindMovieWithRatingBetweenLowerHigher(_movieRepository.Movies, lowerRating, higherRating);
                 if (outData.Count != 0)
                 {
                     foreach (var item in outData)
@@ -214,7 +215,7 @@ namespace HoneyBadgers.ConsoleApp
                 }
                 else
                 {
-                    Console.WriteLine("Movies not found, press ENTER to try again");
+                    Console.WriteLine("MoviesWatched not found, press ENTER to try again");
                     Console.ReadLine();
                 }
 

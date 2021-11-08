@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using HoneyBadgers.Logic.Models;
 
 namespace HoneyBadgers.Logic
 {
@@ -49,7 +50,7 @@ namespace HoneyBadgers.Logic
         //         {
         //             movie.Status = MovieStatus.Watched;
         //             movie.Rating = random.Next(1, 10);
-        //             user.Movies = new List<Movie> { movie };
+        //             user.MoviesWatched = new List<Movie> { movie };
         //         }
         //     }
         // }
@@ -59,7 +60,7 @@ namespace HoneyBadgers.Logic
         //     var rates = new List<double>();
         //     foreach (var user in users)
         //     {
-        //         var userMovie = user.Movies.FirstOrDefault(m => m.Title.Equals(movie.Title, StringComparison.OrdinalIgnoreCase));
+        //         var userMovie = user.MoviesWatched.FirstOrDefault(m => m.Title.Equals(movie.Title, StringComparison.OrdinalIgnoreCase));
         //         if (userMovie != null && userMovie.Rating != null)
         //         {
         //             rates.Add((double)userMovie.Rating);

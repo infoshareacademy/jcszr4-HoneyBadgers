@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HoneyBadgers.Logic;
+using HoneyBadgers.Logic.Repositories;
 
 namespace HoneyBadgers.ConsoleApp.UI
 {
@@ -53,7 +54,7 @@ namespace HoneyBadgers.ConsoleApp.UI
         private void RunMovieDataEdition()
         {
             Console.Clear();
-            _movieRepository.MovieDataEdition();
+            _movieRepository.EditMovie();
             Console.WriteLine("\nPress any key to return to the main menu.");
             Console.ReadKey(true);
         }
