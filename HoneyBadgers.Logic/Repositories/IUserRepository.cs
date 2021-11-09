@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using HoneyBadgers.Logic;
 
-namespace HoneyBadgers
+namespace HoneyBadgers.Logic.Repositories
 {
     public interface IUserRepository
     {
         List<User> Users { get; }
-        void AddUser();
-        void UserDataEdition();
+        void AddUser(User user);
+        void EditUser(User user);
     }
 }

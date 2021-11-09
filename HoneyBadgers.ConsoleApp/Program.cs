@@ -1,6 +1,4 @@
-﻿using System;
-using HoneyBadgers.ConsoleApp.Repositories;
-using HoneyBadgers.Logic;
+﻿using HoneyBadgers.Logic.Repositories;
 
 namespace HoneyBadgers.ConsoleApp
 {
