@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HoneyBadgers.WebApp.Controllers
 {
-    public class SearchController : Controller
+    public class SearchController : BaseController
     {
-        public IActionResult Index(SearchModel search)
+        public IActionResult Index(string search)
         {
-            return View(search);
+            var model = new SearchModel();
+            model.Query = search;
+            return View(model);
         }
     }
 }

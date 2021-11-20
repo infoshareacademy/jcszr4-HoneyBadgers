@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HoneyBadgers.WebApp.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 

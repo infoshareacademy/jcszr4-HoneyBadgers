@@ -8,8 +8,8 @@ namespace HoneyBadgers.WebApp.Enums
 {
     public enum FilterTypeEnum
     {
-        [Display(Name = "By title")]
-        ByTitle,
+        [Display(Name="No filters")]
+        None,
         [Display(Name = "By most popular")]
         ByMostPopular
     }

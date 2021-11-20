@@ -1,0 +1,28 @@
+﻿@model IEnumerable<HoneyBadgers.Logic.Movie>
+
+@foreach (var movie in Model)
+{
+    <div id="movie-partial-view" class="card mb-3" style="max-width: 600px;" onclick="">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="@movie.Poster" class="img-fluid rounded-start" alt="@movie.Title">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">@movie.Title</h5>
+                    <div class="card-text d-flex">
+                        <div class="m-1 d-flex">
+                            <i class="text-yellow-300 fas fa-star"></i>
+                            <p class="pl-2">@movie.ImdbRating</p>
+                        </div>
+                        <div class="m-1 d-flex">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <p class="pl-2">@movie.ViewsNumber</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

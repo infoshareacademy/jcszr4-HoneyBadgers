@@ -1,7 +1,4 @@
-﻿@using HoneyBadgers.WebApp.Enums
-@model HoneyBadgers.WebApp.Models.SearchModel
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,23 +6,26 @@
     <title>@ViewData["Title"] - HoneyBadgers.WebApp</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/HoneyBadgers.WebApp.styles.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome.css" />
     <link rel="stylesheet" href="~/lib/Font-Awesome/css/regular.min.css">
     <link rel="stylesheet" href="~/lib/Font-Awesome/css/solid.min.css">
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav id="test-navbar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HoneyBadgers.WebApp</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+
+                    HoneyBadgers
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <form asp-controller="Search" asp-action="Index" class="d-flex">
-                        <select asp-for="Type" class="form-select" asp-items="Html.GetEnumSelectList<FilterTypeEnum>()"></select>
-                        <input asp-for="Query" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <form asp-controller="Search" asp-action="Index" method="get" class="d-flex">
+                        <input name="Search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">
                             <i class="fas fa-search"></i>
                         </button>
@@ -35,7 +35,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Movie" asp-action="Index">Movies</a>
                         </li>
                     </ul>
                 </div>
