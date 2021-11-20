@@ -1,27 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using HoneyBadgers.ConsoleApp.Helpers;
 using HoneyBadgers.Logic;
-using HoneyBadgers.Logic.Helpers;
+using HoneyBadgers.Logic.Repositories;
+using System;
+using System.Linq;
 
-namespace HoneyBadgers.ConsoleApp.Repositories
+namespace HoneyBadgers.ConsoleApp.Services
 {
-    public class MovieRepository : IMovieRepository
+    class MovieConsoleService
     {
-        public List<Movie> Movies { get; private set; } = new List<Movie>();
-        
-
-        public MovieRepository()
+        private IMovieRepository _movieRepository;
+        public MovieConsoleService(IMovieRepository movieRepository)
         {
-            Movies.AddRange(FileDataReader.LoadMovies());
+            _movieRepository = movieRepository;
         }
-
-        public void AddMovie()
+        public Movie AddMovie()
         {
             Console.WriteLine("Adding new movie\n");
             var movie = GetNewMovieData();
-            Movies.Add(movie);
             Console.WriteLine("The movie has been added correctly");
+            return movie;
         }
 
         private Movie GetNewMovieData()
@@ -50,23 +47,9 @@ namespace HoneyBadgers.ConsoleApp.Repositories
 
             Console.WriteLine("\nEnter country");
             movie.Country = StringValidation(2, 30);
+            movie.ImdbID = Guid.NewGuid().ToString("N");
 
             return movie;
-        }
-
-        private int YearValidation()
-        {
-            var valid = false;
-            var input = 0;
-            while (!valid)
-            {
-                valid = int.TryParse(Console.ReadLine(), out input) && input > 1900;
-                if (!valid)
-                {
-                    Console.WriteLine("The given value is incorrect. The value provided should be a positive number greater then 1900. Try again:");
-                }
-            }
-            return input;
         }
 
         private string StringValidation(int minLength, int maxLength)
@@ -85,10 +68,25 @@ namespace HoneyBadgers.ConsoleApp.Repositories
 
             return input;
         }
+        private int YearValidation()
+        {
+            var valid = false;
+            var input = 0;
+            while (!valid)
+            {
+                valid = int.TryParse(Console.ReadLine(), out input) && input > 1900;
+                if (!valid)
+                {
+                    Console.WriteLine("The given value is incorrect. The value provided should be a positive number greater then 1900. Try again:");
+                }
+            }
+            return input;
+        }
+
         public void PrintMovies()
         {
             Console.WriteLine("LIST OF MOVIES:");
-            foreach (var movie in Movies)
+            foreach (var movie in _movieRepository.Movies)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(
@@ -97,21 +95,21 @@ namespace HoneyBadgers.ConsoleApp.Repositories
                 Console.ResetColor();
             }
         }
-        private Movie EditMovieData()
+        public Movie EditMovieData()
         {
             Console.WriteLine("Enter title of the movie you wish to edit");
             var selectedTitle = "";
             while (true)
             {
                 var titleInput = Console.ReadLine();
-                if (Movies.Any(m => m.Title.Equals(titleInput, StringComparison.OrdinalIgnoreCase)))
+                if (_movieRepository.Movies.Any(m => m.Title.Equals(titleInput, StringComparison.OrdinalIgnoreCase)))
                 {
                     selectedTitle = titleInput;
                     break;
                 }
                 Console.WriteLine("There is no such movie");
             }
-            var selectedMovie = Movies.FirstOrDefault(mov => mov.Title.Equals(selectedTitle, StringComparison.OrdinalIgnoreCase));
+            var selectedMovie = _movieRepository.Movies.FirstOrDefault(mov => mov.Title.Equals(selectedTitle, StringComparison.OrdinalIgnoreCase));
 
             Console.WriteLine($"Current movie title is: {selectedMovie.Title}. Type new title or press enter to continue without changes");
             var title = Console.ReadLine();
@@ -123,7 +121,7 @@ namespace HoneyBadgers.ConsoleApp.Repositories
 
             Console.WriteLine($"Current movie year of release is: {selectedMovie.Year}. Type new year");
             selectedMovie.Year = YearValidation();
-            
+
 
             Console.WriteLine($"Current director is: {selectedMovie.Director}. Type director or press enter to continue without changes");
             var director = Console.ReadLine();
@@ -167,19 +165,8 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             {
                 selectedMovie.Country = country;
             }
-            
-            return selectedMovie;
-        }
-        public void MovieDataEdition()
-        {
-            Console.WriteLine("Would you like to edit any movie data?");
-            Console.WriteLine("Press ENTER to print the list of movies or any key to continue without...");
 
-            ConsoleKey choice = Console.ReadKey(true).Key;
-            if (choice == ConsoleKey.Enter) { PrintMovies(); }
-            var editedMovie = EditMovieData();
-            Console.Clear();
-            Console.WriteLine($"Changes are saved for movie: {editedMovie.Title}");
+            return selectedMovie;
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
+using HoneyBadgers.ConsoleApp.Services;
 using HoneyBadgers.ConsoleApp.UI;
 using HoneyBadgers.Logic;
+using HoneyBadgers.Logic.Repositories;
 
 namespace HoneyBadgers.ConsoleApp
 {
@@ -98,15 +100,20 @@ namespace HoneyBadgers.ConsoleApp
         }
         private void RunAddUserMenu()
         {
+            var _userConsoleService = new UserConsoleService(_usersRepository);
             Console.Clear();
-            _usersRepository.AddUser();
+            var user = _userConsoleService.AddUser();
+            _usersRepository.AddUser(user);
+            Console.WriteLine("The movie has been added correctly");
             Console.WriteLine("\nPress any key to return to the main menu.");
             Console.ReadKey(true);
         }
         private void RunAddMovieMenu()
         {
+            var _movieConsoleService = new MovieConsoleService(_movieRepository);
             Console.Clear();
-            _movieRepository.AddMovie();
+            var movie = _movieConsoleService.AddMovie();
+            _movieRepository.AddMovie(movie);
             Console.WriteLine("\nPress any key to return to the main menu.");
             Console.ReadKey(true);
         }

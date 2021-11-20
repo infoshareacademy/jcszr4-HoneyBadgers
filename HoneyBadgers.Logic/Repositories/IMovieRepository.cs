@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace HoneyBadgers.Logic
+namespace HoneyBadgers.Logic.Repositories
 {
     public interface IMovieRepository
     {
         List<Movie> Movies { get; }
-        void AddMovie();
-        void MovieDataEdition();
+        void AddMovie(Movie movie);
+        void EditMovie(Movie movie);
     }
 }
