@@ -1,0 +1,41 @@
+﻿.hb-navbar, .hb-footer {
+    background-color: #0d0d0d;
+}
+.navbar-brand {
+    color: #fff;
+    font-size: 1.5rem;
+}
+.navbar-brand:hover, .nav-link:hover  {
+    color: #2ba837;
+}
+
+.hb-navbar__logo {
+    width: 75px;
+    height: 75px;
+    background-color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    margin-right: 16px;
+}
+
+.hb-navbar__logo > img {
+    height: 70px;
+}
+
+.nav-link {
+    color: #fff;
+}
+
+.hb-navbar__search-btn {
+    background-color: #fff;
+}
+.hb-navbar__search-btn > i {
+    color: #0d0d0d
+}
+.hb-navbar__search-btn:hover {
+    background-color: #2ba837;
+}
+
+.hb-navbar__search-btn:hover > i {
+   color: #fff;
+}

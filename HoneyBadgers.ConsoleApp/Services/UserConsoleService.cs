@@ -2,31 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
+using System.Text;
+using System.Threading.Tasks;
+using HoneyBadgers.ConsoleApp.Helpers;
 using HoneyBadgers.Logic;
-using HoneyBadgers.Logic.Helpers;
+using HoneyBadgers.Logic.Repositories;
 
-namespace HoneyBadgers.ConsoleApp.Repositories
+namespace HoneyBadgers.ConsoleApp.Services
 {
-    public class UserRepository : IUserRepository
+    public class UserConsoleService
     {
-        public List<User> Users { get; private set; } = new List<User>();
-
-        public UserRepository()
+        private IUserRepository _usersRepository;
+        public UserConsoleService(IUserRepository usersRepository)
         {
-            Users.AddRange(FileDataReader.LoadUsers());
+            _usersRepository = usersRepository;
         }
-
-        public void AddUser()
+        public User AddUser()
         {
             Console.WriteLine("Adding new user");
-            var user = SetNewUser();
-            Users.Add(user);
-            Console.WriteLine("The user has been added correctly");
-        }
-
-        private User SetNewUser()
-        {
-
             var user = new User();
             Console.WriteLine("\nEnter firstname");
             user.FirstName = StringValidation(2, 30);
@@ -42,46 +35,6 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             user.Movies = new List<Movie>();
 
             return user;
-        }
-
-        private string EmailValidation(string email)
-        {
-            while (true)
-            {
-                if (String.IsNullOrEmpty(email))
-                {
-                    Console.WriteLine("The given value is incorrect. The value provided should be of the form name@something.domain. Try again:");
-                }
-                else
-                {
-                    var valid = MailAddress.TryCreate(email, out var result);
-                    if (!valid)
-                    {
-                        Console.WriteLine("The given value is incorrect. The value provided should be of the form name@something.domain. Try again:");
-                    }
-                    else
-                    {
-                        if (Users.Any(u => u.Email == result.ToString()))
-                        {
-                            Console.WriteLine("There is already a user with the given email");
-                        }
-                        else
-                        {
-                            email = result.ToString();
-                            break;
-                        }
-                    }
-                }
-
-                email = Console.ReadLine();
-
-            }
-            return email;
-        }
-
-        private string GenerateId()
-        {
-            return Guid.NewGuid().ToString("N");
         }
 
         private string StringValidation(int minLength, int maxLength)
@@ -103,7 +56,7 @@ namespace HoneyBadgers.ConsoleApp.Repositories
         public void PrintUsers()
         {
             Console.WriteLine("LIST OF USERS:");
-            foreach (var user in Users)
+            foreach (var user in _usersRepository.Users)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(
@@ -111,13 +64,13 @@ namespace HoneyBadgers.ConsoleApp.Repositories
                 Console.ResetColor();
             }
         }
-        private void EditUserData()
+        public User EditUserData()
         {
             Console.WriteLine("Enter Email of the user you wish to edit");
             var input = Console.ReadLine();
-            var selectedUser = Users.FirstOrDefault(usr => usr.Email.Equals(input, StringComparison.OrdinalIgnoreCase));
+            var selectedUser = _usersRepository.Users.FirstOrDefault(usr => usr.Email.Equals(input, StringComparison.OrdinalIgnoreCase));
 
-            if (selectedUser == null) return;
+            if (selectedUser == null) new User();
 
 
             Console.WriteLine($"Current user name is: {selectedUser.FirstName}. Type new name or press enter to continue without changes");
@@ -142,17 +95,48 @@ namespace HoneyBadgers.ConsoleApp.Repositories
             {
                 selectedUser.Email = EmailValidation(email);
             }
+
+            return selectedUser;
         }
 
-        public void UserDataEdition()
+        private string EmailValidation(string email)
         {
-            Console.WriteLine("Would you like to edit any user data?");
-            Console.WriteLine("Press ENTER to print the list of users or any key to continue without...");
+            while (true)
+            {
+                if (String.IsNullOrEmpty(email))
+                {
+                    Console.WriteLine("The given value is incorrect. The value provided should be of the form name@something.domain. Try again:");
+                }
+                else
+                {
+                    var valid = MailAddress.TryCreate(email, out var result);
+                    if (!valid)
+                    {
+                        Console.WriteLine("The given value is incorrect. The value provided should be of the form name@something.domain. Try again:");
+                    }
+                    else
+                    {
+                        if (_usersRepository.Users.Any(u => u.Email == result.ToString()))
+                        {
+                            Console.WriteLine("There is already a user with the given email");
+                        }
+                        else
+                        {
+                            email = result.ToString();
+                            break;
+                        }
+                    }
+                }
 
-            ConsoleKey choice = Console.ReadKey(true).Key;
-            if (choice == ConsoleKey.Enter) { PrintUsers(); }
-            EditUserData();
-            Console.WriteLine("Changes saved successfully");
+                email = Console.ReadLine();
+
+            }
+            return email;
+        }
+
+        private string GenerateId()
+        {
+            return Guid.NewGuid().ToString("N");
         }
     }
 }

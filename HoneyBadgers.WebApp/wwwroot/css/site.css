@@ -24,14 +24,6 @@ a {
   border-color: #1861ac;
 }
 
-#movie-partial-view {
-    background: red;
-}
-
-#test-navbar {
-    background-color: red;
-}
-
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -69,6 +61,7 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  background: #fbfbfb;
 }
 .footer {
   position: absolute;

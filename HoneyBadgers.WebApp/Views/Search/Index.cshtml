@@ -1,4 +1,4 @@
-﻿@model HoneyBadgers.WebApp.Models.SearchModel
+﻿@model HoneyBadgers.Logic.Models.Search
 
 @{
     ViewData["Title"] = "Index";
@@ -15,12 +15,6 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Query)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Type)
         </dd>
     </dl>
 </div>

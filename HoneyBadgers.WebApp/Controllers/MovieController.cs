@@ -1,4 +1,5 @@
 ﻿using HoneyBadgers.Logic;
+using HoneyBadgers.Logic.Services;
 using HoneyBadgers.WebApp.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,32 +11,27 @@ namespace HoneyBadgers.WebApp.Controllers
 {
     public class MovieController : Controller
     {
-        public List<Movie> Movies { get; private set; } = new List<Movie>();
-        public List<User> Users { get; private set; } = new List<User>();
+        private MovieService _movieService;
+        private UserService _userService;
         public MovieController()
         {
-            if ((Movies != null) && (!Movies.Any()))
-            {
-                Movies.AddRange(FileDataReader.LoadMovies());
-            }
-            if ((Users != null) && (!Users.Any()))
-            {
-                Users.AddRange(FileDataReader.LoadUsers());
-            }
+            _movieService = new MovieService();
+            _userService = new UserService();
+
             MockMovieData();
         }
         public IActionResult Index()
         {
-            var model = Movies;
+            List<Movie> model = _movieService.GetAll();
             return View(model);
         }
-        public IActionResult ShowMovies(FilterTypeEnum filterType)
+        public IActionResult ShowMovies(FilterTypeEnum filterType, bool sortDescending)
         {
-            var model = Movies;
+            var model = _movieService.GetAll();
             switch (filterType)
             {
                 case FilterTypeEnum.ByMostPopular:
-                    model = Movies.OrderByDescending(m => m.ViewsNumber).ToList();
+                    model = model.OrderByDescending(m => m.ViewsNumber).ToList();
                     break;
                 default:
                     break;
@@ -114,10 +110,12 @@ namespace HoneyBadgers.WebApp.Controllers
 
         private void MockMovieData()
         {
-            foreach (var user in Users)
+            var movies = _movieService.GetAll();
+            var users = _userService.GetAll();
+            foreach (var user in users)
             {
                 user.Movies = new List<Movie>();
-                foreach (var movie in Movies)
+                foreach (var movie in movies)
                 {
                     var movieStatus = new Random().Next(0, Enum.GetNames(typeof(MovieStatus)).Length);
                     if (movieStatus == (int)MovieStatus.Watched)
