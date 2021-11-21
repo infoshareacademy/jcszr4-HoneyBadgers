@@ -16,6 +16,11 @@ namespace HoneyBadgers.Logic.Repositories
             } 
         }
 
+        public List<User> GetAll()
+        {
+            return Users;
+        }
+
         public void AddUser(User user)
         {
             Users.Add(user);

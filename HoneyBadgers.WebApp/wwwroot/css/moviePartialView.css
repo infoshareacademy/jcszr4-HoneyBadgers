@@ -1,0 +1,39 @@
+﻿
+.hb-movie__icons i {
+    color: #2ba837;
+}
+.hb-movie__icons div {
+    line-height: 24px;
+}
+
+.hb-movie__icons .fas {
+    line-height: 1.5;
+}
+.hb-movie__option label {
+    text-transform: lowercase;
+    color: #888;
+}
+
+.hb-movie__option span {
+    color: #101010;
+}
+
+.hb-movie__header i {
+    color: #2ba837;
+    font-size: 25px;
+}
+
+.hb-movie__btn-details {
+    border: 2px solid #2ba837;
+    color: #101010;
+    font-weight: 500;
+    transition: .5s ease-out;
+    background: transparent;
+    background: linear-gradient(to left, transparent 50%, #2ba837 50%) right;
+    background-size: 200%;
+}
+
+.hb-movie__btn-details:hover {
+    background-position: left;
+    color: #fff;
+}

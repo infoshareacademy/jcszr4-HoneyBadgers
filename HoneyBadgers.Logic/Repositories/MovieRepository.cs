@@ -21,6 +21,11 @@ namespace HoneyBadgers.Logic.Repositories
             }
         }
 
+        public List<Movie> GetAll()
+        {
+            return Movies;
+        }
+
         public void AddMovie(Movie movie)
         {
             Movies.Add(movie);

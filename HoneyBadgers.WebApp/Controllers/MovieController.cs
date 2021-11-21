@@ -1,6 +1,7 @@
 ﻿using HoneyBadgers.Logic;
+using HoneyBadgers.Logic.Enums;
 using HoneyBadgers.Logic.Services;
-using HoneyBadgers.WebApp.Enums;
+using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,38 +12,28 @@ namespace HoneyBadgers.WebApp.Controllers
 {
     public class MovieController : Controller
     {
-        private MovieService _movieService;
-        private UserService _userService;
-        public MovieController()
+        private readonly IMovieService _movieService;
+        public MovieController(IMovieService movieService, IMockDataService mockDataService)
         {
-            _movieService = new MovieService();
-            _userService = new UserService();
-
-            MockMovieData();
+            _movieService = movieService;
+            mockDataService.MockMovieData();
         }
         public IActionResult Index()
         {
             List<Movie> model = _movieService.GetAll();
             return View(model);
         }
-        public IActionResult ShowMovies(FilterTypeEnum filterType, bool sortDescending)
+        public IActionResult ShowMovies(FilterTypeEnum filterType)
         {
-            var model = _movieService.GetAll();
-            switch (filterType)
-            {
-                case FilterTypeEnum.ByMostPopular:
-                    model = model.OrderByDescending(m => m.ViewsNumber).ToList();
-                    break;
-                default:
-                    break;
-            }
+            var model = _movieService.GetSortMovie(filterType);
             return PartialView("_MoviePartialView", model);
         }
 
         // GET: MovieController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
-            return View();
+            var model = _movieService.GetById(id);
+            return View(model);
         }
 
         // GET: MovieController/Create
@@ -105,25 +96,6 @@ namespace HoneyBadgers.WebApp.Controllers
             catch
             {
                 return View();
-            }
-        }
-
-        private void MockMovieData()
-        {
-            var movies = _movieService.GetAll();
-            var users = _userService.GetAll();
-            foreach (var user in users)
-            {
-                user.Movies = new List<Movie>();
-                foreach (var movie in movies)
-                {
-                    var movieStatus = new Random().Next(0, Enum.GetNames(typeof(MovieStatus)).Length);
-                    if (movieStatus == (int)MovieStatus.Watched)
-                    {
-                        user.Movies.Add(movie);
-                        movie.ViewsNumber++;
-                    }
-                }
             }
         }
     }

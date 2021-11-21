@@ -1,14 +1,12 @@
 ﻿@model IEnumerable<HoneyBadgers.Logic.Movie>
-@using HoneyBadgers.WebApp.Enums
+@using HoneyBadgers.Logic.Enums
 
 @{
     ViewData["Title"] = "Movies";
 }
 
-<form class="d-flex mb-2">
-    <select id="filter-type" class="form-select form-select-lg" name="FilterType" asp-items="Html.GetEnumSelectList<FilterTypeEnum>()"></select>
-    <input id="sort-checkbox" type="checkbox" class="btn-check" checked autocomplete="off">
-    <label id="sort-btn" class="btn btn-primary" for="sort-checkbox">Checked</label>
+<form class="d-flex my-3">
+    <select id="filter-type" class="hb-movie-select form-select-lg" name="FilterType" asp-items="Html.GetEnumSelectList<FilterTypeEnum>()"></select>
 </form>
 <div id="movies-list">
     <partial name="../Shared/_MoviePartialView.cshtml" model="@Model" />
@@ -21,7 +19,7 @@
             $("#filter-type").change(function () {
                 $.ajax({
                     type: "Get",
-                    url: "/Movie/ShowMovies?filterType=" + $(this).val() + "&sortDescending=" + !sortDescending,
+                    url: "/Movie/ShowMovies?filterType=" + $(this).val(),
                     success: function (data) {
                         $("#movies-list").html("");
                         $("#movies-list").html(data);
@@ -30,23 +28,6 @@
                         console.log(response.responseText);
                     }
                 });
-            });
-        });
-        $(function () {
-            $("#sort-btn").click(function () {
-                console.log($("#filter-type").val());
-                console.log($("#sort-checkbox").val());
-               /* $.ajax({
-                    type: "Get",
-                    url: "/Movie/ShowMovies?filterType=" + $(this).val(),  //remember change the controller to your owns.
-                    success: function (data) {
-                        $("#movies-list").html("");
-                        $("#movies-list").html(data);
-                    },
-                    error: function (response) {
-                        console.log(response.responseText);
-                    }
-                });*/
             });
         });
     </script>
