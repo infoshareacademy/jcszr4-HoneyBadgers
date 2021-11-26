@@ -4,7 +4,8 @@ namespace HoneyBadgers.Logic.Repositories
 {
     public interface IMovieRepository
     {
-        List<Movie> Movies { get; }
+        static List<Movie> Movies { get; }
+        List<Movie> GetAll();
         void AddMovie(Movie movie);
         void EditMovie(Movie movie);
     }

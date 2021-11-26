@@ -1,14 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace HoneyBadgers.Logic.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public List<User> Users { get; private set; } = new List<User>();
+        public static List<User> Users { get; private set; } = new List<User>();
 
         public UserRepository()
         {
-            Users.AddRange(FileDataReader.LoadUsers());
+            if (!Users.Any())
+            {
+                Users.AddRange(FileDataReader.LoadUsers());
+            } 
+        }
+
+        public List<User> GetAll()
+        {
+            return Users;
         }
 
         public void AddUser(User user)

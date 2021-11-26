@@ -1,13 +1,11 @@
+using HoneyBadgers.Logic.Repositories;
+using HoneyBadgers.Logic.Services;
+using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HoneyBadgers.WebApp
 {
@@ -23,7 +21,12 @@ namespace HoneyBadgers.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddTransient<IMovieRepository, MovieRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IMovieService, MovieService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IMockDataService, MockDataService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

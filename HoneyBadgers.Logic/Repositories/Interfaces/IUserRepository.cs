@@ -4,7 +4,8 @@ namespace HoneyBadgers.Logic.Repositories
 {
     public interface IUserRepository
     {
-        List<User> Users { get; }
+        static List<User> Users { get; }
+        List<User> GetAll();
         void AddUser(User user);
         void EditUser(User user);
     }

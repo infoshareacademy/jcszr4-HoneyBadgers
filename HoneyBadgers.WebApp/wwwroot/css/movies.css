@@ -1,0 +1,28 @@
+﻿.hb-movie-select {
+    height: 40px;
+    min-width: 300px;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    color: #101010;
+    font-weight: 500;
+    transition: .5s ease-out;
+    background: transparent;
+    background: linear-gradient(to left, transparent 50%, #2ba837 50%) right;
+    background-size: 200%;
+}
+
+.hb-movie-select:hover {
+    background-position: left;
+    color: #fff;
+}
+.hb-movie-select:focus-visible {
+    outline: #2ba837 auto 1px;
+}
+
+.hb-movie-select > option {
+    color: #101010;
+}
+
+.hb-movie-select:hover > option {
+    color: #101010;
+}

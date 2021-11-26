@@ -6,11 +6,24 @@ namespace HoneyBadgers.Logic.Repositories
 {
     public class MovieRepository : IMovieRepository
     {
-        public List<Movie> Movies { get; private set; } = new List<Movie>();
+        public static List<Movie> Movies { get; private set; } = new List<Movie>();
         
         public MovieRepository()
         {
-            Movies.AddRange(FileDataReader.LoadMovies());
+            if (!Movies.Any())
+            {
+                var movies = FileDataReader.LoadMovies();
+                foreach (var movie in movies)
+                {
+                    movie.Id = Guid.NewGuid().ToString();
+                }
+                Movies.AddRange(movies);
+            }
+        }
+
+        public List<Movie> GetAll()
+        {
+            return Movies;
         }
 
         public void AddMovie(Movie movie)
@@ -19,7 +32,7 @@ namespace HoneyBadgers.Logic.Repositories
         }
         public void EditMovie(Movie movie)
         {
-            var index = Movies.FindIndex(m => m.ImdbID == movie.ImdbID);
+            var index = Movies.FindIndex(m => m.Id == movie.Id);
             Movies[index] = movie;
         }
     }
