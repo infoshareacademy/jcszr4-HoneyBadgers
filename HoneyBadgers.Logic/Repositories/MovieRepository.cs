@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HoneyBadgers.Logic.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,7 +7,7 @@ namespace HoneyBadgers.Logic.Repositories
 {
     public class MovieRepository : IMovieRepository
     {
-        public static List<Movie> Movies { get; private set; } = new List<Movie>();
+        public static List<Movie> Movies { get; set; } = new List<Movie>();
         
         public MovieRepository()
         {

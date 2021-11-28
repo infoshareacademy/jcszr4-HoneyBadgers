@@ -23,10 +23,19 @@ namespace HoneyBadgers.WebApp.Controllers
             List<Movie> model = _movieService.GetAll();
             return View(model);
         }
-        public IActionResult ShowMovies(FilterTypeEnum filterType)
+
+        public IActionResult ShowMovies(SortType sortType, double ratingFrom, double ratingTo)
         {
-            var model = _movieService.GetSortMovie(filterType);
-            return PartialView("_MoviePartialView", model);
+            var movies = this._movieService.GetAll();
+
+            if (ratingFrom == 0 && ratingTo == 0)
+            {
+
+            }
+
+            movies = Searcher.FindMovieWithRatingBetweenLowerHigher(movies, ratingFrom, ratingTo);
+            movies = _movieService.GetSortMovie(movies, sortType);
+            return PartialView("_MoviePartialView", movies);
         }
 
         // GET: MovieController/Details/5

@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HoneyBadgers.Logic;
+using HoneyBadgers.Logic.HoneyBadgers.Logic.Repositories.Interfaces;
 using HoneyBadgers.Logic.Repositories;
+using HoneyBadgers.Logic.Repositories.Interfaces;
 
 namespace HoneyBadgers.ConsoleApp.UI
 {
