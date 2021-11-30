@@ -1,31 +1,73 @@
-﻿using HoneyBadgers.Logic;
-using HoneyBadgers.Logic.Enums;
-using HoneyBadgers.Logic.Services;
+﻿using HoneyBadgers.Logic.Enums;
+using HoneyBadgers.Logic.Models;
 using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace HoneyBadgers.WebApp.Controllers
 {
     public class MovieController : Controller
     {
         private readonly IMovieService _movieService;
-        public MovieController(IMovieService movieService, IMockDataService mockDataService)
+        private readonly IFavoriteMoviesService _favoriteMoviesService;
+        public MovieController(IMovieService movieService, IMockDataService mockDataService, IFavoriteMoviesService favoriteMoviesService)
         {
             _movieService = movieService;
-            mockDataService.MockMovieData();
+            _favoriteMoviesService = favoriteMoviesService;
         }
         public IActionResult Index()
         {
-            List<Movie> model = _movieService.GetAll();
+            var toDisplay = new List<MovieViewModel>();
+            var movies = _movieService.GetAll();
+            var favorite = _favoriteMoviesService.GetAll();
+            foreach (var movie in movies)
+            {
+                var favoriteMovie = new MovieViewModel();
+                favoriteMovie.Actors = movie.Actors;
+                favoriteMovie.Country = movie.Country;
+                favoriteMovie.Director = movie.Director;
+                favoriteMovie.Genre = movie.Genre;
+                favoriteMovie.Id = movie.Id;
+                favoriteMovie.ImdbRating = movie.ImdbRating;
+                favoriteMovie.Plot = movie.Plot;
+                favoriteMovie.Poster = movie.Poster;
+                favoriteMovie.Ratings = movie.Ratings;
+                favoriteMovie.Writer = movie.Writer;
+                favoriteMovie.ViewsNumber = movie.ViewsNumber;
+                favoriteMovie.Year = movie.Year;
+                favoriteMovie.Title = movie.Title;
+                favoriteMovie.IsFavorite = favorite.Find(f => f == movie.Id) != null;
+                toDisplay.Add(favoriteMovie);
+            }
+            var model = toDisplay;
             return View(model);
         }
         public IActionResult ShowMovies(FilterTypeEnum filterType)
         {
-            var model = _movieService.GetSortMovie(filterType);
+            var sortedMovies = _movieService.GetSortMovie(filterType);
+            var favoriteMovies = _favoriteMoviesService.GetAll();
+            var toDisplay = new List<MovieViewModel>();
+			foreach (var movie in sortedMovies)
+			{
+                var movieToDisplay = new MovieViewModel();
+                movieToDisplay.Actors = movie.Actors;
+                movieToDisplay.Country = movie.Country;
+                movieToDisplay.Director = movie.Director;
+                movieToDisplay.Genre = movie.Genre;
+                movieToDisplay.Id = movie.Id;
+                movieToDisplay.ImdbRating = movie.ImdbRating;
+                movieToDisplay.Plot = movie.Plot;
+                movieToDisplay.Poster = movie.Poster;
+                movieToDisplay.Ratings = movie.Ratings;
+                movieToDisplay.Writer = movie.Writer;
+                movieToDisplay.ViewsNumber = movie.ViewsNumber;
+                movieToDisplay.Year = movie.Year;
+                movieToDisplay.Title = movie.Title;
+                movieToDisplay.IsFavorite = favoriteMovies.Find(f => f == movie.Id) != null;
+                toDisplay.Add(movieToDisplay);
+            }
+            var model = sortedMovies;
             return PartialView("_MoviePartialView", model);
         }
 

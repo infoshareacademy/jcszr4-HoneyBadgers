@@ -1,9 +1,7 @@
-﻿using HoneyBadgers.Logic.Services.Interfaces;
+﻿using HoneyBadgers.Logic.Enums;
+using HoneyBadgers.Logic.Services.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HoneyBadgers.Logic.Services
 {
@@ -11,10 +9,13 @@ namespace HoneyBadgers.Logic.Services
     {
         private IMovieService _movieService;
         private IUserService _userService;
-        public MockDataService(IMovieService movieService, IUserService userService)
+        private IFavoriteMoviesService _favoriteMoviesService;
+        public MockDataService(IMovieService movieService, IUserService userService, IFavoriteMoviesService favoriteMoviesService)
         {
             _movieService = movieService;
             _userService = userService;
+            _favoriteMoviesService = favoriteMoviesService;
+            MockMovieData();
         }
         public void MockMovieData()
         {
@@ -29,10 +30,17 @@ namespace HoneyBadgers.Logic.Services
                     if (movieStatus == (int)MovieStatus.Watched)
                     {
                         user.Movies.Add(movie);
-                        movie.ViewsNumber++;
+                        movie.ViewsNumber = new Random().Next(1000,999999);
+                    }
+
+                    var dice = new Random().NextDouble() * 6;
+                    if (dice > 5.5)
+                    {
+                        _favoriteMoviesService.AddFavorite(movie.Id);
                     }
                 }
             }
+
         }
     }
 }

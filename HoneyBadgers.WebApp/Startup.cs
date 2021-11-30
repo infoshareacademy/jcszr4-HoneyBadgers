@@ -24,9 +24,11 @@ namespace HoneyBadgers.WebApp
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddTransient<IMovieRepository, MovieRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IFavoriteMoviesRepository, FavoriteMoviesRepository>();
             services.AddTransient<IMovieService, MovieService>();
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IMockDataService, MockDataService>();
+            services.AddTransient<IFavoriteMoviesService, FavoriteMoviesService>();
+            services.AddSingleton<IMockDataService, MockDataService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
