@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using HoneyBadgers.Logic;
-using HoneyBadgers.Logic.Repositories;
+using HoneyBadgers.Logic.Repositories.Interfaces;
 
 namespace HoneyBadgers.ConsoleApp
 {
@@ -58,7 +58,7 @@ namespace HoneyBadgers.ConsoleApp
                 {
                     var input = Console.ReadLine();
                     input = input.Trim();
-                    var outData = Searcher.FindByName(_movieRepository.Movies, input);
+                    var outData = Searcher.FindByName(MovieRepository.Movies, input);
                     foreach (var item in outData)
                     {
                         Console.WriteLine($"{item.Key.Title}, {item.Value}");

@@ -2,7 +2,9 @@
 using HoneyBadgers.ConsoleApp.Services;
 using HoneyBadgers.ConsoleApp.UI;
 using HoneyBadgers.Logic;
+using HoneyBadgers.Logic.HoneyBadgers.Logic.Repositories.Interfaces;
 using HoneyBadgers.Logic.Repositories;
+using HoneyBadgers.Logic.Repositories.Interfaces;
 
 namespace HoneyBadgers.ConsoleApp
 {

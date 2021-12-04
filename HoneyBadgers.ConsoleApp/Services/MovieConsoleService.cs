@@ -1,6 +1,6 @@
 ﻿using HoneyBadgers.ConsoleApp.Helpers;
 using HoneyBadgers.Logic;
-using HoneyBadgers.Logic.Repositories;
+using HoneyBadgers.Logic.HoneyBadgers.Logic.Repositories.Interfaces;
 using System;
 using System.Linq;
 

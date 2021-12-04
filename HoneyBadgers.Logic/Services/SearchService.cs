@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using HoneyBadgers.Logic.Repositories;
 
 
-namespace HoneyBadgers.Logic
+namespace HoneyBadgers.Logic.Services
 {
-    public static class Searcher
+    public static class SearchService
     {
-        public static Dictionary<Movie,int> FindByName(IEnumerable<Movie> movies, string searchInput)
+        public static Dictionary<Movie, int> FindByName(string searchInput)
         {
-            //TODO: Jak się pozbyć Dictionary?! :o ZAPYTAĆ PATRYK NA PROJEKCJIE, CZY NOWA KLASA TU UJDZIE (Patrz praca domowa 4)
             searchInput = searchInput.Trim();
-            var inputParts = searchInput.Split(" "); 
+            var inputParts = searchInput.Split(" ");
+
             var results = new Dictionary<Movie, int>();
-            foreach (var movie in movies)
+            foreach (var movie in MovieRepository.Movies)
             {
                 var movieTitle = movie.Title.ToLower();
                 var precision = 0;
@@ -24,11 +25,11 @@ namespace HoneyBadgers.Logic
                         precision += 1;
                     }
                 }
-                
+
                 if (precision > 0)
                 {
-                    
-                    results.Add(movie,precision);
+
+                    results.Add(movie, precision);
                 }
             }
 
@@ -36,19 +37,19 @@ namespace HoneyBadgers.Logic
             return results;
         }
 
-        public static List<Movie> FindMovieWithRatingBetweenLowerHigher(IEnumerable<Movie> movies, double lowestRating, double highestRating)
+        public static List<Movie> FindMovieWithRatingBetweenLowerHigher(List<Movie> movies, double lowestRating, double highestRating)
         {
             return movies.Where(movie => movie.ImdbRating >= lowestRating && movie.ImdbRating <= highestRating)
                 .OrderByDescending(movie => movie.ImdbRating)
                 .ToList();
         }
 
-        public static List<Movie> FindMovieWithRatingLowerThan(IEnumerable<Movie> movies,double highestRating)
+        public static List<Movie> FindMovieWithRatingLowerThan(IEnumerable<Movie> movies, double highestRating)
         {
             return movies.Where(movie => movie.ImdbRating <= highestRating)
                 .OrderByDescending(movie => movie.ImdbRating)
                 .ToList();
-    }
+        }
         public static List<Movie> FindMovieWithRatingHigherThan(IEnumerable<Movie> movies, double lowestRating)
         {
             return movies.Where(movie => movie.ImdbRating >= lowestRating)

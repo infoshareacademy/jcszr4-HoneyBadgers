@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace HoneyBadgers.Logic.Repositories
@@ -13,7 +12,7 @@ namespace HoneyBadgers.Logic.Repositories
             if (!Users.Any())
             {
                 Users.AddRange(FileDataReader.LoadUsers());
-            } 
+            }
         }
 
         public List<User> GetAll()

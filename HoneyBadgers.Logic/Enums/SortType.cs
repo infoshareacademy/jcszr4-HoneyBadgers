@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HoneyBadgers.Logic.Enums
 {
-    public enum FilterTypeEnum
+    public enum SortType
     {
         [Display(Name="No filters")]
         None,
