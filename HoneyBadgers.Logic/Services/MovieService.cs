@@ -20,19 +20,19 @@ namespace HoneyBadgers.Logic.Services
             return _movieRepository.GetAll();
         }
 
-        public List<Movie> GetSortMovie(List<Movie> moviesToSort, SortType sortType)
+        public List<Movie> GetSortMovie(List<Movie> sortedMovies, SortType sortType)
         {
             switch (sortType)
             {
                 case SortType.ByMostPopularDescending:
-                    moviesToSort = moviesToSort.OrderByDescending(m => m.ViewsNumber).ToList();
+                    sortedMovies = sortedMovies.OrderByDescending(m => m.ViewsNumber).ToList();
                     break;
                 case SortType.ByMostPopularAscending:
-                    moviesToSort = moviesToSort.OrderBy(m => m.ViewsNumber).ToList();
+                    sortedMovies = sortedMovies.OrderBy(m => m.ViewsNumber).ToList();
                     break;
             }
 
-            return moviesToSort;
+            return sortedMovies;
         }
 
         public Movie GetById(string id)

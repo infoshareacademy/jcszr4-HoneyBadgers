@@ -7,6 +7,6 @@ namespace HoneyBadgers.Logic.Services.Interfaces
     {
         List<Movie> GetAll();
         Movie GetById(string id);
-        List<Movie> GetSortMovie(List<Movie> moviesToSort, SortType sortType);
+        List<Movie> GetSortMovie(List<Movie> sortedMovies, SortType sortType);
     }
 }

@@ -37,9 +37,9 @@ namespace HoneyBadgers.Logic.Services
             return results;
         }
 
-        public static List<Movie> FindMovieWithRatingBetweenLowerHigher(List<Movie> moviesToFilter, double lowestRating, double highestRating)
+        public static List<Movie> FindMovieWithRatingBetweenLowerHigher(List<Movie> movies, double lowestRating, double highestRating)
         {
-            return moviesToFilter.Where(movie => movie.ImdbRating >= lowestRating && movie.ImdbRating <= highestRating)
+            return movies.Where(movie => movie.ImdbRating >= lowestRating && movie.ImdbRating <= highestRating)
                 .OrderByDescending(movie => movie.ImdbRating)
                 .ToList();
         }
