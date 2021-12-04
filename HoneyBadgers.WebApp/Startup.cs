@@ -1,4 +1,5 @@
 using HoneyBadgers.Logic.Repositories;
+using HoneyBadgers.Logic.Repositories.Interfaces;
 using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;

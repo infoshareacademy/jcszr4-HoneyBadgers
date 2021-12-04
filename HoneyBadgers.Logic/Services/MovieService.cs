@@ -1,5 +1,6 @@
 ﻿using HoneyBadgers.Logic.Enums;
 using HoneyBadgers.Logic.Repositories;
+using HoneyBadgers.Logic.Repositories.Interfaces;
 using HoneyBadgers.Logic.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace HoneyBadgers.Logic.Services
 {
     public class MovieService : IMovieService
     {
-        private IMovieRepository _movieRepository;
+        private readonly IMovieRepository _movieRepository;
         public MovieService(IMovieRepository movieRepository)
         {
             _movieRepository = movieRepository;
@@ -19,22 +20,19 @@ namespace HoneyBadgers.Logic.Services
             return _movieRepository.GetAll();
         }
 
-        public List<Movie> GetSortMovie(FilterTypeEnum filterType)
+        public List<Movie> GetSortMovie(List<Movie> sortedMovies, SortType sortType)
         {
-            var movies = GetAll();
-            switch (filterType)
+            switch (sortType)
             {
-                case FilterTypeEnum.ByMostPopularDescending:
-                    movies = movies.OrderByDescending(m => m.ViewsNumber).ToList();
+                case SortType.ByMostPopularDescending:
+                    sortedMovies = sortedMovies.OrderByDescending(m => m.ViewsNumber).ToList();
                     break;
-                case FilterTypeEnum.ByMostPopularAscending:
-                    movies = movies.OrderBy(m => m.ViewsNumber).ToList();
-                    break;
-                default:
+                case SortType.ByMostPopularAscending:
+                    sortedMovies = sortedMovies.OrderBy(m => m.ViewsNumber).ToList();
                     break;
             }
 
-            return movies;
+            return sortedMovies;
         }
 
         public Movie GetById(string id)

@@ -4,6 +4,7 @@ using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using HoneyBadgers.Logic.Services;
 
 namespace HoneyBadgers.WebApp.Controllers
 {
@@ -21,10 +22,44 @@ namespace HoneyBadgers.WebApp.Controllers
             var model = _favoriteMoviesService.GetAllMoviesAsMovieViewModels();
             return View(model);
         }
-        public IActionResult ShowMovies(FilterTypeEnum filterType)
+
+        public IActionResult ShowMovies(SortType sortType, double ratingFrom, double ratingTo)
         {
             
             var model = _favoriteMoviesService.GetAllMoviesAsMovieViewModels();
+            var movies = this._movieService.GetAll();
+
+            if (ratingTo == 0)
+            {
+                ratingTo = 10;
+            }
+
+            movies = SearchService.FindMovieWithRatingBetweenLowerHigher(movies, ratingFrom, ratingTo);
+            movies = _movieService.GetSortMovie(movies, sortType);
+            var favoriteMovies = _favoriteMoviesService.GetAll();
+            var toDisplay = new List<MovieViewModel>();
+			foreach (var movie in movies)
+			{
+                var movieToDisplay = new MovieViewModel
+                {
+                    Actors = movie.Actors,
+                    Country = movie.Country,
+                    Director = movie.Director,
+                    Genre = movie.Genre,
+                    Id = movie.Id,
+                    ImdbRating = movie.ImdbRating,
+                    Plot = movie.Plot,
+                    Poster = movie.Poster,
+                    Ratings = movie.Ratings,
+                    Writer = movie.Writer,
+                    ViewsNumber = movie.ViewsNumber,
+                    Year = movie.Year,
+                    Title = movie.Title,
+                    IsFavorite = favoriteMovies.Find(f => f == movie.Id) != null
+                };
+                toDisplay.Add(movieToDisplay);
+            }
+            var model = toDisplay;
             return PartialView("_MoviePartialView", model);
         }
 
