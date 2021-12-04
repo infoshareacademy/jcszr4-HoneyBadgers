@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using HoneyBadgers.Logic.Models;
 using HoneyBadgers.Logic.Repositories;
 
 
@@ -43,8 +44,19 @@ namespace HoneyBadgers.Logic.Services
                 .OrderByDescending(movie => movie.ImdbRating)
                 .ToList();
         }
-
+        public static List<MovieViewModel> FindMovieWithRatingBetweenLowerHigher(List<MovieViewModel> movies, double lowestRating, double highestRating)
+        {
+            return movies.Where(movie => movie.ImdbRating >= lowestRating && movie.ImdbRating <= highestRating)
+                .OrderByDescending(movie => movie.ImdbRating)
+                .ToList();
+        }
         public static List<Movie> FindMovieWithRatingLowerThan(IEnumerable<Movie> movies, double highestRating)
+        {
+            return movies.Where(movie => movie.ImdbRating <= highestRating)
+                .OrderByDescending(movie => movie.ImdbRating)
+                .ToList();
+        }
+        public static List<MovieViewModel> FindMovieWithRatingLowerThan(IEnumerable<MovieViewModel> movies, double highestRating)
         {
             return movies.Where(movie => movie.ImdbRating <= highestRating)
                 .OrderByDescending(movie => movie.ImdbRating)
@@ -56,12 +68,28 @@ namespace HoneyBadgers.Logic.Services
                 .OrderBy(movie => movie.ImdbRating)
                 .ToList();
         }
+        public static List<MovieViewModel> FindMovieWithRatingHigherThan(IEnumerable<MovieViewModel> movies, double lowestRating)
+        {
+            return movies.Where(movie => movie.ImdbRating >= lowestRating)
+                .OrderBy(movie => movie.ImdbRating)
+                .ToList();
+        }
         public static List<Movie> SortMoviesByRatingFromHighest(IEnumerable<Movie> movies)
         {
             return movies.OrderByDescending(movie => movie.ImdbRating)
                 .ToList();
         }
+        public static List<MovieViewModel> SortMoviesByRatingFromHighest(IEnumerable<MovieViewModel> movies)
+        {
+            return movies.OrderByDescending(movie => movie.ImdbRating)
+                .ToList();
+        }
         public static List<Movie> SortMoviesByRatingFromLowest(IEnumerable<Movie> movies)
+        {
+            return movies.OrderBy(movie => movie.ImdbRating)
+                .ToList();
+        }
+        public static List<MovieViewModel> SortMoviesByRatingFromLowest(IEnumerable<MovieViewModel> movies)
         {
             return movies.OrderBy(movie => movie.ImdbRating)
                 .ToList();

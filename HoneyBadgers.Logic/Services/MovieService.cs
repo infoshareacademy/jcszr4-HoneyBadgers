@@ -4,6 +4,7 @@ using HoneyBadgers.Logic.Repositories.Interfaces;
 using HoneyBadgers.Logic.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using HoneyBadgers.Logic.Models;
 
 namespace HoneyBadgers.Logic.Services
 {
@@ -21,6 +22,20 @@ namespace HoneyBadgers.Logic.Services
         }
 
         public List<Movie> GetSortMovie(List<Movie> sortedMovies, SortType sortType)
+        {
+            switch (sortType)
+            {
+                case SortType.ByMostPopularDescending:
+                    sortedMovies = sortedMovies.OrderByDescending(m => m.ViewsNumber).ToList();
+                    break;
+                case SortType.ByMostPopularAscending:
+                    sortedMovies = sortedMovies.OrderBy(m => m.ViewsNumber).ToList();
+                    break;
+            }
+
+            return sortedMovies;
+        }
+        public List<MovieViewModel> GetSortMovie(List<MovieViewModel> sortedMovies, SortType sortType)
         {
             switch (sortType)
             {
