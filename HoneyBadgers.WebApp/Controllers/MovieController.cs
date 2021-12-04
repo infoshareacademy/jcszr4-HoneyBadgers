@@ -67,7 +67,7 @@ namespace HoneyBadgers.WebApp.Controllers
                 movieToDisplay.IsFavorite = favoriteMovies.Find(f => f == movie.Id) != null;
                 toDisplay.Add(movieToDisplay);
             }
-            var model = sortedMovies;
+            var model = toDisplay;
             return PartialView("_MoviePartialView", model);
         }
 
