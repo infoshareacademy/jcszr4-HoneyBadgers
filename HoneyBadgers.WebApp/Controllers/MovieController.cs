@@ -51,7 +51,7 @@ namespace HoneyBadgers.WebApp.Controllers
         {
             var movies = this._movieService.GetAll();
 
-            if (ratingFrom == 0 && ratingTo == 0)
+            if (ratingTo == 0)
             {
                 ratingTo = 10;
             }
