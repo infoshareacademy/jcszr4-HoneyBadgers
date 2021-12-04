@@ -4,12 +4,11 @@ using System.Linq;
 using HoneyBadgers.Logic.Repositories;
 
 
-namespace HoneyBadgers.Logic
+namespace HoneyBadgers.Logic.Services
 {
-    // TODO: Naprawić namespace, zamienić na service, dodać do dependency injection
-    public static class Searcher
+    public static class SearchService
     {
-        public static Dictionary<Movie,int> FindByName(string searchInput)
+        public static Dictionary<Movie, int> FindByName(string searchInput)
         {
             searchInput = searchInput.Trim();
             var inputParts = searchInput.Split(" ");
@@ -26,11 +25,11 @@ namespace HoneyBadgers.Logic
                         precision += 1;
                     }
                 }
-                
+
                 if (precision > 0)
                 {
-                    
-                    results.Add(movie,precision);
+
+                    results.Add(movie, precision);
                 }
             }
 
@@ -45,12 +44,12 @@ namespace HoneyBadgers.Logic
                 .ToList();
         }
 
-        public static List<Movie> FindMovieWithRatingLowerThan(IEnumerable<Movie> movies,double highestRating)
+        public static List<Movie> FindMovieWithRatingLowerThan(IEnumerable<Movie> movies, double highestRating)
         {
             return movies.Where(movie => movie.ImdbRating <= highestRating)
                 .OrderByDescending(movie => movie.ImdbRating)
                 .ToList();
-    }
+        }
         public static List<Movie> FindMovieWithRatingHigherThan(IEnumerable<Movie> movies, double lowestRating)
         {
             return movies.Where(movie => movie.ImdbRating >= lowestRating)
