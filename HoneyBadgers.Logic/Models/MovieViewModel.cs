@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace HoneyBadgers.Logic
+namespace HoneyBadgers.Logic.Models
 {
-    public class Movie
+    public class MovieViewModel
     {
         public string Id { get; set; }
         public string Title { get; set; }
@@ -17,5 +17,6 @@ namespace HoneyBadgers.Logic
         public string Poster { get; set; }
         public List<Rating> Ratings { get; set; }
         public int ViewsNumber { get; set; }
+        public bool IsFavorite { get; set; }
     }
 }
