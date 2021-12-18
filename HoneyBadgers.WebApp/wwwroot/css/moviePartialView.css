@@ -1,4 +1,7 @@
-﻿
+﻿.hb-movie {
+    max-width: 750px;
+    margin: auto;
+}
 .hb-movie__icons i {
     color: #2ba837;
 }
