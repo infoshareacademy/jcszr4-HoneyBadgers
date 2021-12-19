@@ -1,0 +1,37 @@
+﻿.hb-circle-image {
+    width: 200px;
+    height: 200px;
+    border: 5px solid #0d0d0d;
+    border-radius: 50%;
+    background-size: cover;
+    transition: transform 0.5s, box-shadow 0.1s;
+}
+.cookie-monster {
+    background-image: url("../assets/cookie-monster.jpg");
+}
+.ernie {
+    background-image: url("../assets/ernie.jpg");
+}
+.monster {
+    background-image: url("../assets/monster.png");
+}
+.bert {
+    background-image: url("../assets/bert.jpg");
+}
+.hb-team__name {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 18px;
+}
+.col:hover .hb-team__name {
+    text-decoration: underline;
+}
+.col:hover .hb-circle-image {
+    border: 5px solid #2ba837;
+    transform: scale(1.05, 1.05);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+p i {
+    color: #0d0d0d;
+}
+

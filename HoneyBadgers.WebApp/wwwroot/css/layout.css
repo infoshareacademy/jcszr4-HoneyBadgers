@@ -39,3 +39,17 @@
 .hb-navbar__search-btn:hover > i {
    color: #fff;
 }
+.hb-footer__logo {
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    margin-right: 16px;
+    display: block;
+    margin-top: 18px;
+}
+.hb-footer__logo > img {
+    height: 35px;
+    vertical-align: unset;
+}
