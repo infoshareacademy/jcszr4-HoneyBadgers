@@ -13,6 +13,7 @@ namespace HoneyBadgers.Logic.Enums
         [Display(Name = "By most popular - descending")]
         ByMostPopularDescending,
         [Display(Name = "By most popular - ascending")]
-        ByMostPopularAscending
+        ByMostPopularAscending,
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using HoneyBadgers.Logic.Enums;
+﻿using System.Linq;
+using HoneyBadgers.Logic.Enums;
 using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +22,7 @@ namespace HoneyBadgers.WebApp.Controllers
             return View(model);
         }
 
-        public IActionResult ShowMovies(SortType sortType, double ratingFrom, double ratingTo)
+        public IActionResult ShowMovies(SortType sortType, double ratingFrom, double ratingTo, bool isFavorite)
         {
 
             var movies = _favoriteMoviesService.GetAllMoviesAsMovieViewModels();
@@ -32,6 +33,10 @@ namespace HoneyBadgers.WebApp.Controllers
             }
 
             movies = SearchService.FindMovieWithRatingBetweenLowerHigher(movies, ratingFrom, ratingTo);
+            if (isFavorite)
+            {
+                movies = movies.Where(m => m.IsFavorite).ToList();
+            }
             var model = _movieService.GetSortMovie(movies, sortType);
 
             return PartialView("_MoviePartialView", model);
