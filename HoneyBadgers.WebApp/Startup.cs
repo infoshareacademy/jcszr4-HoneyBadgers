@@ -4,6 +4,7 @@ using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,6 +31,10 @@ namespace HoneyBadgers.WebApp
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IFavoriteMoviesService, FavoriteMoviesService>();
             services.AddSingleton<IMockDataService, MockDataService>();
+
+            //Database setup
+            var connectionString = Configuration.GetConnectionString("HoneyBadgersDatabase");
+            services.AddDbContext<MoviesContext>(context => context.UseSqlServer(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

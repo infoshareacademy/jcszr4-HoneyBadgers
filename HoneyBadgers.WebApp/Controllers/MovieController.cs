@@ -1,9 +1,11 @@
-﻿using System.Linq;
-using HoneyBadgers.Logic.Enums;
+﻿using HoneyBadgers.Logic.Enums;
 using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using HoneyBadgers.WebApp.Db;
 
 namespace HoneyBadgers.WebApp.Controllers
 {
@@ -11,10 +13,15 @@ namespace HoneyBadgers.WebApp.Controllers
     {
         private readonly IMovieService _movieService;
         private readonly IFavoriteMoviesService _favoriteMoviesService;
-        public MovieController(IMovieService movieService, IMockDataService mockDataService, IFavoriteMoviesService favoriteMoviesService)
+        private MoviesContext _moviesContext;
+        public MovieController(IMovieService movieService, IMockDataService mockDataService, IFavoriteMoviesService favoriteMoviesService, MoviesContext moviesContext)
         {
             _movieService = movieService;
             _favoriteMoviesService = favoriteMoviesService;
+            //mockDataService - żeby się wywołał konstruktor
+            _moviesContext = moviesContext;
+
+
         }
         public IActionResult Index()
         {
