@@ -1,10 +1,8 @@
-﻿using System;
-using HoneyBadgers.ConsoleApp.Services;
+﻿using HoneyBadgers.ConsoleApp.Services;
 using HoneyBadgers.ConsoleApp.UI;
-using HoneyBadgers.Logic;
-using HoneyBadgers.Logic.HoneyBadgers.Logic.Repositories.Interfaces;
 using HoneyBadgers.Logic.Repositories;
 using HoneyBadgers.Logic.Repositories.Interfaces;
+using System;
 
 namespace HoneyBadgers.ConsoleApp
 {
@@ -42,19 +40,19 @@ namespace HoneyBadgers.ConsoleApp
                 while (true)
                 {
                     string prompt = _logo + "\nWelcome to the Honey-Badgers application. What would you like to do? \n(Use the arrows keys to cycle through options and press enter to select an option.)";
-                    string[] options = { "Search movie by...", 
+                    string[] options = { "Search movie by...",
                                         "Search movie by most popular",
-                                        "Add new user", 
+                                        "Add new user",
                                         "Add new movie",
-                                        "Edit Data", 
-                                        "Information", 
+                                        "Edit Data",
+                                        "Information",
                                         "Exit" };
                     Menu mainMenu = new Menu(prompt, options);
                     int selectedIndex = mainMenu.Run();
-                    SearchConsoleMenu searchMenu = new (_movieRepository);
+                    SearchConsoleMenu searchMenu = new(_movieRepository);
                     SortMovieMenu sortMovieMenu = new SortMovieMenu(_usersRepository, _movieRepository);
                     DataEditionMenu dataEditionMenu = new DataEditionMenu(_usersRepository, _movieRepository);
-                    
+
                     switch (selectedIndex)
                     {
                         case 0:

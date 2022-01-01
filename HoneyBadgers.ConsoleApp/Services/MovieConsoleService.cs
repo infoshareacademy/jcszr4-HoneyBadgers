@@ -1,6 +1,6 @@
 ﻿using HoneyBadgers.ConsoleApp.Helpers;
 using HoneyBadgers.Logic;
-using HoneyBadgers.Logic.HoneyBadgers.Logic.Repositories.Interfaces;
+using HoneyBadgers.Logic.Repositories.Interfaces;
 using System;
 using System.Linq;
 
@@ -47,7 +47,7 @@ namespace HoneyBadgers.ConsoleApp.Services
 
             Console.WriteLine("\nEnter country");
             movie.Country = StringValidation(2, 30);
-            movie.ImdbID = Guid.NewGuid().ToString("N");
+            //movie.ImdbID = Guid.NewGuid().ToString("N");
 
             return movie;
         }
