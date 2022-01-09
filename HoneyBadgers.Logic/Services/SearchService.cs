@@ -1,8 +1,7 @@
-﻿using System;
+﻿using HoneyBadgers.Logic.Models;
+using HoneyBadgers.Logic.Repositories;
 using System.Collections.Generic;
 using System.Linq;
-using HoneyBadgers.Logic.Models;
-using HoneyBadgers.Logic.Repositories;
 
 
 namespace HoneyBadgers.Logic.Services

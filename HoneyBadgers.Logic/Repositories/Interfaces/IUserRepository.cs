@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using HoneyBadgers.Logic.Models;
 
-namespace HoneyBadgers.Logic.Repositories
+namespace HoneyBadgers.Logic.Repositories.Interfaces
 {
     public interface IUserRepository
     {

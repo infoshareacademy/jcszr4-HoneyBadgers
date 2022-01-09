@@ -1,4 +1,4 @@
-﻿namespace HoneyBadgers.Logic
+﻿namespace HoneyBadgers.Logic.Models
 {
     public class Rating
     {

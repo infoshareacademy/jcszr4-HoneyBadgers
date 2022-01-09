@@ -2,14 +2,15 @@
 using HoneyBadgers.Logic.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using HoneyBadgers.Logic.Models;
 
 namespace HoneyBadgers.Logic.Services
 {
     public class MockDataService : IMockDataService
     {
-        private IMovieService _movieService;
-        private IUserService _userService;
-        private IFavoriteMoviesService _favoriteMoviesService;
+        private readonly IMovieService _movieService;
+        private readonly IUserService _userService;
+        private readonly IFavoriteMoviesService _favoriteMoviesService;
         public MockDataService(IMovieService movieService, IUserService userService, IFavoriteMoviesService favoriteMoviesService)
         {
             _movieService = movieService;
