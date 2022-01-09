@@ -111,5 +111,17 @@ namespace HoneyBadgers.WebApp.Controllers
                 return View();
             }
         }
+
+        public IActionResult AddFavotire(string id)
+        {
+            _favoriteMoviesService.AddFavorite(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult RemoveFavotire(string id)
+        {
+            _favoriteMoviesService.RemoveFavorite(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
