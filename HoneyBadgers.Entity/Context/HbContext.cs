@@ -1,12 +1,18 @@
 ﻿using HoneyBadgers.Entity.Configuration;
 using HoneyBadgers.Entity.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace HoneyBadgers.Entity.Context
 {
     public class HbContext : DbContext
     {
-        public HbContext(DbContextOptions<HbContext> options) : base(options) { }
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public HbContext(DbContextOptions<HbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<FavoriteMovie> FavoriteMovies { get; set; }
         public DbSet<Genre> Genres { get; set; }

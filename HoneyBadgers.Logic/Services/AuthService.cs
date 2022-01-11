@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using HoneyBadgers.Entity.Models;
 using HoneyBadgers.Entity.Repositories;
 using HoneyBadgers.Logic.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 
 namespace HoneyBadgers.Logic.Services
@@ -21,7 +23,7 @@ namespace HoneyBadgers.Logic.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public LoginResult Login(string email, string password)
+        public async Task<LoginResult> Login(string email, string password)
         {
             var salt = System.Text.Encoding.UTF8.GetBytes("my salt");
             var bytePassword = System.Text.Encoding.UTF8.GetBytes(password);
@@ -34,15 +36,32 @@ namespace HoneyBadgers.Logic.Services
             var user = data.FirstOrDefault();
             if (user != null)
             {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.FirstName)
-                };
+                _httpContextAccessor.HttpContext.Session.SetString("FullName", user.FirstName + " " + user.LastName);
+                _httpContextAccessor.HttpContext.Session.SetString("Email", user.Email);
+                _httpContextAccessor.HttpContext.Session.SetString("UserId", user.Id.ToString());
+                // _httpContextAccessor.HttpContext.Session.SetString();
+                // var claimsIdentity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+                // claimsIdentity.AddClaim(new Claim("name", "aaaa"));
+                // await _httpContextAccessor.HttpContext.SignInAsync(
+                //     CookieAuthenticationDefaults.AuthenticationScheme,
+                //     new ClaimsPrincipal(claimsIdentity)
+                // );
 
-                var userIdentity = new ClaimsIdentity(claims, "login");
-
-                ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
-                _httpContextAccessor.HttpContext.SignInAsync(principal);
+                // var claims = new List<Claim>
+                // {
+                //     new Claim(ClaimTypes.Name, user.FirstName)
+                // };
+                //
+                // var userIdentity = new ClaimsIdentity(claims, "login");
+                // // var userIdentity = new List<ClaimsIdentity>( subject)
+                // // {
+                // //     DisplayName = name,
+                // //     AdditionalClaims = claims,
+                // //     AuthenticationTime = clock.UtcNow.UtcDateTime
+                // // };
+                //
+                // ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+                // _httpContextAccessor.HttpContext.SignInAsync(principal);
                 // user.Password = Convert.ToBase64String(saltedHash);
                 // _userRepository.Update(user);
                 // _userRepository.Insert(new User()
@@ -53,8 +72,8 @@ namespace HoneyBadgers.Logic.Services
                 //     Password = Convert.ToBase64String(saltedHash)
                 // });
             }
-            
-            
+            // var cos = _httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
+
             if (user != null)
             {
                 return new LoginResult()

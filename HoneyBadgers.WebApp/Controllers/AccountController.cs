@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using HoneyBadgers.Logic.Services;
 using Microsoft.AspNetCore.Http;
 
@@ -25,16 +26,13 @@ namespace HoneyBadgers.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(string email, string password)
+        public async Task<ActionResult> Login(string email, string password)
         {
             if (ModelState.IsValid)
             {
-                var logged = _authService.Login(email, password);
+                var logged = await _authService.Login(email, password);
                 if (logged != null)
                 {
-                    HttpContext.Session.SetString("FullName", logged.UserName);
-                    HttpContext.Session.SetString("Email", logged.UserEmail);
-                    HttpContext.Session.SetString("UserId", logged.UserId.ToString());
                     return RedirectToAction("Index", "Home");
                 }
             }

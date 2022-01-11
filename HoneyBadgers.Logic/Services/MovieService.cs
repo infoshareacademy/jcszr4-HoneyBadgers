@@ -2,14 +2,13 @@
 using HoneyBadgers.Logic.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Json;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using HoneyBadgers.Entity.Models;
 using HoneyBadgers.Entity.Repositories;
 using HoneyBadgers.Logic.Dto;
 using Microsoft.EntityFrameworkCore;
-using System.Web;
 using Microsoft.AspNetCore.Http;
 
 namespace HoneyBadgers.Logic.Services
@@ -30,6 +29,7 @@ namespace HoneyBadgers.Logic.Services
 
         public async Task<List<MovieDto>> GetAllMovieShortModel(int userId)
         {
+            var cos = _httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
             var userName = _httpContextAccessor.HttpContext.User.Identity.Name;
             var userFavoriteMovies = _userRepository.GetAllQueryable()
                 .Where(u => u.Id == userId)
@@ -61,7 +61,6 @@ namespace HoneyBadgers.Logic.Services
                     sortedMovies = sortedMovies.OrderBy(m => m.ViewsNumber).ToList();
                     break;
             }
-
             return sortedMovies;
         }
         public List<MovieDto> GetSortMovie(List<MovieDto> sortedMovies, SortType sortType)
@@ -75,7 +74,6 @@ namespace HoneyBadgers.Logic.Services
                     sortedMovies = sortedMovies.OrderBy(m => m.ViewsNumber).ToList();
                     break;
             }
-
             return sortedMovies;
         }
 
