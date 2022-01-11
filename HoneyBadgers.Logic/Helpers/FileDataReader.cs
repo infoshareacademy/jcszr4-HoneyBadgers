@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using HoneyBadgers.Entity.Models;
 
 namespace HoneyBadgers.Logic
 {
@@ -38,41 +39,5 @@ namespace HoneyBadgers.Logic
                 throw new Exception($"An error has occurred while reading Users records. Ex: {e.Message}");
             }
         }
-
-        // private void InitMockData()
-        // {
-        //     var random = new Random();
-        //     foreach (var user in users)
-        //     {
-        //         var movie = movies[random.Next(0, users.Count)];
-        //         if (movie != null)
-        //         {
-        //             movie.Status = MovieStatus.Watched;
-        //             movie.Rating = random.Next(1, 10);
-        //             user.Movies = new List<Movie> { movie };
-        //         }
-        //     }
-        // }
-        //
-        // private void RatingMovie(Movie movie)
-        // {
-        //     var rates = new List<double>();
-        //     foreach (var user in users)
-        //     {
-        //         var userMovie = user.Movies.FirstOrDefault(m => m.Title.Equals(movie.Title, StringComparison.OrdinalIgnoreCase));
-        //         if (userMovie != null && userMovie.Rating != null)
-        //         {
-        //             rates.Add((double)userMovie.Rating);
-        //         }
-        //     }
-        //
-        //     if (rates.Count > 0)
-        //     {
-        //         var sumRates = rates.Sum();
-        //         var rate = sumRates / rates.Count;
-        //         movie.Ratings.Add(new Rating("User votes", rate.ToString()));
-        //     }
-        //    
-        // }
     }
 }

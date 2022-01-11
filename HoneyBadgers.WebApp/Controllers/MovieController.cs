@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using HoneyBadgers.Logic.Enums;
 using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
@@ -10,22 +11,21 @@ namespace HoneyBadgers.WebApp.Controllers
     public class MovieController : Controller
     {
         private readonly IMovieService _movieService;
-        private readonly IFavoriteMoviesService _favoriteMoviesService;
-        public MovieController(IMovieService movieService, IMockDataService mockDataService, IFavoriteMoviesService favoriteMoviesService)
+        public MovieController(IMovieService movieService)
         {
             _movieService = movieService;
-            _favoriteMoviesService = favoriteMoviesService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var model = _favoriteMoviesService.GetAllMoviesAsMovieViewModels();
+            int.TryParse(HttpContext.Session.GetString("UserId"), out var userId);
+            var model = await _movieService.GetAllMovieShortModel(userId);
             return View(model);
         }
 
-        public IActionResult ShowMovies(SortType sortType, double ratingFrom, double ratingTo, bool isFavorite)
+        public async Task<IActionResult> ShowMovies(SortType sortType, double ratingFrom, double ratingTo, bool isFavorite)
         {
-
-            var movies = _favoriteMoviesService.GetAllMoviesAsMovieViewModels();
+            int.TryParse(HttpContext.Session.GetString("UserId"), out var userId);
+            var movies = await _movieService.GetAllMovieShortModel(userId);
 
             if (ratingTo == 0)
             {
@@ -43,7 +43,7 @@ namespace HoneyBadgers.WebApp.Controllers
         }
 
         // GET: MovieController/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
             var model = _movieService.GetById(id);
             return View(model);

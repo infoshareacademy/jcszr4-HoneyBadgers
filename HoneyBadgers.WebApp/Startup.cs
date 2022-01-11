@@ -1,9 +1,11 @@
-using HoneyBadgers.Logic.Repositories;
-using HoneyBadgers.Logic.Repositories.Interfaces;
+using HoneyBadgers.Entity.Context;
 using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
+using HoneyBadgers.Entity.Repositories;
+using HoneyBadgers.Logic.MappingProfiles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,13 +25,18 @@ namespace HoneyBadgers.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
-            services.AddTransient<IMovieRepository, MovieRepository>();
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IFavoriteMoviesRepository, FavoriteMoviesRepository>();
+            // services.AddSession();
+            services.AddHttpContextAccessor();
+            services.AddTransient<AuthService>();
             services.AddTransient<IMovieService, MovieService>();
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IFavoriteMoviesService, FavoriteMoviesService>();
-            services.AddSingleton<IMockDataService, MockDataService>();
+
+            var profileAssembly = typeof(MovieProfile).Assembly;
+            services.AddAutoMapper(profileAssembly);
+
+            var connectionString = Configuration.GetConnectionString("Database");
+            services.AddDbContext<HbContext>(o => o.UseSqlServer(connectionString, b => b.MigrationsAssembly("HoneyBadgers.WebApp")));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,13 +52,11 @@ namespace HoneyBadgers.WebApp
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

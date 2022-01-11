@@ -1,5 +1,6 @@
-﻿@model List<HoneyBadgers.Logic.Models.MovieViewModel>
+﻿@model List<HoneyBadgers.Logic.Dto.MovieDto>
 @using HoneyBadgers.Logic.Enums
+@using Microsoft.AspNetCore.Http
 
 @{
     ViewData["Title"] = "Movies";
@@ -10,10 +11,14 @@
         <form class="d-flex col-6">
             <select id="filter-type" class="hb-movie-select" name="FilterType" asp-items="Html.GetEnumSelectList<SortType>()"></select>
         </form>
-        <div class="d-flex col-6">
-            <input class="d-flex m-2" type="checkbox" id="isFavorite"/>
-            <label class="d-flex m-1">Only favorite movies</label>
-        </div>
+        @if (Context.Session.GetString("UserId") != null)
+        {
+            <div class="d-flex col-6">
+                <input class="d-flex m-2" type="checkbox" id="isFavorite"/>
+                <label class="d-flex m-1">Only favorite movies</label>
+            </div>
+        }
+        
     </div>
     <div class="row m-3">
         <div class="d-flex my-3">

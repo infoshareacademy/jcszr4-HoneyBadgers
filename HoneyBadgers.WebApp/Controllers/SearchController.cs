@@ -1,4 +1,4 @@
-﻿using HoneyBadgers.Logic.Models;
+﻿using HoneyBadgers.Entity.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HoneyBadgers.WebApp.Controllers

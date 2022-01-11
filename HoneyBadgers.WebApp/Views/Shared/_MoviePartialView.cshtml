@@ -1,4 +1,5 @@
-﻿@model List<HoneyBadgers.Logic.Models.MovieViewModel>
+﻿@using Microsoft.AspNetCore.Http
+@model List<HoneyBadgers.Logic.Dto.MovieDto>
 
 @foreach (var movie in Model)
 {
@@ -13,18 +14,20 @@
                         <div class="col-md-10">
                             <h6 class="card-title">@movie.Title</h6>
                         </div>
-                        <div class="col-md-2">
-                            @if (movie.IsFavorite)
-                            {
-                                <i class="fas fa-heart"></i>
-                            }
-                            else
-                            {
-                                <i class="far fa-heart"></i>
-                            }
-                        </div>
+                        @if (Context.Session.GetString("UserId") != null)
+                        {
+                            <div class="col-md-2">
+                                @if (movie.IsFavorite)
+                                {
+                                    <i class="fas fa-heart"></i>
+                                }
+                                else
+                                {
+                                    <i class="far fa-heart"></i>
+                                }
+                            </div>
+                        }
                     </div>
-
                     <div class="hb-movie__option card-text">
                         <label asp-for="@movie.Year"></label>
                         <span>@movie.Year</span>
