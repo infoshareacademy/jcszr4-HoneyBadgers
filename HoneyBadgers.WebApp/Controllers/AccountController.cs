@@ -26,12 +26,12 @@ namespace HoneyBadgers.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(string email, string password)
+        public ActionResult Login(string email, string password)
         {
             if (ModelState.IsValid)
             {
-                var logged = await _authService.Login(email, password);
-                if (logged != null)
+                var logged = _authService.Login(email, password);
+                if (logged)
                 {
                     return RedirectToAction("Index", "Home");
                 }
@@ -42,9 +42,7 @@ namespace HoneyBadgers.WebApp.Controllers
 
         public ActionResult Logout()
         {
-            HttpContext.Session.Remove("FullName");
-            HttpContext.Session.Remove("Email");
-            HttpContext.Session.Remove("UserId");
+            _authService.Logout();
             return RedirectToAction("Login");
         }
     }
