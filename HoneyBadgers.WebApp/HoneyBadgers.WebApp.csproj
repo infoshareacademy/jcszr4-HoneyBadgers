@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\HomeController1.cs" />
+    <Compile Remove="HomeController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Resources\movies.json" />
     <Content Remove="Resources\users.json" />
   </ItemGroup>

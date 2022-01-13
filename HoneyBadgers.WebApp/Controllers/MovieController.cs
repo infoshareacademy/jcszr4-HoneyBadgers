@@ -1,4 +1,6 @@
-﻿using HoneyBadgers.Logic.Enums;
+﻿using HoneyBadgers.Logic;
+using HoneyBadgers.Logic.Enums;
+using HoneyBadgers.Logic.Models;
 using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -15,6 +17,7 @@ namespace HoneyBadgers.WebApp.Controllers
             _movieService = movieService;
             _favoriteMoviesService = favoriteMoviesService;
         }
+
         public IActionResult Index()
         {
             var model = _favoriteMoviesService.GetAllMoviesAsMovieViewModels();
@@ -40,8 +43,32 @@ namespace HoneyBadgers.WebApp.Controllers
         // GET: MovieController/Details/5
         public ActionResult Details(string id)
         {
-            var model = _movieService.GetById(id);
+            var movie = _movieService.GetById(id);
+            var favouriteMoviesId = _favoriteMoviesService.GetAllFavoriteMovieId();
+            var model = Map(movie);
+            model.IsFavorite = favouriteMoviesId.Contains(model.Id);
             return View(model);
+
+        }
+
+        private MovieViewModel Map(Movie movie)
+        {
+            return new MovieViewModel()
+            {
+                Actors = movie.Actors,
+                Country = movie.Country,
+                Director = movie.Director,
+                Genre = movie.Genre,
+                Id = movie.Id,
+                ImdbRating = movie.ImdbRating,
+                Plot = movie.Plot,
+                Poster = movie.Poster,
+                Ratings = movie.Ratings,
+                Writer = movie.Writer,
+                ViewsNumber = movie.ViewsNumber,
+                Year = movie.Year,
+                Title = movie.Title
+            };
         }
 
         // GET: MovieController/Create

@@ -10,5 +10,6 @@ namespace HoneyBadgers.Logic.Services.Interfaces
         void AddFavorite(string id);
         void RemoveFavorite(string id);
         List<MovieViewModel> GetAllMoviesAsMovieViewModels();
+        List<FavoriteMoviesViewModel> GetAllFavoriteMoviesViewModels();
     }
 }
