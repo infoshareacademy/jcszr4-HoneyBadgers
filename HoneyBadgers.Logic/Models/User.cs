@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HoneyBadgers.Logic
+namespace HoneyBadgers.Logic.Models
 {
     public class User
     {

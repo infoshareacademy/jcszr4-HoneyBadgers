@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HoneyBadgers.Logic.Helpers;
+using HoneyBadgers.Logic.Models;
 
 namespace HoneyBadgers.Logic.Repositories
 {
