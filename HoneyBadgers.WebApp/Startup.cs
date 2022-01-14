@@ -4,6 +4,8 @@ using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
 using HoneyBadgers.Entity.Repositories;
 using HoneyBadgers.Logic.MappingProfiles;
+using HoneyBadgers.Logic.Repositories;
+using HoneyBadgers.Logic.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,6 +38,8 @@ namespace HoneyBadgers.WebApp
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<AuthService>();
             services.AddTransient<UserService>();
+            services.AddTransient<IFavoriteMoviesService, FavoriteMoviesService>();
+            services.AddTransient<IFavoriteMoviesRepository, FavoriteMoviesRepository>();
             services.AddTransient<IMovieService, MovieService>();
             var profileAssembly = typeof(MovieProfile).Assembly;
             services.AddAutoMapper(profileAssembly);

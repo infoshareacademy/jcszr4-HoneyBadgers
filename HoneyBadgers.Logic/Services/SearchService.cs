@@ -4,6 +4,7 @@ using HoneyBadgers.Entity.Models;
 using HoneyBadgers.Entity.Repositories;
 using HoneyBadgers.Logic.Dto;
 
+
 namespace HoneyBadgers.Logic.Services
 {
     public class SearchService
@@ -19,7 +20,8 @@ namespace HoneyBadgers.Logic.Services
             var inputParts = searchInput.Split(" ");
 
             var results = new Dictionary<Movie, int>();
-            foreach (var movie in _movieRepository.GetAll().ToList())
+            var movies = _movieRepository.GetAll();
+            foreach (var movie in movies)
             {
                 var movieTitle = movie.Title.ToLower();
                 var precision = 0;

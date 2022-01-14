@@ -1,5 +1,3 @@
-using System;
-
 namespace HoneyBadgers.WebApp.Models
 {
     public class ErrorViewModel

@@ -11,9 +11,11 @@ namespace HoneyBadgers.WebApp.Controllers
     public class MovieController : Controller
     {
         private readonly IMovieService _movieService;
-        public MovieController(IMovieService movieService)
+        private readonly IFavoriteMoviesService _favoriteMoviesService;
+        public MovieController(IMovieService movieService, IFavoriteMoviesService favoriteMoviesService)
         {
             _movieService = movieService;
+            _favoriteMoviesService = favoriteMoviesService;
         }
         public async Task<IActionResult> Index()
         {
@@ -109,6 +111,18 @@ namespace HoneyBadgers.WebApp.Controllers
             {
                 return View();
             }
+        }
+
+        public IActionResult AddFavotire(string id)
+        {
+            _favoriteMoviesService.AddFavorite(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult RemoveFavotire(string id)
+        {
+            _favoriteMoviesService.RemoveFavorite(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
