@@ -13,12 +13,6 @@ namespace HoneyBadgers.Logic
 
         private const string MoviesFilePath = "Resources/movies.json";
 
-
-        public static List<User> LoadUsers()
-        {
-            return LoadData<User>(UsersFilePath);
-        }
-
         public static List<Movie> LoadMovies()
         {
             return LoadData<Movie>(MoviesFilePath);

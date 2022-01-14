@@ -1,9 +1,46 @@
-﻿@using Microsoft.AspNetCore.Http;
+﻿@using Microsoft.AspNetCore.Identity
+@using HoneyBadgers.Entity.Models
+@model HoneyBadgers.Logic.Models.HomeViewModel
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome @Context.Session.GetString("FullName")</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div>
+    <h1 class="text-center display-4">
+        Welcome
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <span>
+                @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName
+            </span>
+        }
+    </h1>
+    <div class="hb-home-movie-list">
+        <div class="hb-home-header container">
+            <div class="row">
+                <div class="col">
+                    <h3>Recent Movies</h3>
+                </div>
+                <div class="col">
+                    <a class="hb-home-movie-list__link" asp-area="" asp-controller="Movie" asp-action="Index">View all</a>
+                </div>
+            </div>
+            <div class="hb-home-movies d-flex flex-row flex-nowrap overflow-auto">
+                
+            @foreach (var movie in Model.RecentMovies)
+            {
+                <div class="card" style="width: 18rem;">
+                    <img src="@movie.Poster" class="card-img-top" alt="@movie.Title">
+                    <div class="card-body">
+                        <h5 class="card-title">@movie.Title</h5>
+                    </div>
+                </div>
+            }
+            </div>
+        </div>
+        
+    </div>
 </div>

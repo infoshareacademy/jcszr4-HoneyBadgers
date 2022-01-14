@@ -17,15 +17,14 @@ namespace HoneyBadgers.WebApp.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            int.TryParse(HttpContext.Session.GetString("UserId"), out var userId);
-            var model = await _movieService.GetAllMovieShortModel(userId);
+
+            var model = await _movieService.GetAllMovieShortModel();
             return View(model);
         }
 
         public async Task<IActionResult> ShowMovies(SortType sortType, double ratingFrom, double ratingTo, bool isFavorite)
         {
-            int.TryParse(HttpContext.Session.GetString("UserId"), out var userId);
-            var movies = await _movieService.GetAllMovieShortModel(userId);
+            var movies = await _movieService.GetAllMovieShortModel();
 
             if (ratingTo == 0)
             {
@@ -43,7 +42,7 @@ namespace HoneyBadgers.WebApp.Controllers
         }
 
         // GET: MovieController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
             var model = _movieService.GetById(id);
             return View(model);

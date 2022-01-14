@@ -23,5 +23,6 @@ namespace HoneyBadgers.Entity.Models
         public virtual List<Rating> Ratings { get; set; }
         public int ViewsNumber { get; set; }
         public virtual List<FavoriteMovie> FavoriteMovies { get; set; }
+        public virtual List<UserMovie> UserMovies { get; set; }
     }
 }

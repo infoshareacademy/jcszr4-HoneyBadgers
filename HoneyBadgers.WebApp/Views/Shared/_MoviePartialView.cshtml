@@ -1,5 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
+@using HoneyBadgers.Entity.Models
 @model List<HoneyBadgers.Logic.Dto.MovieDto>
+@inject SignInManager<ApplicationUser> SignInManager
 
 @foreach (var movie in Model)
 {
@@ -14,7 +17,7 @@
                         <div class="col-md-10">
                             <h6 class="card-title">@movie.Title</h6>
                         </div>
-                        @if (Context.Session.GetString("UserId") != null)
+                        @if (SignInManager.IsSignedIn(User))
                         {
                             <div class="col-md-2">
                                 @if (movie.IsFavorite)

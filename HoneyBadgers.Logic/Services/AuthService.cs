@@ -1,50 +1,32 @@
-﻿using System;
-using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Threading.Tasks;
 using HoneyBadgers.Entity.Models;
-using HoneyBadgers.Entity.Repositories;
-using HoneyBadgers.Logic.Helpers;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace HoneyBadgers.Logic.Services
 {
     public class AuthService
     {
-        private readonly IRepository<User> _userRepository;
-        private readonly SessionHelper _sessionHelper;
-        public AuthService(IRepository<User> userRepository, SessionHelper sessionHelper)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IHttpContextAccessor httpContextAccessor)
         {
-            _userRepository = userRepository;
-            _sessionHelper = sessionHelper;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        public bool Login(string email, string password)
+        public string GetUserId()
         {
-            var hashPassword = GetHashPassword(password);
-            var data = _userRepository.GetAllQueryable()
-                .Where(s => s.Email.Equals(email) && s.Password.Equals(hashPassword))
-                .ToList();
-            var user = data.FirstOrDefault();
-            if (user != null)
-            {
-                _sessionHelper.SetUserSession(user);
-                return true;
-            }
-
-            return false;
+            var userId = _userManager.GetUserId(_httpContextAccessor.HttpContext.User);
+            return userId;
         }
 
-        public void Logout()
+        public async Task<ApplicationUser> GetUser()
         {
-            _sessionHelper.ClearUserSession();
-        }
-
-        private string GetHashPassword(string password)
-        {
-            var salt = System.Text.Encoding.UTF8.GetBytes("becia salt");
-            var bytePassword = System.Text.Encoding.UTF8.GetBytes(password);
-            var hmacMd5 = new HMACMD5(salt);
-            var saltedHash = hmacMd5.ComputeHash(bytePassword);
-            return Convert.ToBase64String(saltedHash);
+            var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            return user;
         }
     }
 }

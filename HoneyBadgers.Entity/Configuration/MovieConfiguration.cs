@@ -9,7 +9,7 @@ namespace HoneyBadgers.Entity.Configuration
         public void Configure(EntityTypeBuilder<Movie> builder)
         {
             builder.HasKey(m => m.Id);
-            builder.Property(m => m.Id).IsRequired();
+            builder.Property(m => m.Id).IsRequired().HasDefaultValueSql("NEWID()");
             builder.HasIndex(s => s.Id).IsUnique();
             builder.Property(m => m.CreatedDate).HasDefaultValueSql("getdate()");
             builder.Property(m => m.Title).HasMaxLength(150).IsRequired();

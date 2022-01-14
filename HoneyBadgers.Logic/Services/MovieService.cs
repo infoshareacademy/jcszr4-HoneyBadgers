@@ -2,43 +2,41 @@
 using HoneyBadgers.Logic.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using HoneyBadgers.Entity.Models;
 using HoneyBadgers.Entity.Repositories;
 using HoneyBadgers.Logic.Dto;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
 
 namespace HoneyBadgers.Logic.Services
 {
     public class MovieService : IMovieService
     {
+        private readonly UserService _userService;
         private readonly IRepository<Movie> _movieRepository;
-        private readonly IRepository<User> _userRepository;
         private readonly IMapper _mapper;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public MovieService(IRepository<Movie> movieRepository, IRepository<User> userRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+        private readonly AuthService _authService;
+        public MovieService(
+            IRepository<Movie> movieRepository,
+            UserService userService,
+            IMapper mapper,
+            AuthService authService)
         {
             _movieRepository = movieRepository;
-            _userRepository = userRepository;
+            _userService = userService;
             _mapper = mapper;
-            _httpContextAccessor = httpContextAccessor;
+            _authService = authService;
         }
 
-        public async Task<List<MovieDto>> GetAllMovieShortModel(int userId)
+        public async Task<List<MovieDto>> GetAllMovieShortModel()
         {
-            var cos = _httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
-            var userName = _httpContextAccessor.HttpContext.User.Identity.Name;
-            var userFavoriteMovies = _userRepository.GetAllQueryable()
-                .Where(u => u.Id == userId)
-                .SelectMany(u => u.FavoriteMovies.Select(fm => fm.Movie))
-                .ToList();
+            
             var movies = await _movieRepository.GetAllQueryable()
                 .Include(m => m.Genre)
                 .Select(m => _mapper.Map<MovieDto>(m))
                 .ToListAsync();
+            var userFavoriteMovies = _userService.GetFavoriteMovie();
             movies.ForEach(m => m.IsFavorite = userFavoriteMovies.Any(f => f.Id == m.Id));
             return movies;
         }
@@ -77,9 +75,18 @@ namespace HoneyBadgers.Logic.Services
             return sortedMovies;
         }
 
-        public Movie GetById(int id)
+        public Movie GetById(string id)
         {
             return _movieRepository.Get(id);
+        }
+
+        public async Task<List<Movie>> GetRecent(int amount = 5)
+        {
+            return await _movieRepository.GetAllQueryable()
+                .Include(m => m.Genre)
+                .OrderByDescending(m => m.Released)
+                .Take(amount)
+                .ToListAsync();
         }
     }
 }

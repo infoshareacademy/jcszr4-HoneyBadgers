@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyBadgers.Logic", "Honey
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyBadgers.WebApp", "HoneyBadgers.WebApp\HoneyBadgers.WebApp.csproj", "{4D70FACE-A879-41BD-A2DF-8B103F445FCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoneyBadgers.Entity", "HoneyBadgers.Entity\HoneyBadgers.Entity.csproj", "{EFED54B2-1977-4E95-B671-77AF5C6B7D4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyBadgers.Entity", "HoneyBadgers.Entity\HoneyBadgers.Entity.csproj", "{EFED54B2-1977-4E95-B671-77AF5C6B7D4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

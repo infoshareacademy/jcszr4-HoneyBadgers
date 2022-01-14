@@ -8,7 +8,7 @@ namespace HoneyBadgers.Entity.Repositories
     {
         IEnumerable<T> GetAll();
         IQueryable<T> GetAllQueryable();
-        T Get(int id);
+        T Get(string id);
         void Insert(T entity);
         void Update(T entity);
         void Delete(T entity);

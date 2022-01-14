@@ -1,11 +1,12 @@
 ﻿using HoneyBadgers.Entity.Configuration;
 using HoneyBadgers.Entity.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HoneyBadgers.Entity.Context
 {
-    public class HbContext : DbContext
+    public class HbContext : IdentityDbContext
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -17,14 +18,16 @@ namespace HoneyBadgers.Entity.Context
         public DbSet<FavoriteMovie> FavoriteMovies { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Rating> Ratings { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserMovie> UserMovie { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
             modelBuilder.ApplyConfiguration(new MovieConfiguration());
             modelBuilder.ApplyConfiguration(new GenreConfiguration());
             modelBuilder.ApplyConfiguration(new RatingConfiguration());
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new FavoriteMovieConfiguration());
+            modelBuilder.ApplyConfiguration(new UserMovieConfiguration());
         }
     }
 }

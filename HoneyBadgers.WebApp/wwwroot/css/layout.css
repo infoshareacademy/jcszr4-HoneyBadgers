@@ -1,4 +1,7 @@
-﻿.hb-navbar, .hb-footer {
+﻿header {
+    position: relative;
+}
+.hb-navbar, .hb-footer {
     background-color: #0d0d0d;
 }
 .navbar-brand {
@@ -9,9 +12,18 @@
     color: #2ba837;
 }
 
+.hb-navbar.hb-navbar-top {
+    padding: 0.5rem 1rem;
+}
+
+.hb-navbar.hb-navbar-down {
+    padding: 0.5rem 1rem;
+    background-color: rgba(27, 27, 27, 0.9);
+}
+
 .hb-navbar__logo {
-    width: 75px;
-    height: 75px;
+    width: 65px;
+    height: 65px;
     background-color: #fff;
     border-radius: 50%;
     text-align: center;
@@ -19,7 +31,7 @@
 }
 
 .hb-navbar__logo > img {
-    height: 70px;
+    height: 60px;
 }
 
 .nav-link {

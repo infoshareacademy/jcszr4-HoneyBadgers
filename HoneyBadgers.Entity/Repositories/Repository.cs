@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HoneyBadgers.Entity.Context;
 using HoneyBadgers.Entity.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace HoneyBadgers.Entity.Repositories
@@ -28,7 +29,7 @@ namespace HoneyBadgers.Entity.Repositories
             return entities.AsQueryable();
         }
 
-        public T Get(int id)
+        public T Get(string id)
         {
             return entities.SingleOrDefault(s => s.Id == id);
         }
