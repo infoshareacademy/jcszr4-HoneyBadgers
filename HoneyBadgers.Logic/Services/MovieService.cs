@@ -1,24 +1,51 @@
 ﻿using HoneyBadgers.Logic.Enums;
-using HoneyBadgers.Logic.Repositories;
-using HoneyBadgers.Logic.Repositories.Interfaces;
 using HoneyBadgers.Logic.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using HoneyBadgers.Logic.Models;
+using System.Threading.Tasks;
+using AutoMapper;
+using HoneyBadgers.Entity.Models;
+using HoneyBadgers.Entity.Repositories;
+using HoneyBadgers.Logic.Dto;
+using Microsoft.EntityFrameworkCore;
 
 namespace HoneyBadgers.Logic.Services
 {
     public class MovieService : IMovieService
     {
-        private readonly IMovieRepository _movieRepository;
-        public MovieService(IMovieRepository movieRepository)
+        private readonly UserService _userService;
+        private readonly IRepository<Movie> _movieRepository;
+        private readonly IMapper _mapper;
+        private readonly AuthService _authService;
+        public MovieService(
+            IRepository<Movie> movieRepository,
+            UserService userService,
+            IMapper mapper,
+            AuthService authService)
         {
             _movieRepository = movieRepository;
+            _userService = userService;
+            _mapper = mapper;
+            _authService = authService;
         }
 
-        public List<Movie> GetAll()
+        public async Task<List<MovieDto>> GetAllMovieShortModel()
         {
-            return _movieRepository.GetAll();
+            
+            var movies = await _movieRepository.GetAllQueryable()
+                .Include(m => m.Genre)
+                .Select(m => _mapper.Map<MovieDto>(m))
+                .ToListAsync();
+            var userFavoriteMovies = _userService.GetFavoriteMovies();
+            movies.ForEach(m => m.IsFavorite = userFavoriteMovies.Any(f => f.Id == m.Id));
+            return movies;
+        }
+
+        public async Task<List<Movie>> GetAll()
+        {
+            return await _movieRepository.GetAllQueryable()
+                .Include(m => m.Genre)
+                .ToListAsync();
         }
 
         public List<Movie> GetSortMovie(List<Movie> sortedMovies, SortType sortType)
@@ -32,10 +59,9 @@ namespace HoneyBadgers.Logic.Services
                     sortedMovies = sortedMovies.OrderBy(m => m.ViewsNumber).ToList();
                     break;
             }
-
             return sortedMovies;
         }
-        public List<MovieViewModel> GetSortMovie(List<MovieViewModel> sortedMovies, SortType sortType)
+        public List<MovieDto> GetSortMovie(List<MovieDto> sortedMovies, SortType sortType)
         {
             switch (sortType)
             {
@@ -46,13 +72,27 @@ namespace HoneyBadgers.Logic.Services
                     sortedMovies = sortedMovies.OrderBy(m => m.ViewsNumber).ToList();
                     break;
             }
-
             return sortedMovies;
         }
 
         public Movie GetById(string id)
         {
-            return MovieRepository.Movies.SingleOrDefault(m => m.Id == id);
+            return _movieRepository.Get(id);
+        }
+
+        public MovieDto GetMovieDtoById(string id)
+        {
+            var movie = _movieRepository.Get(id);
+            return _mapper.Map<MovieDto>(movie);
+        }
+
+        public async Task<List<Movie>> GetRecent(int amount = 5)
+        {
+            return await _movieRepository.GetAllQueryable()
+                .Include(m => m.Genre)
+                .OrderByDescending(m => m.Released)
+                .Take(amount)
+                .ToListAsync();
         }
     }
 }

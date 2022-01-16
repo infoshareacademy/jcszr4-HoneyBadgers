@@ -1,0 +1,23 @@
+﻿.hb-login > nav-item > nav-link:hover {
+    color: #2ba837;
+}
+
+.account-circle {
+    background-color: #2ba837;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    font-size: 20px;
+    line-height: 28px;
+    border: 2px solid #fff;
+    margin-right: 4px;
+}
+
+.account-name {
+    line-height: 30px;
+}
+
+.account-name:hover {
+    color: #2ba837;
+}

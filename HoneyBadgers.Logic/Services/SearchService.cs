@@ -1,20 +1,27 @@
-﻿using HoneyBadgers.Logic.Models;
-using HoneyBadgers.Logic.Repositories;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using HoneyBadgers.Entity.Models;
+using HoneyBadgers.Entity.Repositories;
+using HoneyBadgers.Logic.Dto;
 
 
 namespace HoneyBadgers.Logic.Services
 {
-    public static class SearchService
+    public class SearchService
     {
-        public static Dictionary<Movie, int> FindByName(string searchInput)
+        private readonly IRepository<Movie> _movieRepository;
+        public SearchService(IRepository<Movie> movieRepository)
+        {
+            _movieRepository = movieRepository;
+        }
+        public Dictionary<Movie, int> FindByName(string searchInput)
         {
             searchInput = searchInput.Trim();
             var inputParts = searchInput.Split(" ");
 
             var results = new Dictionary<Movie, int>();
-            foreach (var movie in MovieRepository.Movies)
+            var movies = _movieRepository.GetAll();
+            foreach (var movie in movies)
             {
                 var movieTitle = movie.Title.ToLower();
                 var precision = 0;
@@ -43,7 +50,7 @@ namespace HoneyBadgers.Logic.Services
                 .OrderByDescending(movie => movie.ImdbRating)
                 .ToList();
         }
-        public static List<MovieViewModel> FindMovieWithRatingBetweenLowerHigher(List<MovieViewModel> movies, double lowestRating, double highestRating)
+        public static List<MovieDto> FindMovieWithRatingBetweenLowerHigher(List<MovieDto> movies, double lowestRating, double highestRating)
         {
             return movies.Where(movie => movie.ImdbRating >= lowestRating && movie.ImdbRating <= highestRating)
                 .OrderByDescending(movie => movie.ImdbRating)
@@ -55,7 +62,7 @@ namespace HoneyBadgers.Logic.Services
                 .OrderByDescending(movie => movie.ImdbRating)
                 .ToList();
         }
-        public static List<MovieViewModel> FindMovieWithRatingLowerThan(IEnumerable<MovieViewModel> movies, double highestRating)
+        public static List<MovieDto> FindMovieWithRatingLowerThan(IEnumerable<MovieDto> movies, double highestRating)
         {
             return movies.Where(movie => movie.ImdbRating <= highestRating)
                 .OrderByDescending(movie => movie.ImdbRating)
@@ -67,7 +74,7 @@ namespace HoneyBadgers.Logic.Services
                 .OrderBy(movie => movie.ImdbRating)
                 .ToList();
         }
-        public static List<MovieViewModel> FindMovieWithRatingHigherThan(IEnumerable<MovieViewModel> movies, double lowestRating)
+        public static List<MovieDto> FindMovieWithRatingHigherThan(IEnumerable<MovieDto> movies, double lowestRating)
         {
             return movies.Where(movie => movie.ImdbRating >= lowestRating)
                 .OrderBy(movie => movie.ImdbRating)
@@ -78,7 +85,7 @@ namespace HoneyBadgers.Logic.Services
             return movies.OrderByDescending(movie => movie.ImdbRating)
                 .ToList();
         }
-        public static List<MovieViewModel> SortMoviesByRatingFromHighest(IEnumerable<MovieViewModel> movies)
+        public static List<MovieDto> SortMoviesByRatingFromHighest(IEnumerable<MovieDto> movies)
         {
             return movies.OrderByDescending(movie => movie.ImdbRating)
                 .ToList();
@@ -88,7 +95,7 @@ namespace HoneyBadgers.Logic.Services
             return movies.OrderBy(movie => movie.ImdbRating)
                 .ToList();
         }
-        public static List<MovieViewModel> SortMoviesByRatingFromLowest(IEnumerable<MovieViewModel> movies)
+        public static List<MovieDto> SortMoviesByRatingFromLowest(IEnumerable<MovieDto> movies)
         {
             return movies.OrderBy(movie => movie.ImdbRating)
                 .ToList();

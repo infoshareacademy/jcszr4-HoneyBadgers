@@ -1,31 +1,25 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
-using HoneyBadgers.Logic;
-using HoneyBadgers.Logic.Models;
+using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
 
 namespace HoneyBadgers.WebApp.Controllers
 {
     public class FavoriteMovieController : Controller
     {
-        
-        private readonly IFavoriteMoviesService _favoriteMoviesService;
         private readonly IMovieService _movieService;
-        
+        private readonly UserService _userService;
 
-        public FavoriteMovieController(IMockDataService mockDataService, IFavoriteMoviesService favoriteMoviesService, IMovieService movieService)
+        public FavoriteMovieController(IMovieService movieService, UserService userService)
         {
-            _favoriteMoviesService = favoriteMoviesService;
             _movieService = movieService;
+            _userService = userService;
         }
         // GET: FavoriteMovieController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var movies = _favoriteMoviesService.GetAllFavoriteMoviesViewModels();
+            var movies = await _movieService.GetAllMovieShortModel();
             var model = movies.Where(e => e.IsFavorite);
             return View(model);
         }

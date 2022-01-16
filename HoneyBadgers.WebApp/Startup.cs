@@ -1,11 +1,20 @@
-using HoneyBadgers.Logic.Repositories;
-using HoneyBadgers.Logic.Repositories.Interfaces;
+using HoneyBadgers.Entity.Context;
+using HoneyBadgers.Entity.Models;
 using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
+using HoneyBadgers.Entity.Repositories;
+using HoneyBadgers.Logic.MappingProfiles;
+using HoneyBadgers.Logic.Repositories;
+using HoneyBadgers.Logic.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 
 namespace HoneyBadgers.WebApp
@@ -23,13 +32,33 @@ namespace HoneyBadgers.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
-            services.AddTransient<IMovieRepository, MovieRepository>();
-            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddSession();
+            services.AddHttpContextAccessor();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<AuthService>();
+            services.AddTransient<UserService>();
             services.AddTransient<IFavoriteMoviesRepository, FavoriteMoviesRepository>();
             services.AddTransient<IMovieService, MovieService>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IFavoriteMoviesService, FavoriteMoviesService>();
-            services.AddSingleton<IMockDataService, MockDataService>();
+            var profileAssembly = typeof(MovieProfile).Assembly;
+            services.AddAutoMapper(profileAssembly);
+
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<HbContext>(o => o.UseSqlServer(connectionString, b => b.MigrationsAssembly("HoneyBadgers.WebApp")));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddDefaultIdentity<ApplicationUser>(options =>
+                {
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequiredLength = 3;
+                    options.Password.RequireDigit = false;
+                    options.User.RequireUniqueEmail = true;
+                })
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<HbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,18 +74,18 @@ namespace HoneyBadgers.WebApp
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

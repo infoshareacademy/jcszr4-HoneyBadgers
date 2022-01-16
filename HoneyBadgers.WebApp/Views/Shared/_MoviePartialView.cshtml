@@ -1,4 +1,8 @@
-﻿@model List<HoneyBadgers.Logic.Models.MovieViewModel>
+﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
+@using HoneyBadgers.Entity.Models
+@model List<HoneyBadgers.Logic.Dto.MovieDto>
+@inject SignInManager<ApplicationUser> SignInManager
 
 @foreach (var movie in Model)
 {
@@ -13,23 +17,25 @@
                         <div class="col-md-10">
                             <h6 class="card-title">@movie.Title</h6>
                         </div>
-                        <div class="col-md-2">
-                            @if (movie.IsFavorite)
-                            {
-                                <a asp-controller="Movie" asp-action="RemoveFavotire" asp-route-id="@movie.Id">
-                                    <i class="fas fa-heart"></i>
-                                </a>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <div class="col-md-2">
+                                @if (movie.IsFavorite)
+                                {
+                                    <a asp-controller="Movie" asp-action="RemoveFavotire" asp-route-id="@movie.Id">
+                                        <i class="fas fa-heart"></i>
+                                    </a>
 
-                            }
-                            else
-                            {
-                                <a asp-controller="Movie" asp-action="AddFavotire" asp-route-id="@movie.Id">
-                                    <i class="far fa-heart"></i>
-                                </a>
-                            }
-                        </div>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Movie" asp-action="AddFavotire" asp-route-id="@movie.Id">
+                                        <i class="far fa-heart"></i>
+                                    </a>
+                                }
+                            </div>
+                        }
                     </div>
-
                     <div class="hb-movie__option card-text">
                         <label asp-for="@movie.Year"></label>
                         <span>@movie.Year</span>

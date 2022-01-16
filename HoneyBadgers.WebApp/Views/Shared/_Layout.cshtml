@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using HoneyBadgers.Entity.Models
+@inject SignInManager<ApplicationUser> SignInManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -14,7 +17,7 @@
 </head>
 <body>
     <header class="sticky-top">
-        <nav class="hb-navbar navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
+        <nav class="hb-navbar hb-navbar-top navbar sticky-top navbar-expand-sm navbar-toggleable-sm box-shadow">
             <div class="container">
                 <a class="hb-navbar__logo" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/assets/badger-transparent-logo.png" />
@@ -22,18 +25,30 @@
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     HoneyBadgers
                 </a>
-                <button class="navbar-toggler bg-white" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-flex justify-content-between">
-                    <ul class="navbar-nav">
+                <div class="navbar-collapse collapse d-flex justify-content-end">
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+        <nav class="hb-navbar hb-navbar-down navbar sticky-top navbar-expand-sm navbar-toggleable-sm box-shadow mb-3">
+            <div class="container">
+                <div class="hb-navbar-container navbar-collapse collapse d-flex justify-content-between">
+                    <ul class="hb-navbar-nav navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Movie" asp-action="Index">Movies</a>
                         </li>
-                        <li class="nav-item">
+                        <li>
                             <a class="nav-link" asp-area="" asp-controller="FavoriteMovie" asp-action="Index">Favorite Movies</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="About" asp-action="Index">About</a>
+                        </li>
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Manage" asp-action="Index">Manage</a>
+                            </li>
+                        }
                     </ul>
                     <form class="hb-navbar__search" asp-controller="Search" asp-action="Index" method="get">
                         <div class="input-group">
@@ -62,14 +77,14 @@
                     </a>
                 </div>
                 <div class="col">
-                    <a class="nav-link" asp-area="" asp-controller="About" asp-action="Index">About</a>
+
                 </div>
                 <div class="col mt-2">
                     &copy; 2021 - HoneyBadgers
                 </div>
             </div>
-            
-           
+
+
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

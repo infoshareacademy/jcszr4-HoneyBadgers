@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyBadgers.ConsoleApp", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyBadgers.Logic", "HoneyBadgers.Logic\HoneyBadgers.Logic.csproj", "{66F11CC3-2D82-4341-AC56-DD065B1EEA05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoneyBadgers.WebApp", "HoneyBadgers.WebApp\HoneyBadgers.WebApp.csproj", "{4D70FACE-A879-41BD-A2DF-8B103F445FCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyBadgers.WebApp", "HoneyBadgers.WebApp\HoneyBadgers.WebApp.csproj", "{4D70FACE-A879-41BD-A2DF-8B103F445FCE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyBadgers.Entity", "HoneyBadgers.Entity\HoneyBadgers.Entity.csproj", "{EFED54B2-1977-4E95-B671-77AF5C6B7D4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{4D70FACE-A879-41BD-A2DF-8B103F445FCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D70FACE-A879-41BD-A2DF-8B103F445FCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D70FACE-A879-41BD-A2DF-8B103F445FCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFED54B2-1977-4E95-B671-77AF5C6B7D4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFED54B2-1977-4E95-B671-77AF5C6B7D4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFED54B2-1977-4E95-B671-77AF5C6B7D4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFED54B2-1977-4E95-B671-77AF5C6B7D4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

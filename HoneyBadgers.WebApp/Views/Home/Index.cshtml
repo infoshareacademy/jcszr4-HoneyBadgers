@@ -1,8 +1,185 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using HoneyBadgers.Entity.Models
+@model HoneyBadgers.Logic.Models.HomeViewModel
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<div>
+    <h1 class="text-center display-4">
+        Welcome
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <span>
+                @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName
+            </span>
+        }
+    </h1>
+    <div class="hb-home-movie-list">
+        <div class="hb-home-header">
+            <div class="row">
+                <div class="col">
+                    <h3>Recent Movies</h3>
+                </div>
+                <div class="col text-end">
+                    <a class="hb-home-movie-list__link" asp-area="" asp-controller="Movie" asp-action="Index">View all</a>
+                </div>
+            </div>
+        </div>
+        <div id="hbRecentMovies" class="hb-recent-movies d-flex flex-nowrap">
+            <div id="recentLeftArrow" class="hb-left-arrow">
+                <div class="hb-left-arrow-icon">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+        
+            </div>
+            @foreach (var movie in Model.RecentMovies)
+            {
+                <div class="hb-recent-movie" style="background-image: linear-gradient(to bottom, transparent 0%, transparent 70%, #000 100%), url( @movie.Poster );">
+                    @* <img src="@movie.Poster" class="card-img-top" alt="@movie.Title"> *@
+                    <div class="hb-recent-movie-body">
+                        <h5 class="card-title">@movie.Title</h5>
+                    </div>
+                </div>
+            }
+            <div id="recentRightArrow" class="hb-right-arrow">
+                <div class="hb-right-arrow-icon">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (SignInManager.IsSignedIn(User))
+    {
+    <div class="hb-home-movie-list">
+        <div class="hb-home-header">
+            <div class="row">
+                <div class="col">
+                    <h3>Your Favorite Movies</h3>
+                </div>
+                @if (@Model.FavoriteMovies.Count > 0)
+                {
+                    <div class="col text-end">
+                        <a class="hb-home-movie-list__link" asp-area="" asp-controller="FavoriteMovie" asp-action="Index">View all</a>
+                    </div>
+                }
+            </div>
+        </div>
+        @if (@Model.FavoriteMovies.Count > 0)
+        {
+            <div id="hbFavoriteMovies" class="hb-favorite-movies d-flex flex-nowrap">
+                <div id="favoriteLeftArrow" class="hb-left-arrow">
+                    <div class="hb-left-arrow-icon">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+
+                </div>
+                @foreach (var movie in Model.FavoriteMovies)
+                {
+                    <div class="hb-favorite-movie" style="background-image: linear-gradient(to bottom, transparent 0%, transparent 70%, #000 100%), url(@movie.Poster);">
+                        <div class="hb-favorite-movie-body">
+                            <h5 class="card-title">@movie.Title</h5>
+                        </div>
+                    </div>
+                }
+                <div id="favoriteRightArrow" class="hb-right-arrow">
+                    <div class="hb-right-arrow-icon">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="hb-empty-movie-list text-center">
+                <h4>Oh no ... You haven't added any movies to your favorites yet.</h4>
+                <p>You can do this by clicking on the heart in the movie</p>
+            </div>
+        }
+    </div>
+    }
+    </div>
+
+@section Scripts{
+    <script>
+        var recentMovies = document.getElementsByClassName("hb-recent-movie");
+        var recentMovieWidth = recentMovies[0].offsetWidth + 8;
+        var favoriteMovies = document.getElementsByClassName("hb-favorite-movie");
+        var recentMovieContainerWidth = document.getElementById("hbRecentMovies").clientWidth;
+        var favoriteMovieContainer = document.getElementById("hbFavoriteMovies");
+        var recentScrollPosition = 0;
+        var favoriteScrollPosition = 0;
+        $("#recentLeftArrow").hide();
+        $("#favoriteLeftArrow").hide();
+        if (favoriteMovies && favoriteMovieContainer && (recentMovieWidth * favoriteMovies.length) < favoriteMovieContainer.clientWidth) {
+            $("#favoriteRightArrow").hide();
+        }
+        $(function () {
+            $("#recentRightArrow").click(function () {
+                calculateScrollPosition('right', 'recent', recentMovieWidth * recentMovies.length, recentMovieContainerWidth);
+                for (var i = 0; i < recentMovies.length; i++) {
+                    recentMovies[i].style.transform = "translateX(" + (recentScrollPosition) + "px)";
+                }
+            });
+            $("#recentLeftArrow").click(function () {
+                calculateScrollPosition('left', 'recent', recentMovieWidth * recentMovies.length, recentMovieContainerWidth);
+                for (var i = 0; i < recentMovies.length; i++) {
+                    recentMovies[i].style.transform = "translateX(" + (recentScrollPosition) + "px)";
+                }
+            });
+            $("#favoriteRightArrow").click(function () {
+                calculateScrollPosition('right', 'favorite', recentMovieWidth * favoriteMovies.length, favoriteMovieContainer.clientWidth);
+                for (var i = 0; i < favoriteMovies.length; i++) {
+                    favoriteMovies[i].style.transform = "translateX(" + (favoriteScrollPosition) + "px)";
+                }
+            });
+            $("#favoriteLeftArrow").click(function () {
+                calculateScrollPosition('left', 'favorite', recentMovieWidth * favoriteMovies.length, favoriteMovieContainer.clientWidth);
+                for (var i = 0; i < favoriteMovies.length; i++) {
+                    favoriteMovies[i].style.transform = "translateX(" + (favoriteScrollPosition) + "px)";
+                }
+            });
+        });
+        function calculateScrollPosition(direction, type, moviesLength, containerWidth) {
+            var diff;
+            var position = type === 'recent' ? recentScrollPosition : favoriteScrollPosition;
+            if (direction === 'right') {
+                diff = moviesLength - containerWidth + position;
+                if (diff > containerWidth) {
+                    position -= containerWidth;
+                } else {
+                    position -= diff;
+                }
+            }
+            if (direction === 'left') {
+                diff = position + containerWidth;
+                if (diff < 0) {
+                    position += containerWidth;
+                } else {
+                    position -= position;
+                }
+            }
+
+            if (position === 0) {
+                $("#recentLeftArrow").hide();
+            } else {
+                $("#recentLeftArrow").show();
+            }
+
+            if (-position + recentMovieContainerWidth === moviesLength) {
+                $("#recentRightArrow").hide();
+            } else {
+                $("#recentRightArrow").show();
+            }
+            if (type === 'recent') {
+                recentScrollPosition = position;
+            }
+            if (type === 'favorite') {
+                favoriteScrollPosition = position;
+            }
+        }
+    </script>
+}

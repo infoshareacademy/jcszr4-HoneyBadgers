@@ -1,14 +1,19 @@
 ﻿using HoneyBadgers.Logic.Enums;
 using System.Collections.Generic;
-using HoneyBadgers.Logic.Models;
+using System.Threading.Tasks;
+using HoneyBadgers.Entity.Models;
+using HoneyBadgers.Logic.Dto;
 
 namespace HoneyBadgers.Logic.Services.Interfaces
 {
     public interface IMovieService
     {
-        List<Movie> GetAll();
+        Task<List<Movie>> GetAll();
         Movie GetById(string id);
+        MovieDto GetMovieDtoById(string id);
         List<Movie> GetSortMovie(List<Movie> sortedMovies, SortType sortType);
-        List<MovieViewModel> GetSortMovie(List<MovieViewModel> sortedMovies, SortType sortType);
+        List<MovieDto> GetSortMovie(List<MovieDto> sortedMovies, SortType sortType);
+        Task<List<MovieDto>> GetAllMovieShortModel();
+        Task<List<Movie>> GetRecent(int amount = 5);
     }
 }

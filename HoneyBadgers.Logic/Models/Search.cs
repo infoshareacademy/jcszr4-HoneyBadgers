@@ -1,4 +1,4 @@
-﻿namespace HoneyBadgers.Logic.Models
+﻿namespace HoneyBadgers.Entity.Models
 {
     public class Search
     {

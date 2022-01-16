@@ -1,0 +1,81 @@
+﻿.col.text-end {
+    text-align: end;
+}
+.hb-home-movie-list {
+    margin-bottom: 32px;
+}
+.hb-recent-movies {
+    width: 100%;
+    overflow-x: hidden;
+    position: relative;
+}
+.hb-right-arrow-icon {
+    padding: 16px;
+    background: #fff;
+    width: 45px;
+    float: right;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.hb-left-arrow-icon {
+    padding: 16px;
+    background: #fff;
+    width: 45px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.hb-left-arrow {
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    height: 100%;
+    width: 50px;
+    padding-top: 162.5px;
+    background: linear-gradient(to left, transparent 0%, #f2f2f2 100%);
+}
+.hb-right-arrow {
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    height: 100%;
+    width: 50px;
+    padding-top: 175px;
+    background: linear-gradient(to right, transparent 0%, #f2f2f2 100%);
+}
+.hb-recent-movie {
+    min-width: 250px;
+    transition: transform 0.5s;
+    height: 375px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin: 4px;
+    border-radius: 6px;
+    position: relative;
+}
+.hb-recent-movie-body {
+    color: #fff;
+    position: absolute;
+    bottom: 0px;
+    padding: 8px;
+}
+.hb-favorite-movies {
+    width: 100%;
+    overflow-x: hidden;
+    position: relative;
+}
+.hb-favorite-movie {
+    min-width: 250px;
+    transition: transform 0.5s;
+    height: 375px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin: 4px;
+    border-radius: 6px;
+    position: relative;
+}
+.hb-favorite-movie-body {
+    color: #fff;
+    position: absolute;
+    bottom: 0px;
+    padding: 8px;
+}

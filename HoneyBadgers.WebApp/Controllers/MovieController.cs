@@ -1,11 +1,6 @@
- feature/favmovies
-﻿using HoneyBadgers.Logic;
 using HoneyBadgers.Logic.Enums;
-using HoneyBadgers.Logic.Models;
-
-﻿using System.Linq;
-using HoneyBadgers.Logic.Enums;
- master
+ using System.Linq;
+using System.Threading.Tasks;
 using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -16,23 +11,23 @@ namespace HoneyBadgers.WebApp.Controllers
     public class MovieController : Controller
     {
         private readonly IMovieService _movieService;
-        private readonly IFavoriteMoviesService _favoriteMoviesService;
-        public MovieController(IMovieService movieService, IMockDataService mockDataService, IFavoriteMoviesService favoriteMoviesService)
+        private readonly UserService _userService;
+        public MovieController(IMovieService movieService, UserService userService)
         {
             _movieService = movieService;
-            _favoriteMoviesService = favoriteMoviesService;
+            _userService = userService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var model = _favoriteMoviesService.GetAllMoviesAsMovieViewModels();
+
+            var model = await _movieService.GetAllMovieShortModel();
             return View(model);
         }
 
-        public IActionResult ShowMovies(SortType sortType, double ratingFrom, double ratingTo, bool isFavorite)
+        public async Task<IActionResult> ShowMovies(SortType sortType, double ratingFrom, double ratingTo, bool isFavorite)
         {
-
-            var movies = _favoriteMoviesService.GetAllMoviesAsMovieViewModels();
+            var movies = await _movieService.GetAllMovieShortModel();
 
             if (ratingTo == 0)
             {
@@ -52,32 +47,10 @@ namespace HoneyBadgers.WebApp.Controllers
         // GET: MovieController/Details/5
         public ActionResult Details(string id)
         {
-            var movie = _movieService.GetById(id);
-            var favouriteMoviesId = _favoriteMoviesService.GetAllFavoriteMovieId();
-            var model = Map(movie);
-            model.IsFavorite = favouriteMoviesId.Contains(model.Id);
+            var model = _movieService.GetMovieDtoById(id);
+            var favoriteMovie = _userService.GetFavoriteMovie(id);
+            model.IsFavorite = favoriteMovie != null;
             return View(model);
-
-        }
-
-        private MovieViewModel Map(Movie movie)
-        {
-            return new MovieViewModel()
-            {
-                Actors = movie.Actors,
-                Country = movie.Country,
-                Director = movie.Director,
-                Genre = movie.Genre,
-                Id = movie.Id,
-                ImdbRating = movie.ImdbRating,
-                Plot = movie.Plot,
-                Poster = movie.Poster,
-                Ratings = movie.Ratings,
-                Writer = movie.Writer,
-                ViewsNumber = movie.ViewsNumber,
-                Year = movie.Year,
-                Title = movie.Title
-            };
         }
 
         // GET: MovieController/Create
@@ -145,13 +118,13 @@ namespace HoneyBadgers.WebApp.Controllers
 
         public IActionResult AddFavotire(string id)
         {
-            _favoriteMoviesService.AddFavorite(id);
+            //_favoriteMoviesService.AddFavorite(id);
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult RemoveFavotire(string id)
         {
-            _favoriteMoviesService.RemoveFavorite(id);
+            //_favoriteMoviesService.RemoveFavorite(id);
             return RedirectToAction(nameof(Index));
         }
     }
