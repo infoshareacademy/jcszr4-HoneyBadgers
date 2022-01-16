@@ -59,10 +59,6 @@ namespace HoneyBadgers.Logic.Services
             var favorite = GetAllFavoriteMovieId();
             foreach (var movie in movies)
             {
-                foreach (var f in favorite)
-                {
-                    
-                }
                 var favoriteMovie = new FavoriteMoviesViewModel
                 {
                     Actors = movie.Actors,
