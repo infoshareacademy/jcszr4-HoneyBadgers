@@ -38,12 +38,14 @@
             </div>
             @foreach (var movie in Model.RecentMovies)
             {
-                <div class="hb-recent-movie" style="background-image: linear-gradient(to bottom, transparent 0%, transparent 70%, #000 100%), url( @movie.Poster );">
-                    @* <img src="@movie.Poster" class="card-img-top" alt="@movie.Title"> *@
-                    <div class="hb-recent-movie-body">
-                        <h5 class="card-title">@movie.Title</h5>
+                <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">
+                    <div class="hb-recent-movie" style="background-image: linear-gradient(to bottom, transparent 0%, transparent 70%, #000 100%), url( @movie.Poster );">
+                        <div class="hb-recent-movie-body">
+                            <h5 class="card-title">@movie.Title</h5>
+                        </div>
                     </div>
-                </div>
+                </a>
+                
             }
             <div id="recentRightArrow" class="hb-right-arrow">
                 <div class="hb-right-arrow-icon">
@@ -70,26 +72,28 @@
         </div>
         @if (@Model.FavoriteMovies.Count > 0)
         {
-            <div id="hbFavoriteMovies" class="hb-favorite-movies d-flex flex-nowrap">
-                <div id="favoriteLeftArrow" class="hb-left-arrow">
-                    <div class="hb-left-arrow-icon">
-                        <i class="fas fa-chevron-left"></i>
-                    </div>
+    <div id="hbFavoriteMovies" class="hb-favorite-movies d-flex flex-nowrap">
+        <div id="favoriteLeftArrow" class="hb-left-arrow">
+            <div class="hb-left-arrow-icon">
+                <i class="fas fa-chevron-left"></i>
+            </div>
 
+        </div>
+        @foreach (var movie in Model.FavoriteMovies)
+        {
+            <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">
+            <div class="hb-favorite-movie" style="background-image: linear-gradient(to bottom, transparent 0%, transparent 70%, #000 100%), url(@movie.Poster);">
+                <div class="hb-favorite-movie-body">
+                    <h5 class="card-title">@movie.Title</h5>
                 </div>
-                @foreach (var movie in Model.FavoriteMovies)
-                {
-                    <div class="hb-favorite-movie" style="background-image: linear-gradient(to bottom, transparent 0%, transparent 70%, #000 100%), url(@movie.Poster);">
-                        <div class="hb-favorite-movie-body">
-                            <h5 class="card-title">@movie.Title</h5>
+            </div>
+            </a>
+                    }
+                    <div id="favoriteRightArrow" class="hb-right-arrow">
+                        <div class="hb-right-arrow-icon">
+                            <i class="fas fa-chevron-right"></i>
                         </div>
                     </div>
-                }
-                <div id="favoriteRightArrow" class="hb-right-arrow">
-                    <div class="hb-right-arrow-icon">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
-                </div>
             </div>
         }
         else
@@ -164,15 +168,14 @@
             }
 
             if (position === 0) {
-                $("#recentLeftArrow").hide();
+                type === 'recent' ? $("#recentLeftArrow").hide() : $("#favoriteLeftArrow").hide();
             } else {
-                $("#recentLeftArrow").show();
+                type === 'recent' ? $("#recentLeftArrow").show() : $("#favoriteLeftArrow").show();
             }
-
             if (-position + recentMovieContainerWidth === moviesLength) {
-                $("#recentRightArrow").hide();
+                type === 'recent' ? $("#recentRightArrow").hide() : $("#favoriteRightArrow").hide();
             } else {
-                $("#recentRightArrow").show();
+                type === 'recent' ? $("#recentRightArrow").show() : $("#favoriteRightArrow").show();
             }
             if (type === 'recent') {
                 recentScrollPosition = position;
