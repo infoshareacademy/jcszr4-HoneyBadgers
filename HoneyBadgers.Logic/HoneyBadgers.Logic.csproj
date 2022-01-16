@@ -14,4 +14,8 @@
     <ProjectReference Include="..\HoneyBadgers.Entity\HoneyBadgers.Entity.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\Interfaces\" />
+  </ItemGroup>
+
 </Project>

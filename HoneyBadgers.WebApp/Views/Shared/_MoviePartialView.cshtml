@@ -22,14 +22,14 @@
                             <div class="col-md-2">
                                 @if (movie.IsFavorite)
                                 {
-                                    <a asp-controller="Movie" asp-action="RemoveFavotire" asp-route-id="@movie.Id">
+                                    <a asp-controller="Movie" asp-action="RemoveFavorite" asp-route-id="@movie.Id">
                                         <i class="fas fa-heart"></i>
                                     </a>
 
                                 }
                                 else
                                 {
-                                    <a asp-controller="Movie" asp-action="AddFavotire" asp-route-id="@movie.Id">
+                                    <a asp-controller="Movie" asp-action="AddFavorite" asp-route-id="@movie.Id">
                                         <i class="far fa-heart"></i>
                                     </a>
                                 }
