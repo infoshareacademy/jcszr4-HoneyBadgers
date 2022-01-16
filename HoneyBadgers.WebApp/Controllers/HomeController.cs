@@ -29,7 +29,7 @@ namespace HoneyBadgers.WebApp.Controllers
             var modal = new HomeViewModel()
             {
                 RecentMovies = await _movieService.GetRecent(),
-                FavoriteMovies = _userService.GetFavoriteMovie()
+                FavoriteMovies = _userService.GetFavoriteMovies()
             };
             return View(modal);
         }

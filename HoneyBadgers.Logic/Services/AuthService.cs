@@ -8,12 +8,10 @@ namespace HoneyBadgers.Logic.Services
     public class AuthService
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IHttpContextAccessor httpContextAccessor)
+        public AuthService(UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
             _httpContextAccessor = httpContextAccessor;
         }
 

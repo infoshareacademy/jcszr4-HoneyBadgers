@@ -1,6 +1,13 @@
-﻿namespace HoneyBadgers.Logic.Dto
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using HoneyBadgers.Entity.Models;
+
+namespace HoneyBadgers.Logic.Models
 {
-    public class MovieDto
+    public class FavoriteMoviesViewModel
     {
         public string Id { get; set; }
         public string Title { get; set; }
@@ -13,6 +20,7 @@
         public string Country { get; set; }
         public double ImdbRating { get; set; }
         public string Poster { get; set; }
+        public List<Rating> Ratings { get; set; }
         public int ViewsNumber { get; set; }
         public bool IsFavorite { get; set; }
     }
