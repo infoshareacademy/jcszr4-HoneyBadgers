@@ -57,9 +57,12 @@ namespace HoneyBadgers.Logic.Services
         public void RemoveFavoriteMovie(string id)
         {
             var userId = _authService.GetUser().Result;
-            var mov = _hbContext.FavoriteMovies.Where(m => m.MovieId == id && m.UserId == userId.Id).AsQueryable().First();
+            var mov = _hbContext.FavoriteMovies.Where(m => m.MovieId == id && m.UserId == userId.Id).AsQueryable()
+                .First();
             _hbContext.FavoriteMovies.Remove(mov);
             _hbContext.SaveChanges();
+        }
+
         public Movie GetFavoriteMovie(string movieId)
         {
             var userId = _authService.GetUserId();
