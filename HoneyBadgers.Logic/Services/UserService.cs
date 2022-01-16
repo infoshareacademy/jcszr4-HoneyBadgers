@@ -28,7 +28,7 @@ namespace HoneyBadgers.Logic.Services
             return _userManager.Users;
         }
 
-        public List<Movie> GetFavoriteMovie()
+        public List<Movie> GetFavoriteMovies()
         {
             var userId = _authService.GetUserId();
             var userFavoriteMovies = _hbContext.FavoriteMovies.AsQueryable()
@@ -37,6 +37,19 @@ namespace HoneyBadgers.Logic.Services
                 .Select(m => m.Movie)
                 .ToList();
             return userFavoriteMovies;
+        }
+
+        public Movie GetFavoriteMovie(string movieId)
+        {
+            var userId = _authService.GetUserId();
+            var userFavoriteMovie = _hbContext.FavoriteMovies.AsQueryable()
+                .Where(u => u.UserId == userId)
+                .Where(m => m.MovieId == movieId)
+                .Include(u => u.Movie)
+                .Select(m => m.Movie)
+                .ToList()
+                .First();
+            return userFavoriteMovie;
         }
     }
 }

@@ -36,7 +36,7 @@ namespace HoneyBadgers.Logic.Services
                 .Include(m => m.Genre)
                 .Select(m => _mapper.Map<MovieDto>(m))
                 .ToListAsync();
-            var userFavoriteMovies = _userService.GetFavoriteMovie();
+            var userFavoriteMovies = _userService.GetFavoriteMovies();
             movies.ForEach(m => m.IsFavorite = userFavoriteMovies.Any(f => f.Id == m.Id));
             return movies;
         }
@@ -78,6 +78,12 @@ namespace HoneyBadgers.Logic.Services
         public Movie GetById(string id)
         {
             return _movieRepository.Get(id);
+        }
+
+        public MovieDto GetMovieDtoById(string id)
+        {
+            var movie = _movieRepository.Get(id);
+            return _mapper.Map<MovieDto>(movie);
         }
 
         public async Task<List<Movie>> GetRecent(int amount = 5)

@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
 using HoneyBadgers.Logic.Enums;
+ using System.Linq;
+using System.Threading.Tasks;
 using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -11,12 +11,13 @@ namespace HoneyBadgers.WebApp.Controllers
     public class MovieController : Controller
     {
         private readonly IMovieService _movieService;
-        private readonly IFavoriteMoviesService _favoriteMoviesService;
-        public MovieController(IMovieService movieService, IFavoriteMoviesService favoriteMoviesService)
+        private readonly UserService _userService;
+        public MovieController(IMovieService movieService, UserService userService)
         {
             _movieService = movieService;
-            _favoriteMoviesService = favoriteMoviesService;
+            _userService = userService;
         }
+
         public async Task<IActionResult> Index()
         {
 
@@ -46,7 +47,9 @@ namespace HoneyBadgers.WebApp.Controllers
         // GET: MovieController/Details/5
         public ActionResult Details(string id)
         {
-            var model = _movieService.GetById(id);
+            var model = _movieService.GetMovieDtoById(id);
+            var favoriteMovie = _userService.GetFavoriteMovie(id);
+            model.IsFavorite = favoriteMovie != null;
             return View(model);
         }
 
@@ -115,13 +118,13 @@ namespace HoneyBadgers.WebApp.Controllers
 
         public IActionResult AddFavotire(string id)
         {
-            _favoriteMoviesService.AddFavorite(id);
+            //_favoriteMoviesService.AddFavorite(id);
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult RemoveFavotire(string id)
         {
-            _favoriteMoviesService.RemoveFavorite(id);
+            //_favoriteMoviesService.RemoveFavorite(id);
             return RedirectToAction(nameof(Index));
         }
     }

@@ -38,7 +38,6 @@ namespace HoneyBadgers.WebApp
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<AuthService>();
             services.AddTransient<UserService>();
-            services.AddTransient<IFavoriteMoviesService, FavoriteMoviesService>();
             services.AddTransient<IFavoriteMoviesRepository, FavoriteMoviesRepository>();
             services.AddTransient<IMovieService, MovieService>();
             var profileAssembly = typeof(MovieProfile).Assembly;
