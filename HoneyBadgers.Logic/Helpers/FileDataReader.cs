@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using HoneyBadgers.Logic.Models;
+using Newtonsoft.Json;
 
-namespace HoneyBadgers.Logic
+namespace HoneyBadgers.Logic.Helpers
 {
     public static class FileDataReader
     {

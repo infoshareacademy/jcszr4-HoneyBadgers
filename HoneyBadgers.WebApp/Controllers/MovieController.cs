@@ -1,6 +1,11 @@
+ feature/favmovies
 ﻿using HoneyBadgers.Logic;
 using HoneyBadgers.Logic.Enums;
 using HoneyBadgers.Logic.Models;
+
+﻿using System.Linq;
+using HoneyBadgers.Logic.Enums;
+ master
 using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -24,7 +29,7 @@ namespace HoneyBadgers.WebApp.Controllers
             return View(model);
         }
 
-        public IActionResult ShowMovies(SortType sortType, double ratingFrom, double ratingTo)
+        public IActionResult ShowMovies(SortType sortType, double ratingFrom, double ratingTo, bool isFavorite)
         {
 
             var movies = _favoriteMoviesService.GetAllMoviesAsMovieViewModels();
@@ -35,6 +40,10 @@ namespace HoneyBadgers.WebApp.Controllers
             }
 
             movies = SearchService.FindMovieWithRatingBetweenLowerHigher(movies, ratingFrom, ratingTo);
+            if (isFavorite)
+            {
+                movies = movies.Where(m => m.IsFavorite).ToList();
+            }
             var model = _movieService.GetSortMovie(movies, sortType);
 
             return PartialView("_MoviePartialView", model);
@@ -132,6 +141,18 @@ namespace HoneyBadgers.WebApp.Controllers
             {
                 return View();
             }
+        }
+
+        public IActionResult AddFavotire(string id)
+        {
+            _favoriteMoviesService.AddFavorite(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult RemoveFavotire(string id)
+        {
+            _favoriteMoviesService.RemoveFavorite(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

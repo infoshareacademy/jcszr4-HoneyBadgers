@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using HoneyBadgers.Logic.Repositories;
-using System.Linq;
-using HoneyBadgers.Logic.Models;
+﻿using HoneyBadgers.Logic.Models;
+using HoneyBadgers.Logic.Repositories.Interfaces;
 using HoneyBadgers.Logic.Services.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace HoneyBadgers.Logic.Services
 {
@@ -54,6 +54,7 @@ namespace HoneyBadgers.Logic.Services
 
         public List<FavoriteMoviesViewModel> GetAllFavoriteMoviesViewModels()
         {
+ feature/favmovies
             var movieViewModels = new List<FavoriteMoviesViewModel>();
             var movies = _movieService.GetAll();
             var favorite = GetAllFavoriteMovieId();
@@ -91,6 +92,10 @@ namespace HoneyBadgers.Logic.Services
                 return;
             }
 
+
+            if (_favoriteMovies.GetAll().Any(m => m == id)) { return; }
+            
+         master
             _favoriteMovies.AddFavorite(id);
         }
 

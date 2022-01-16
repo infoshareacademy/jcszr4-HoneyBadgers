@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HoneyBadgers.Logic.Models;
 
 namespace HoneyBadgers.Logic.Repositories.Interfaces
 {

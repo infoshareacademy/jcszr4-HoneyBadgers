@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HoneyBadgers.Logic.Repositories
+namespace HoneyBadgers.Logic.Repositories.Interfaces
 {
     public interface IFavoriteMoviesRepository
     {
