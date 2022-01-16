@@ -10,6 +10,7 @@ namespace HoneyBadgers.Logic.Services
     {
         private IMovieService _movieService { get; }
         private IFavoriteMoviesRepository _favoriteMovies { get; set; }
+
         public FavoriteMoviesService(IFavoriteMoviesRepository favoriteMovies, IMovieService movieService)
         {
             _favoriteMovies = favoriteMovies;
@@ -50,15 +51,57 @@ namespace HoneyBadgers.Logic.Services
 
             return movieViewModels;
         }
-        public void AddFavorite(string id)
+
+        public List<FavoriteMoviesViewModel> GetAllFavoriteMoviesViewModels()
         {
+ feature/favmovies
+            var movieViewModels = new List<FavoriteMoviesViewModel>();
+            var movies = _movieService.GetAll();
+            var favorite = GetAllFavoriteMovieId();
+            foreach (var movie in movies)
+            {
+                var favoriteMovie = new FavoriteMoviesViewModel
+                {
+                    Actors = movie.Actors,
+                    Country = movie.Country,
+                    Director = movie.Director,
+                    Genre = movie.Genre,
+                    Id = movie.Id,
+                    ImdbRating = movie.ImdbRating,
+                    Plot = movie.Plot,
+                    Poster = movie.Poster,
+                    Ratings = movie.Ratings,
+                    Writer = movie.Writer,
+                    ViewsNumber = movie.ViewsNumber,
+                    Year = movie.Year,
+                    Title = movie.Title,
+                    IsFavorite = favorite.Find(f => f == movie.Id) != null
+                };
+                movieViewModels.Add(favoriteMovie);
+            }
+
+            return movieViewModels;
+        }
+
+    
+
+    public void AddFavorite(string id)
+        {
+            if (_favoriteMovies.GetAll().Any(m => m == id))
+            {
+                return;
+            }
+
+
             if (_favoriteMovies.GetAll().Any(m => m == id)) { return; }
+            
+         master
             _favoriteMovies.AddFavorite(id);
         }
+
         public void RemoveFavorite(string id)
         {
             _favoriteMovies.RemoveFavorite(id);
         }
-
     }
 }
