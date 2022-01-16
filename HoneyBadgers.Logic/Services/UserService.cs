@@ -72,7 +72,7 @@ namespace HoneyBadgers.Logic.Services
                 .Include(u => u.Movie)
                 .Select(m => m.Movie)
                 .ToList()
-                .First();
+                .FirstOrDefault();
             return userFavoriteMovie;
 
         }
