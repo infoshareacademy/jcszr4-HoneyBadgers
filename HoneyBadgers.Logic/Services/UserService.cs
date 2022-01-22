@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using HoneyBadgers.Entity.Configuration;
-using HoneyBadgers.Entity.Context;
+﻿using HoneyBadgers.Entity.Context;
 using HoneyBadgers.Entity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace HoneyBadgers.Logic.Services
 {
-        public class UserService
+    public class UserService
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly AuthService _authService;
@@ -44,7 +39,7 @@ namespace HoneyBadgers.Logic.Services
         {
             _hbContext.UserMovie.AsQueryable();
             var userId = _authService.GetUser().Result;
-            var movieToAdd = _hbContext.Movies.AsQueryable().FirstOrDefault(m=> m.Id == id);
+            var movieToAdd = _hbContext.Movies.AsQueryable().FirstOrDefault(m => m.Id == id);
             var favMovie = new FavoriteMovie()
             {
                 MovieId = movieToAdd.Id,
