@@ -1,0 +1,38 @@
+﻿.manage-btns {
+    display: flex;
+}
+.manage-btns > .manage-btn {
+    min-width: 250px;
+    height: 225px;
+    padding: 16px 24px;
+    margin: 8px;
+    background-color: #f3f3f3;
+    transition: .5s ease-out;
+    border-radius: 5px;
+    color: #000;
+    text-decoration: unset;
+}
+
+.manage-btn > .manage-btn-icon {
+    text-align: center;
+    font-size: 55px;
+}
+
+.manage-btn > .manage-btn-text {
+    text-align: center;
+    margin-top: 24px;
+    transition: .5s ease-out;
+}
+
+.manage-btn:hover {
+    background-color: #2BA837;
+}
+.manage-btn:hover > .manage-btn-icon {
+    color: #fbfbfb;
+    transition: .5s ease-out;
+}
+.manage-btn:hover > .manage-btn-text {
+    margin-top: 8px;
+    color: #fbfbfb;
+    transition: .5s ease-out;
+}

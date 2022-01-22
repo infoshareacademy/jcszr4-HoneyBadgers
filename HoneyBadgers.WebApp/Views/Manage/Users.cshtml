@@ -1,0 +1,66 @@
+﻿@using System.Linq
+@model List<HoneyBadgers.Entity.Models.ApplicationUser>
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Manage" asp-action="Index">Manage</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Users</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col">
+        <h1>Users List</h1>
+    </div>
+    <div class="col text-end">
+        <a class="hb-movie__btn-details btn" role="button" asp-action="CreateUser"><i style="margin-right: 4px;" class="fas fa-plus"></i>Create New</a>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <label asp-for="@Model.First().Id"></label>
+            </th>
+            <th>
+                <label asp-for="@Model.First().FirstName"></label>
+            </th>
+            <th>
+                <label asp-for="@Model.First().LastName"></label>
+            </th>
+            <th>
+                <label asp-for="@Model.First().Email"></label>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.FirstName
+                </td>
+                <td>
+                    @item.LastName
+                </td>
+                <td>
+                    @item.Email
+                </td>
+                <td>
+                    <a asp-controller="Manage" asp-action="EditUser" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-controller="Manage" asp-action="DeleteUser" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
