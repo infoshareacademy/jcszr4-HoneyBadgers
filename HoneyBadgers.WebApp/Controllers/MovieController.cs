@@ -1,5 +1,5 @@
 using HoneyBadgers.Logic.Enums;
- using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
@@ -126,6 +126,18 @@ namespace HoneyBadgers.WebApp.Controllers
         {
             _userService.RemoveFavoriteMovie(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult AddFavoriteInDetail(string id)
+        {
+            _userService.AddFavoriteMovie(id);
+            return RedirectToAction("Details", new { ID = id });
+        }
+
+        public IActionResult RemoveFavoriteInDetail(string id)
+        {
+            _userService.RemoveFavoriteMovie(id);
+            return RedirectToAction("Details", new { ID = id });
         }
     }
 }
