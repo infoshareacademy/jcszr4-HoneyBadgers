@@ -1,53 +1,26 @@
-﻿@using System.Linq
-@model List<HoneyBadgers.Entity.Models.ApplicationUser>
-
-@{
-    ViewData["Title"] = "List";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@{
+    ViewData["Title"] = "Mange";
 }
-
-<h1>List</h1>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                <label asp-for="@Model.First().Id"></label>
-            </th>
-            <th>
-                <label asp-for="@Model.First().FirstName"></label>
-            </th>
-            <th>
-                <label asp-for="@Model.First().LastName"></label>
-            </th>
-            <th>
-                <label asp-for="@Model.First().Email"></label>
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="container">
+    <h1>Manage</h1>
+    <div class="manage-btns">
+        <a class="manage-btn" asp-controller="Manage" asp-action="Users">
+            <div class="manage-btn-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="manage-btn-text">
+                <h3>Manage Users</h3>
+                <p>List of users with edit and delete function</p>
+            </div>
+        </a>
+        <a class="manage-btn" asp-controller="Manage" asp-action="Movies">
+            <div class="manage-btn-icon">
+                <i class="fas fa-film"></i>
+            </div>
+            <div class="manage-btn-text">
+                <h3>Manage Movies</h3>
+                <p>List of movies with edit and delete function</p>
+            </div>
+        </a>
+    </div>
+</div>
