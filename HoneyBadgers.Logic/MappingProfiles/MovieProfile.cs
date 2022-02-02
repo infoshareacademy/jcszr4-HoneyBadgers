@@ -10,7 +10,6 @@ namespace HoneyBadgers.Logic.MappingProfiles
         public MovieProfile()
         {
             CreateMap<Movie, MovieDto>()
-                .ForMember(m => m.Genre, o => o.MapFrom(s => string.Join(", ", s.Genre.Select(g => g.Name))))
                 .ForMember(m => m.IsFavorite, o => o.Ignore());
         }
     }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
+using HoneyBadgers.WebApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,12 +46,18 @@ namespace HoneyBadgers.WebApp.Controllers
         }
 
         // GET: MovieController/Details/5
-        public ActionResult Details(string id)
+        public async Task<ActionResult> Details(string id)
         {
-            var model = _movieService.GetMovieDtoById(id);
+            var model = await _movieService.GetMovieDtoById(id);
             var favoriteMovie = _userService.GetFavoriteMovie(id);
             model.IsFavorite = favoriteMovie != null;
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddReview(CreateReviewViewModel textEditor)
+        {
+            return View("Index");
         }
 
         // GET: MovieController/Create

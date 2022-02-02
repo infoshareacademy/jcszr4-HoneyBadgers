@@ -73,5 +73,35 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+/* Buttons
+-------------------------------------------------- */
+.hb-btn {
+    border: 2px solid #2ba837;
+    color: #101010;
+    font-weight: 500;
+    transition: .5s ease-out;
+    background: transparent;
+    background: linear-gradient(to left, transparent 50%, #2ba837 50%) right;
+    background-size: 200%;
+}
 
+.hb-btn:hover {
+        background-position: left;
+        color: #fff;
+}
+
+.hb-btn-rounded {
+    border: 2px solid #2ba837;
+    border-radius: 200px;
+    color: #101010;
+    font-weight: 500;
+    transition: .5s ease-out;
+    background: transparent;
+    background: linear-gradient(to left, #fbfbfb 50%, #2ba837 50%) right;
+    background-size: 200%;
+}
+.hb-btn-rounded:hover {
+    background-position: left;
+    color: #fbfbfb;
+}
 

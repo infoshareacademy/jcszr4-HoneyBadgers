@@ -19,6 +19,7 @@ namespace HoneyBadgers.Entity.Context
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<UserMovie> UserMovie { get; set; }
+        public DbSet<Review> Reviews { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -28,6 +29,7 @@ namespace HoneyBadgers.Entity.Context
             modelBuilder.ApplyConfiguration(new RatingConfiguration());
             modelBuilder.ApplyConfiguration(new FavoriteMovieConfiguration());
             modelBuilder.ApplyConfiguration(new UserMovieConfiguration());
+            modelBuilder.ApplyConfiguration(new ReviewConfiguration());
         }
     }
 }

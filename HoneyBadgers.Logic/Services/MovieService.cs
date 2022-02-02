@@ -80,9 +80,11 @@ namespace HoneyBadgers.Logic.Services
             return _movieRepository.Get(id);
         }
 
-        public MovieDto GetMovieDtoById(string id)
+        public async Task<MovieDto> GetMovieDtoById(string id)
         {
-            var movie = _movieRepository.Get(id);
+            var movie = await _movieRepository.GetAllQueryable()
+                .Include(m => m.Genre)
+                .SingleOrDefaultAsync(s => s.Id == id);
             return _mapper.Map<MovieDto>(movie);
         }
 

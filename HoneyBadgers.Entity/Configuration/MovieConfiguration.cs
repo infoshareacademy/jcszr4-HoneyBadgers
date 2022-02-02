@@ -19,6 +19,7 @@ namespace HoneyBadgers.Entity.Configuration
             builder.Property(m => m.Writer).HasMaxLength(150);
             builder.HasMany(m => m.Genre).WithMany(g => g.Movies);
             builder.HasMany(m => m.Ratings).WithOne();
+            builder.HasMany(m => m.Reviews).WithOne(r => r.Movie).HasForeignKey(m => m.MovieId);
         }
     }
 }

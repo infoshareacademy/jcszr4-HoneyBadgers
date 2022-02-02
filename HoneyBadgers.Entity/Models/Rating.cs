@@ -5,11 +5,11 @@
         public int Id { get; set; }
         public string Source { get; set; }
         public string Value { get; set; }
+        public int Amount { get; set; }
 
-        public Rating(string source, string value)
+        public Rating()
         {
-            Source = source;
-            Value = value;
+
         }
     }
 }

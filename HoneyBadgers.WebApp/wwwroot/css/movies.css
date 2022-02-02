@@ -26,3 +26,17 @@
 .hb-movie-select:hover > option {
     color: #101010;
 }
+
+.hb-details-movie {
+
+}
+
+.hb-details-movie__header {
+    background-color: rgba(38, 38, 38, 0.9);
+    color: #fff;
+}
+
+.hb-details-movie__header-type {
+    color: #2ba837;
+    text-transform: uppercase;
+}

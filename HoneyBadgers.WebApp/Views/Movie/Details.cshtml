@@ -4,106 +4,151 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="hb-details-movie">
+    <div class="hb-details-movie__header">
+        <div class="container py-3">
+            <div class="row">
+                <div class="col-md-auto">
+                    <img src="@Model.Poster" alt="@Model.Title"/>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <span class="hb-details-movie__header-type">Movie</span>
+                            <h2>@Model.Title</h2>
+                            <div class="row" style="padding-left: 15px;">
+                                <div class="col-md-auto text-center px-2">@Model.Year</div>
+                                <div class="col-md-auto px-1" style="color: #2ba837; font-size: 8px; align-self: center;"><i class="fas fa-circle"></i></div>
+                                <div class="col-md-auto text-center px-2">@Model.Runtime</div>
+                                <div class="col-md-auto px-1" style="color: #2ba837; font-size: 8px; align-self: center;"><i class="fas fa-circle"></i></div>
+                                <div class="col-md-auto text-center px-2">@Model.Language</div>
+                            </div>
 
-<div>
-    <hr/>
-    <div class="row">
-        <div class="col-4">
-            <img src="@Model.Poster" />
-        </div>
-        <div class="col-4">
-            <dl class="row">
-                <dt class="col-sm-4">
-                    <label asp-for="Title"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.Title
-                </dd>
-                <dt class="col-sm-4">
-                    <label asp-for="Year"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.Year
-                </dd>
-                <dt class="col-sm-4">
-                    <label asp-for="Director"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.Director
-                </dd>
-                <dt class="col-sm-4">
-                    <label asp-for="Writer"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.Writer
-                </dd>
-                <dt class="col-sm-4">
-                    <label asp-for="Actors"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.Actors
-                </dd>
-                <dt class="col-sm-4">
-                    <label asp-for="Plot"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.Plot
-                </dd>
-                <dt class="col-sm-4">
-                    <label asp-for="Genre"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.Genre
-                </dd>
-                <dt class="col-sm-4">
-                    <label asp-for="Country"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.Country
-                </dd>
-                <dt class="col-sm-4">
-                    <label asp-for="ImdbRating"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.ImdbRating
-                </dd>
-                <dt class="col-sm-4">
-                    <label asp-for="ViewsNumber"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.ViewsNumber
-                </dd>
-                <dd>
-                    <div class="col-sm-2">
-                        @if (Model.IsFavorite)
-                        {
-                                <a class="hb-movie__btn-details btn" asp-action="RemoveFavoriteInDetail" asp-route-id="@Model.Id">
-                                    <i class="fas fa-heart"></i>
-                                </a>
-                        }
-                        else
-                        {
-                                <a class="hb-movie__btn-details btn" asp-action="AddFavoriteInDetail" asp-route-id="@Model.Id">
-                                    <i class="far fa-heart"></i>
-                                </a>
-                        }
+                            <div class="d-flex flex-row my-3">
+                                @foreach (var genre in Model.Genre)
+                                {
+                                    <a class="hb-btn-rounded btn mx-1" asp-controller="Genre" asp-action="List" asp-route-id="@genre.Id">
+                                        @genre.Name
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-auto">
+                            <div class="text-center mb-4" style="margin-top: 25px;">
+                                <div>IMDb Rating</div>
+                                <div style="font-size: 25px;"><i style="color: #f6ca2a;" class="fas fa-star mr-2"></i>@Model.ImdbRating</div>
+                            </div>
+                            <div class="text-center mb-4">
+                                <div>Watched</div>
+                                <div style="font-size: 25px;"><i style="color: #2ba837;" class="fas fa-chalkboard-teacher mr-2"></i>@Model.ViewsNumber</div>
+                            </div>
+                        </div>
                     </div>
-                </dd>
-                <dt class="col-sm-8">
-                    @if (@Model.IsFavorite)
-                    {
-                        <p>This movie is currently favorite on your movies list! </p>
-                    }
-                </dt>
-
-            </dl>
+                </div>
+            </div>
         </div>
     </div>
-    
-    
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+
+<div class="container">
+    <h1>Details</h1>
+
+    <div>
+        <hr />
+        <div class="row">
+            <div class="col-4">
+                <img src="@Model.Poster" />
+            </div>
+            <div class="col-4">
+                <dl class="row">
+                    <dt class="col-sm-4">
+                        <label asp-for="Title"></label>
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Model.Title
+                    </dd>
+                    <dt class="col-sm-4">
+                        <label asp-for="Year"></label>
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Model.Year
+                    </dd>
+                    <dt class="col-sm-4">
+                        <label asp-for="Director"></label>
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Model.Director
+                    </dd>
+                    <dt class="col-sm-4">
+                        <label asp-for="Writer"></label>
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Model.Writer
+                    </dd>
+                    <dt class="col-sm-4">
+                        <label asp-for="Actors"></label>
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Model.Actors
+                    </dd>
+                    <dt class="col-sm-4">
+                        <label asp-for="Plot"></label>
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Model.Plot
+                    </dd>
+                    <dt class="col-sm-4">
+                        <label asp-for="Genre"></label>
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Model.Genre
+                    </dd>
+                    <dt class="col-sm-4">
+                        <label asp-for="Country"></label>
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Model.Country
+                    </dd>
+                    <dt class="col-sm-4">
+                        <label asp-for="ImdbRating"></label>
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Model.ImdbRating
+                    </dd>
+                    <dt class="col-sm-4">
+                        <label asp-for="ViewsNumber"></label>
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Model.ViewsNumber
+                    </dd>
+                    <dd>
+                        <div class="col-sm-2">
+                            @if (Model.IsFavorite)
+                            {
+                                <a class="hb-btn btn" asp-action="RemoveFavoriteInDetail" asp-route-id="@Model.Id">
+                                    <i class="fas fa-heart"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="hb-btn btn" asp-action="AddFavoriteInDetail" asp-route-id="@Model.Id">
+                                    <i class="far fa-heart"></i>
+                                </a>
+                            }
+                        </div>
+                    </dd>
+                    <dt class="col-sm-8">
+                        @if (@Model.IsFavorite)
+                        {
+                            <p>This movie is currently favorite on your movies list! </p>
+                        }
+                    </dt>
+
+                </dl>
+            </div>
+        </div>
+        <a class="hb-btn btn" asp-controller="Review" asp-action="Create" asp-route-id="@Model.Id">
+            Create Review
+        </a>
+    </div>
 </div>
