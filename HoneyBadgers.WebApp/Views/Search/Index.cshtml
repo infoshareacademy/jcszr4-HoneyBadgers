@@ -1,23 +1,39 @@
-﻿@model HoneyBadgers.Entity.Models.Search
-
+﻿@using System.Linq
+@model List<HoneyBadgers.Entity.Models.Movie>
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Search result</h1>
+<hr/>
 
-<div>
-    <h4>SearchModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Query)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Query)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@foreach (var item in Model)
+{
+    <div class="row mb-2">
+        <div class="col-3">
+            <img class="img-fluid img-thumbnail" src="@item.Poster"/>
+        </div>
+        <div class="col-6">
+            <dl class="row">
+                <dt class="col-sm-4">
+                    Title
+                </dt>
+                <dd class="col-sm-8">
+                    @item.Title
+                </dd>
+                <dt class="col-sm-4">
+                    Year
+                </dt>
+                <dd class="col-sm-8">
+                    @item.Year
+                </dd>
+                <dt class="col-sm-4">
+                    ImdbRating
+                </dt>
+                <dd class="col-sm-8">
+                    @item.ImdbRating
+                </dd>
+            </dl>
+        </div>
+    </div>
+}
