@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using HoneyBadgers.Entity.Models;
 using HoneyBadgers.Entity.Repositories;
+using HoneyBadgers.Logic.Dto;
 using HoneyBadgers.Logic.Models;
 using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -11,28 +13,31 @@ namespace HoneyBadgers.WebApp.Controllers
 {
     public class SearchController : Controller
     {
-        private readonly IRepository<Movie> _movieRepository;
+        private readonly IMovieService _movieService;
 
-        public SearchController(IRepository<Movie> movieRepository)
+        public SearchController(IMovieService movieService)
         {
-            _movieRepository = movieRepository;
+            _movieService = movieService;
         }
-        public IActionResult Index(string search)
+
+        public async Task<IActionResult> Index(string search)
         {
-            List<Movie> model;
+            var model = await _movieService.GetAllMovieShortModel();
 
             if (search == null)
             {
-                model = _movieRepository
-                    .GetAll()
-                    .ToList();
                 return View(model);
             }
 
-            model = _movieRepository
-                .GetAll()
+            model = model
                 .Where(movie => movie.Title.ToLower().Contains(search))
                 .ToList();
+
+            if (model.Count == 0)
+            {
+                return View();
+            }
+
             return View(model);
         }
     }

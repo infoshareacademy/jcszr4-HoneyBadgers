@@ -1,5 +1,10 @@
 ﻿@using System.Linq
-@model List<HoneyBadgers.Entity.Models.Movie>
+@using HoneyBadgers.Entity.Models
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.CodeAnalysis.CSharp.Syntax
+@model List<HoneyBadgers.Logic.Dto.MovieDto>
+@inject SignInManager<ApplicationUser> _signInManager
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -7,33 +12,13 @@
 <h1>Search result</h1>
 <hr/>
 
-@foreach (var item in Model)
+@if (@Model == null)
 {
-    <div class="row mb-2">
-        <div class="col-3">
-            <img class="img-fluid img-thumbnail" src="@item.Poster"/>
-        </div>
-        <div class="col-6">
-            <dl class="row">
-                <dt class="col-sm-4">
-                    Title
-                </dt>
-                <dd class="col-sm-8">
-                    @item.Title
-                </dd>
-                <dt class="col-sm-4">
-                    Year
-                </dt>
-                <dd class="col-sm-8">
-                    @item.Year
-                </dd>
-                <dt class="col-sm-4">
-                    ImdbRating
-                </dt>
-                <dd class="col-sm-8">
-                    @item.ImdbRating
-                </dd>
-            </dl>
-        </div>
+    <h4>No search results</h4>
+}
+else
+{
+    <div id="movies-list">
+        <partial name="../Shared/_MoviePartialView.cshtml" model="@Model" />
     </div>
 }
