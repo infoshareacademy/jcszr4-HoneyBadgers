@@ -9,6 +9,7 @@ using HoneyBadgers.Logic.Models;
 using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HoneyBadgers.WebApp.Controllers
 {
@@ -16,6 +17,7 @@ namespace HoneyBadgers.WebApp.Controllers
     {
         private readonly IMovieService _movieService;
         private readonly UserService _userService;
+        private static string _searchInput;
 
         public SearchController(IMovieService movieService, UserService userService)
         {
@@ -23,36 +25,31 @@ namespace HoneyBadgers.WebApp.Controllers
             _userService = userService;
         }
 
-        public async Task<IActionResult> Index(string search)
+        public IActionResult Index(string search)
         {
-            var model = await _movieService.GetAllMovieShortModel();
+            _searchInput = search;
+            List<MovieDto> model;
 
             if (search == null)
             {
+                model = _movieService.GetAllMovieShortModel().Result.ToList();
                 return View(model);
             }
 
-            model = model
-                .Where(movie => movie.Title.ToLower().Contains(search))
-                .ToList();
+            model = _movieService.GetAllMovieShortModel().Result.Where(x => x.Title.ToLower().Contains(search)).ToList();
 
-            if (model.Count == 0)
-            {
-                return View();
-            }
-
-            return View(model);
+            return model.Count == 0 ? View() : View(model);
         }
         public IActionResult AddFavorite(string id)
         {
             _userService.AddFavoriteMovie(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", new { search = _searchInput });
         }
 
         public IActionResult RemoveFavorite(string id)
         {
             _userService.RemoveFavoriteMovie(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", new { search = _searchInput });
         }
     }
 }
