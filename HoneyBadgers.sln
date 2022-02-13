@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyBadgers.WebApp", "Hone
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyBadgers.Entity", "HoneyBadgers.Entity\HoneyBadgers.Entity.csproj", "{EFED54B2-1977-4E95-B671-77AF5C6B7D4D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoneyBadgers.RestApi", "HoneyBadgers.RestApi\HoneyBadgers.RestApi.csproj", "{BB45F623-CF96-4197-81AC-8DC296DB0E84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{EFED54B2-1977-4E95-B671-77AF5C6B7D4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFED54B2-1977-4E95-B671-77AF5C6B7D4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFED54B2-1977-4E95-B671-77AF5C6B7D4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB45F623-CF96-4197-81AC-8DC296DB0E84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB45F623-CF96-4197-81AC-8DC296DB0E84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB45F623-CF96-4197-81AC-8DC296DB0E84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB45F623-CF96-4197-81AC-8DC296DB0E84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
