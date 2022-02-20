@@ -6,5 +6,15 @@ namespace HoneyBadgers.Entity.Models
     {
         public Guid Id { get; private set; }
         public string Body { get; set; }
+
+        public Report()
+        {
+            
+        }
+
+        public Report(string body)
+        {
+            Body = body;
+        }
     }
 }

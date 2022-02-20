@@ -2,25 +2,30 @@
 using HoneyBadgers.RestApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using HoneyBadgers.RestApi.Services.Interfaces;
 
 namespace HoneyBadgers.RestApi.Controllers
 {
     [ApiController]
     [Route("api/reports")]
-    public class ReportController
+    public class ReportController : ControllerBase
     {
-        private readonly ReportService _reportService;
+        private readonly IReportService _reportService;
 
-        public ReportController(ReportService reportService)
+        public ReportController(IReportService reportService)
         {
             _reportService = reportService;
         }
 
         [HttpGet]
-        public IEnumerable<Report> GetReports()
+        public ActionResult<IEnumerable<Report>> GetReports()
         {
             var reports = _reportService.GetReports();
-            return reports;
+            if (reports == null)
+            {
+                return NoContent();
+            }
+            return Ok(reports);
         }
 
     }

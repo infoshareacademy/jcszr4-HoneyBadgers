@@ -1,6 +1,7 @@
 using HoneyBadgers.Entity.Context;
 using HoneyBadgers.Entity.Repositories;
 using HoneyBadgers.RestApi.Services;
+using HoneyBadgers.RestApi.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +27,7 @@ namespace HoneyBadgers.RestApi
             services.AddControllers();
             services.AddHttpContextAccessor();
             services.AddTransient<IReportRepository, ReportRepository>();
-            services.AddTransient<ReportService>();
+            services.AddTransient<IReportService, ReportService>();
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<HbContext>(o => o.UseSqlServer(connectionString, b => b.MigrationsAssembly("HoneyBadgers.RestApi")));

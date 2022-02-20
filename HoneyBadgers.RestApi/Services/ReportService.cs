@@ -1,9 +1,10 @@
 ﻿using HoneyBadgers.Entity.Models;
 using System.Collections.Generic;
+using HoneyBadgers.RestApi.Services.Interfaces;
 
 namespace HoneyBadgers.RestApi.Services
 {
-    public class ReportService
+    public class ReportService : IReportService
     {
         private readonly IReportRepository _repository;
 

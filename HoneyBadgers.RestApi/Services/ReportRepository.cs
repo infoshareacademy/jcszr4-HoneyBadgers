@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HoneyBadgers.RestApi.Services.Interfaces;
 
 namespace HoneyBadgers.RestApi.Services
 {
@@ -42,10 +43,5 @@ namespace HoneyBadgers.RestApi.Services
 
     }
 
-    public interface IReportRepository
-    {
-        IEnumerable<Report> GetReports();
-        Report GetReport(Guid id);
-        void AddReport(Report report);
-    }
+    
 }

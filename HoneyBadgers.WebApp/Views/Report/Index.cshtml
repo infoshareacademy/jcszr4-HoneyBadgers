@@ -5,28 +5,42 @@
 }
 
 <table class="table">
-    <thead>
-    <tr>
-        <th>
-            <label asp-for="First().Id"></label>
-        </th>
-        <th>
-            <label asp-for="First().Body"></label>
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model) {
-        <tr>
 
-            <td>
-                @item.Id
-            </td>
-            <td>
-                @item.Body
-            </td>
-
-        </tr>
+    @if (Model.Count() == 1)
+    {
+        @foreach (var item in Model)
+        {
+            @item.Body
+        }
     }
-    </tbody>
+    else
+    {
+        <thead>
+            <tr>
+                <th>
+                    <label asp-for="First().Id"></label>
+                </th>
+                <th>
+                    <label asp-for="First().Body"></label>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @item.Id
+                    </td>
+                    <td>
+                        @item.Body
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    }
+
+
 </table>
