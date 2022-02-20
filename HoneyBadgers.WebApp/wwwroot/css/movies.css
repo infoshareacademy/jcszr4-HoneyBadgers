@@ -27,10 +27,6 @@
     color: #101010;
 }
 
-.hb-details-movie {
-
-}
-
 .hb-details-movie__header {
     background-color: rgba(38, 38, 38, 0.9);
     color: #fff;
@@ -39,4 +35,103 @@
 .hb-details-movie__header-type {
     color: #2ba837;
     text-transform: uppercase;
+}
+.hb-details-movie__info label {
+    color: #f3f3f3;
+    opacity: 0.5;
+}
+
+.hb-details-movie__user-circle {
+    background-color: #fff;
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    text-align: center;
+    font-size: 39px;
+    line-height: 58px;
+    border: 5px solid #2ba837;
+    margin-right: 4px;
+    color: #2ba837;
+}
+
+.hb-details-movie__user-movie-status {
+    font-size: 25px;
+    margin-left: 12px;
+}
+
+.hb-details-movie__user-status-select {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #2ba837;
+}
+.hb-details-movie__user-status-select:focus-visible {
+    outline: none;
+}
+
+.yellow {
+    color: #f6ca2a;
+}
+.grey {
+    color: #d9d9d9;
+}
+
+.hb-details-movie__reviews {
+    background-color: #fbfbfb;
+}
+
+.hb-review {
+    display: grid;
+    grid-template-columns: 66px auto 30px;
+    grid-template-rows: auto;
+}
+
+.hb-review-avatar {
+    background-color: #fff;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    font-size: 26px;
+    line-height: 34px;
+    border: 5px solid #2ba837;
+    margin-right: 16px;
+    color: #2ba837;
+}
+
+.hb-review-text {
+    margin-left: 16px;
+}
+.hb-review-text h5 {
+    margin-bottom: 0px;
+}
+
+.hb-review-action {
+    font-size: 30px;
+}
+
+.hb-reviewer {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+.hb-review-content {
+    max-height: 120px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hb-review-content .hb-review-body__read-more {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 30px 0;
+    /* "transparent" only works here because == rgba(0,0,0,0) */
+    background-image: linear-gradient(to bottom, transparent, #fbfbfb);
+}
+
+.hb-details-movie__no-reviews {
+
 }

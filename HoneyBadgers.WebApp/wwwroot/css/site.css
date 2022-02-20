@@ -62,9 +62,10 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-  background: #fbfbfb;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background: #fbfbfb;
+    /* overflow: hidden; */
 }
 .footer {
   position: absolute;
@@ -103,5 +104,13 @@ body {
 .hb-btn-rounded:hover {
     background-position: left;
     color: #fbfbfb;
+}
+
+.hb-btn-green {
+    background: #2ba837;
+    color: #fbfbfb;
+    border: 2px solid #2ba837;
+    border-radius: 200px;
+    font-weight: 500;
 }
 

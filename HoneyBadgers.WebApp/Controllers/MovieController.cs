@@ -48,9 +48,7 @@ namespace HoneyBadgers.WebApp.Controllers
         // GET: MovieController/Details/5
         public async Task<ActionResult> Details(string id)
         {
-            var model = await _movieService.GetMovieDtoById(id);
-            var favoriteMovie = _userService.GetFavoriteMovie(id);
-            model.IsFavorite = favoriteMovie != null;
+            var model = await _movieService.GetDetailMovie(id);
             return View(model);
         }
 
@@ -58,69 +56,6 @@ namespace HoneyBadgers.WebApp.Controllers
         public ActionResult AddReview(CreateReviewViewModel textEditor)
         {
             return View("Index");
-        }
-
-        // GET: MovieController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: MovieController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: MovieController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: MovieController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: MovieController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: MovieController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
 
         public IActionResult AddFavorite(string id)

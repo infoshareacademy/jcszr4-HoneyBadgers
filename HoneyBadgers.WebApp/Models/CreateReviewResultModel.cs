@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace HoneyBadgers.WebApp.Models
+﻿namespace HoneyBadgers.WebApp.Models
 {
     public class CreateReviewResultModel
     {

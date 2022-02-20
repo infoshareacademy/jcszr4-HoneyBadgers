@@ -9,7 +9,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HoneyBadgers.Logic.Services
 {
-    public class ReviewService
+    public interface IReviewService
+    {
+        Task<List<Review>> GetAllMovieReviews(string movieId);
+        Task<List<Review>> GetMovieReviews(string movieId);
+        void Create(Review review);
+        Review GetById(string id);
+        string Delete(string id);
+        Task<Review> GetDetails(string id);
+        Task<List<Review>> GetUserReviews(string movieId);
+        Task<List<Review>> GetRecentReviews();
+        void Update(Review action);
+    }
+    public class ReviewService: IReviewService
     {
         private readonly IRepository<Movie> _movieRepository;
         private readonly IRepository<Review> _reviewRepository;
@@ -21,10 +33,31 @@ namespace HoneyBadgers.Logic.Services
             _reviewRepository = reviewRepository;
         }
 
+        public async Task<List<Review>> GetAllMovieReviews(string movieId)
+        {
+            var reviews  = await _reviewRepository.GetAllQueryable()
+                .Include(r => r.Movie)
+                .Include(r => r.User)
+                .Where(r => r.MovieId == movieId)
+                .ToListAsync();
+            return reviews;
+        }
+
         public async Task<List<Review>> GetMovieReviews(string movieId)
         {
+            var reviews = await _reviewRepository.GetAllQueryable()
+                .Include(r => r.Movie)
+                .Include(r => r.User)
+                .Where(r => r.MovieId == movieId)
+                .Take(3)
+                .ToListAsync();
+            return reviews;
+        }
+
+        public async Task<List<Review>> GetUserReviews(string movieId)
+        {
             var userId = _authService.GetUserId();
-            var reviews  = await _reviewRepository.GetAllQueryable()
+            var reviews = await _reviewRepository.GetAllQueryable()
                 .Include(r => r.Movie)
                 .Include(r => r.User)
                 .Where(r => r.MovieId == movieId && r.UserId == userId)
@@ -37,6 +70,48 @@ namespace HoneyBadgers.Logic.Services
             var userId = _authService.GetUserId();
             review.UserId = userId;
             _reviewRepository.Insert(review);
+        }
+
+        public void Update(Review action)
+        {
+            var review = _reviewRepository.Get(action.Id);
+            review.Title = action.Title;
+            review.Body = action.Body;
+
+            _reviewRepository.Update(review);
+        }
+
+        public async Task<Review> GetDetails(string id)
+        {
+            var review = await _reviewRepository.GetAllQueryable()
+                .Include(r => r.Movie)
+                .Include(r => r.User)
+                .Where(r => r.Id == id)
+                .SingleOrDefaultAsync();
+            return review;
+        }
+
+        public Review GetById(string id)
+        {
+            return _reviewRepository.Get(id);
+        }
+
+        public string Delete(string id)
+        {
+            var review = GetById(id);
+            _reviewRepository.Delete(review);
+            return review.MovieId;
+        }
+
+        public async Task<List<Review>> GetRecentReviews()
+        {
+            var reviews = await _reviewRepository.GetAllQueryable()
+                .Include(r => r.Movie)
+                .Include(r => r.User)
+                .OrderByDescending(r => r.CreatedDate)
+                .Take(2)
+                .ToListAsync();
+            return reviews;
         }
     }
 }

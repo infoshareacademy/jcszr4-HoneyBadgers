@@ -1,0 +1,67 @@
+﻿@using Microsoft.AspNetCore.Html
+@using Microsoft.AspNetCore.Identity
+@using HoneyBadgers.Entity.Models
+@model HoneyBadgers.Entity.Models.Review
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="hb-review-details">
+    <div class="hb-review-details__header">
+        <div class="container py-3">
+            <div class="row">
+                <div class="col-md-auto">
+                    <img style="border-radius: 4px;" height="225" src="@Model.Movie.Poster" alt="@Model.Title" />
+                </div>
+                <div class="col mr-1">
+                    <h5>@Model.Movie.Title</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hb-review-details__content container py-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Movie" asp-action="Details" asp-route-id="@Model.Movie.Id">@Model.Movie.Title</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Review - @Model.Title</li>
+            </ol>
+        </nav>
+        <div class="hb-review-details__content-header row">
+            <div class="hb-review-details__content-header-title col">
+                <h3>@Model.Title</h3>
+            </div>
+            <div class="hb-review-details__content-header-action col text-end">
+                @if (SignInManager.IsSignedIn(User) && UserManager.GetUserId(User) == Model.UserId)
+                {
+                    <div class="hb-review-action">
+                        <a data-toggle="dropdown" href="#">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a class="mx-1" asp-controller="Review" asp-action="Delete" asp-route-id="@Model.Id">
+                                    Delete
+                                </a>
+                            </li>
+                            <li>
+                                <a class="mx-1" asp-controller="Review" asp-action="Update" asp-route-id="@Model.Id">
+                                    Edit
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="hb-review-details__content-created">
+            @Model.CreatedDate.ToString("dd MMMM yyyy")
+        </div>
+        <div class="hb-review-details__content-body">
+            @(new HtmlString(Model.Body))
+        </div>
+    </div>
+</div>

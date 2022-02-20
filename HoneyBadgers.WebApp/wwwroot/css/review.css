@@ -1,1 +1,9 @@
-﻿
+﻿.hb-review-details__header {
+    background-color: rgba(38, 38, 38, 0.9);
+    color: #fff;
+}
+
+.hb-review-details__content-created {
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 14px;
+}
