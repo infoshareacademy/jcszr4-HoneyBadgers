@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Identity
 @using HoneyBadgers.Entity.Models
-@model List<HoneyBadgers.Logic.Dto.MovieDto>
+@model IEnumerable<HoneyBadgers.Logic.Dto.MovieDto>
 @inject SignInManager<ApplicationUser> SignInManager
 
 @foreach (var movie in Model)

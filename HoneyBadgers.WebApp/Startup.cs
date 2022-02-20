@@ -1,3 +1,4 @@
+using System.IO;
 using HoneyBadgers.Entity.Context;
 using HoneyBadgers.Entity.Models;
 using HoneyBadgers.Entity.Repositories;
@@ -14,6 +15,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace HoneyBadgers.WebApp
 {
@@ -59,8 +62,20 @@ namespace HoneyBadgers.WebApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", false, true)
+                .Build();
+
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .Enrich.FromLogContext()
+                .CreateLogger();
+            loggerFactory.AddSerilog();
+            Log.Debug("Application is running");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -70,6 +85,7 @@ namespace HoneyBadgers.WebApp
                 app.UseExceptionHandler("/error/404");
                 app.UseHsts();
             }
+
             app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
