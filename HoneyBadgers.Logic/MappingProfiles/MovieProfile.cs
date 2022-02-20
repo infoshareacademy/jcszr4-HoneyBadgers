@@ -14,6 +14,7 @@ namespace HoneyBadgers.Logic.MappingProfiles
                 .ForMember(m => m.IsFavorite, o => o.Ignore());
             CreateMap<Movie, DetailMovieViewModel>()
                 .ForMember(m => m.IsFavorite, o => o.Ignore());
+            
         }
     }
 }
