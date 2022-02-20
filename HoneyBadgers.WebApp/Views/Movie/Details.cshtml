@@ -56,10 +56,14 @@
                     <h2 class="mb-2">Reviews</h2>
                 </div>
                 <div class="col justify-content-end d-flex">
-                    <a class="mx-3" asp-controller="Review" asp-action="Create" asp-route-id="@Model.Id">
-                        <i class="fas fa-plus"></i>
-                        Add review
-                    </a> |
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <a class="mx-3" asp-controller="Review" asp-action="Create" asp-route-id="@Model.Id">
+                            <i class="fas fa-plus"></i>
+                            Add review
+                        </a>
+                        <span>|</span>
+                    }
                     <a class="mx-3" asp-controller="Review" asp-action="Index" asp-route-id="@Model.Id">
                         <i class="fas fa-list-ul"></i>
                         View all
