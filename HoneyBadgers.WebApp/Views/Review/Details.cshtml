@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Html
 @using Microsoft.AspNetCore.Identity
 @using HoneyBadgers.Entity.Models
-@model HoneyBadgers.Entity.Models.Review
+@model HoneyBadgers.Logic.Models.ReviewViewModel
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -11,18 +11,9 @@
 }
 
 <div class="hb-review-details">
-    <div class="hb-review-details__header">
-        <div class="container py-3">
-            <div class="row">
-                <div class="col-md-auto">
-                    <img style="border-radius: 4px;" height="225" src="@Model.Movie.Poster" alt="@Model.Title" />
-                </div>
-                <div class="col mr-1">
-                    <h5>@Model.Movie.Title</h5>
-                </div>
-            </div>
-        </div>
-    </div>
+
+    <partial name="../Shared/_MovieHeaderPartialView.cshtml" model="@Model.Movie"/>
+
     <div class="hb-review-details__content container py-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -35,7 +26,7 @@
                 <h3>@Model.Title</h3>
             </div>
             <div class="hb-review-details__content-header-action col text-end">
-                @if (SignInManager.IsSignedIn(User) && UserManager.GetUserId(User) == Model.UserId)
+                @if (SignInManager.IsSignedIn(User) && UserManager.GetUserId(User) == Model.User.Id)
                 {
                     <div class="hb-review-action">
                         <a data-toggle="dropdown" href="#">

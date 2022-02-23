@@ -33,9 +33,9 @@ namespace HoneyBadgers.WebApp.Controllers
             return View(model);
         }
 
-        public IActionResult Create(string id)
+        public async Task<IActionResult> Create(string id)
         {
-            var movie = _movieService.GetById(id);
+            var movie = await _movieService.GetDetailMovie(id);
             var model = new CreateReviewViewModel
             {
                 Movie = movie

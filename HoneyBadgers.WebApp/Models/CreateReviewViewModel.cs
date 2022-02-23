@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using HoneyBadgers.Entity.Models;
+using HoneyBadgers.Logic.Models;
 
 namespace HoneyBadgers.WebApp.Models
 {
@@ -10,6 +10,6 @@ namespace HoneyBadgers.WebApp.Models
         [AllowHtml]
         [Display(Name = "Review")]
         public string Review { get; set; }
-        public Movie Movie { get; set; }
+        public DetailMovieViewModel Movie { get; set; }
     }
 }

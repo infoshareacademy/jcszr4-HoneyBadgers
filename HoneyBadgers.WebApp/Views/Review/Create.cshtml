@@ -4,6 +4,9 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<partial name="../Shared/_MovieHeaderPartialView.cshtml" model="@Model.Movie" />
+
 <div class="container mt-3">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">

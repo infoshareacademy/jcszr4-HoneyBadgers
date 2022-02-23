@@ -81,7 +81,17 @@
                             </div>
                             <div class="hb-review-text">
                                 <h5>@review.Title</h5>
-                                <div class="hb-reviewer">@review.User.FirstName @review.User.LastName</div>
+                                <div class="hb-reviewer d-flex">
+                                    <div class="hb-reviewer__user">
+                                        @review.User.FirstName @review.User.LastName
+                                    </div>
+                                    <div class="hb-reviewer__dot-icon mx-2" style="font-size: 8px; align-self: center;">
+                                        <i class="fas fa-circle"></i>
+                                    </div>
+                                    <div class="hb-reviewer__date">
+                                        @review.CreatedDate.ToString("dd MMMM yyyy")
+                                    </div>
+                                </div>
                                 <div class="hb-review-content">
                                     <div class="hb-review-body">
                                         @(new HtmlString(review.Body))
