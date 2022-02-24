@@ -8,7 +8,7 @@
     ViewData["Title"] = "Movies";
 }
 
-<div class="container">
+<div class="container mt-3">
     <div class="row m-3">
         <form class="d-flex col-6">
             <select id="filter-type" class="hb-movie-select" name="FilterType" asp-items="Html.GetEnumSelectList<SortType>()"></select>
@@ -31,9 +31,6 @@
         <span id="error" class="ml-2"></span>
     </div>
 </div>
-
-
-
 <div id="movies-list">
     <partial name="../Shared/_MoviePartialView.cshtml" model="@Model" />
 </div>

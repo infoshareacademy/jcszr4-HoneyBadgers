@@ -147,6 +147,9 @@ namespace HoneyBadgers.WebApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
                     b.Property<string>("MovieId")
                         .HasColumnType("nvarchar(450)");
 
@@ -170,6 +173,45 @@ namespace HoneyBadgers.WebApp.Migrations
                     b.ToTable("Ratings");
                 });
 
+            modelBuilder.Entity("HoneyBadgers.Entity.Models.Review", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("MovieId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("MovieId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("HoneyBadgers.Entity.Models.UserMovie", b =>
                 {
                     b.Property<string>("MovieId")
@@ -177,6 +219,9 @@ namespace HoneyBadgers.WebApp.Migrations
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Rate")
+                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -458,6 +503,25 @@ namespace HoneyBadgers.WebApp.Migrations
                         .HasForeignKey("MovieId");
                 });
 
+            modelBuilder.Entity("HoneyBadgers.Entity.Models.Review", b =>
+                {
+                    b.HasOne("HoneyBadgers.Entity.Models.Movie", "Movie")
+                        .WithMany("Reviews")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HoneyBadgers.Entity.Models.ApplicationUser", "User")
+                        .WithMany("Reviews")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("HoneyBadgers.Entity.Models.UserMovie", b =>
                 {
                     b.HasOne("HoneyBadgers.Entity.Models.Movie", "Movie")
@@ -534,12 +598,16 @@ namespace HoneyBadgers.WebApp.Migrations
 
                     b.Navigation("Ratings");
 
+                    b.Navigation("Reviews");
+
                     b.Navigation("UserMovies");
                 });
 
             modelBuilder.Entity("HoneyBadgers.Entity.Models.ApplicationUser", b =>
                 {
                     b.Navigation("FavoriteMovies");
+
+                    b.Navigation("Reviews");
 
                     b.Navigation("UserMovies");
                 });
