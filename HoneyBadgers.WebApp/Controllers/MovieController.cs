@@ -5,7 +5,6 @@ using HoneyBadgers.Logic.Models;
 using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
 using HoneyBadgers.WebApp.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HoneyBadgers.WebApp.Controllers
@@ -54,7 +53,11 @@ namespace HoneyBadgers.WebApp.Controllers
             var model = await _movieService.GetDetailMovie(id);
             foreach (var genre in model.Genre)
             {
-
+                await _reportService.AddGenreStats(new CreateGenreStats()
+                {
+                    GenreName = genre.Name,
+                    GenreId = genre.Id
+                });
             }
             return View(model);
         }

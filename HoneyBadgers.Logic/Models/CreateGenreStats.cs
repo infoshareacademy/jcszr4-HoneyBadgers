@@ -10,5 +10,7 @@ namespace HoneyBadgers.Logic.Models
     {
         public int GenreId { get; set; }
         public string GenreName { get; set; }
+        public string UserEmail { get; set; }
+        public string UserId { get; set; }
     }
 }
