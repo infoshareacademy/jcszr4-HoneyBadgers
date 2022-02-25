@@ -25,18 +25,3 @@
     color: #2ba837;
     font-size: 25px;
 }
-
-.hb-movie__btn-details {
-    border: 2px solid #2ba837;
-    color: #101010;
-    font-weight: 500;
-    transition: .5s ease-out;
-    background: transparent;
-    background: linear-gradient(to left, transparent 50%, #2ba837 50%) right;
-    background-size: 200%;
-}
-
-.hb-movie__btn-details:hover {
-    background-position: left;
-    color: #fff;
-}

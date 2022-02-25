@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome.css" />
     <link rel="stylesheet" href="~/lib/Font-Awesome/css/regular.min.css">
     <link rel="stylesheet" href="~/lib/Font-Awesome/css/solid.min.css">
+    <link rel="stylesheet" href="~/lib/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" href="~/lib/summernote/summernote-lite.min.css">
+    <link rel="stylesheet" href="~/lib/summernote/summernote.min.css">
 </head>
 <body>
     <header class="sticky-top">
@@ -30,7 +33,7 @@
                 </div>
             </div>
         </nav>
-        <nav class="hb-navbar hb-navbar-down navbar sticky-top navbar-expand-sm navbar-toggleable-sm box-shadow mb-3">
+        <nav class="hb-navbar hb-navbar-down navbar sticky-top navbar-expand-sm navbar-toggleable-sm box-shadow">
             <div class="container">
                 <div class="hb-navbar-container navbar-collapse collapse d-flex justify-content-between">
                     <ul class="hb-navbar-nav navbar-nav">
@@ -65,8 +68,8 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="hb-main-content mb-4">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
@@ -92,6 +95,9 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/summernote/summernote-bs4.min.js"></script>
+    <script src="~/lib/summernote/summernote-lite.min.js"></script>
+    <script src="~/lib/summernote/summernote.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

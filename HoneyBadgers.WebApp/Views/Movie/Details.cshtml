@@ -1,109 +1,164 @@
-@model HoneyBadgers.Logic.Dto.MovieDto
+@using HoneyBadgers.Entity.Models
+@using HoneyBadgers.Logic.Enums
+@using Microsoft.AspNetCore.Html
+@using Microsoft.AspNetCore.Identity
+@model HoneyBadgers.Logic.Models.DetailMovieViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
-<div>
-    <hr/>
-    <div class="row">
-        <div class="col-4">
-            <img src="@Model.Poster" />
-        </div>
-        <div class="col-4">
-            <dl class="row">
-                <dt class="col-sm-4">
-                    <label asp-for="Title"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.Title
-                </dd>
-                <dt class="col-sm-4">
-                    <label asp-for="Year"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.Year
-                </dd>
-                <dt class="col-sm-4">
-                    <label asp-for="Director"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.Director
-                </dd>
-                <dt class="col-sm-4">
-                    <label asp-for="Writer"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.Writer
-                </dd>
-                <dt class="col-sm-4">
-                    <label asp-for="Actors"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.Actors
-                </dd>
-                <dt class="col-sm-4">
-                    <label asp-for="Plot"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.Plot
-                </dd>
-                <dt class="col-sm-4">
-                    <label asp-for="Genre"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.Genre
-                </dd>
-                <dt class="col-sm-4">
-                    <label asp-for="Country"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.Country
-                </dd>
-                <dt class="col-sm-4">
-                    <label asp-for="ImdbRating"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.ImdbRating
-                </dd>
-                <dt class="col-sm-4">
-                    <label asp-for="ViewsNumber"></label>
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.ViewsNumber
-                </dd>
-                <dd>
-                    <div class="col-sm-2">
-                        @if (Model.IsFavorite)
-                        {
-                                <a class="hb-movie__btn-details btn" asp-action="RemoveFavoriteInDetail" asp-route-id="@Model.Id">
-                                    <i class="fas fa-heart"></i>
-                                </a>
-                        }
-                        else
-                        {
-                                <a class="hb-movie__btn-details btn" asp-action="AddFavoriteInDetail" asp-route-id="@Model.Id">
-                                    <i class="far fa-heart"></i>
-                                </a>
-                        }
+<div class="hb-details-movie">
+    <partial name="../Shared/_MovieHeaderPartialView.cshtml" model="@Model" />
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="hb-details-movie__user-status">
+            <div class="container py-4">
+                <h2 class="mb-2">Your opinion</h2>
+                <div class="row mt-2">
+                    <div class="col-sm-1">
+                        <div class="hb-details-movie__user-circle">
+                            <i class="fas fa-user-alt"></i>
+                        </div>
                     </div>
-                </dd>
-                <dt class="col-sm-8">
-                    @if (@Model.IsFavorite)
+                    <div class="col hb-details-movie__user-movie-status">
+                        <div class="row d-flex">
+                            <span>I </span>
+                            <form class="hb-details-movie__user-movie-status__form">
+                                <select id="movie-status" class="hb-details-movie__user-status-select" name="MovieStatus" asp-items="Html.GetEnumSelectList<MovieStatusView>()"></select>
+                            </form>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="hb-details-movie__user-movie-rate d-flex">
+                                <i id="star-1" class="far fa-star grey"></i>
+                                <i id="star-2" class="far fa-star grey"></i>
+                                <i id="star-3" class="far fa-star grey"></i>
+                                <i id="star-4" class="far fa-star grey"></i>
+                                <i id="star-5" class="far fa-star grey"></i>
+                                <i id="star-6" class="far fa-star grey"></i>
+                                <i id="star-7" class="far fa-star grey"></i>
+                                <i id="star-8" class="far fa-star grey"></i>
+                                <i id="star-9" class="far fa-star grey"></i>
+                                <i id="star-10" class="far fa-star grey"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="hb-details-movie__reviews">
+        <div class="container py-4">
+            <div class="row">
+                <div class="col">
+                    <h2 class="mb-2">Reviews</h2>
+                </div>
+                <div class="col justify-content-end d-flex">
+                    @if (SignInManager.IsSignedIn(User))
                     {
-                        <p>This movie is currently favorite on your movies list! </p>
+                        <a class="mx-3" asp-controller="Review" asp-action="Create" asp-route-id="@Model.Id">
+                            <i class="fas fa-plus"></i>
+                            Add review
+                        </a>
+                        <span>|</span>
                     }
-                </dt>
-
-            </dl>
+                    <a class="mx-3" asp-controller="Review" asp-action="Index" asp-route-id="@Model.Id">
+                        <i class="fas fa-list-ul"></i>
+                        View all
+                    </a>
+                </div>
+            </div>
+            @if (@Model.Reviews.Count > 0)
+            {
+                <div class="mt-2">
+                    @foreach (var review in Model.Reviews)
+                    {
+                        <div class="hb-review my-2">
+                            <div class="hb-review-avatar">
+                                <i class="fas fa-user-alt"></i>
+                            </div>
+                            <div class="hb-review-text">
+                                <h5>@review.Title</h5>
+                                <div class="hb-reviewer d-flex">
+                                    <div class="hb-reviewer__user">
+                                        @review.User.FirstName @review.User.LastName
+                                    </div>
+                                    <div class="hb-reviewer__dot-icon mx-2" style="font-size: 8px; align-self: center;">
+                                        <i class="fas fa-circle"></i>
+                                    </div>
+                                    <div class="hb-reviewer__date">
+                                        @review.CreatedDate.ToString("dd MMMM yyyy")
+                                    </div>
+                                </div>
+                                <div class="hb-review-content">
+                                    <div class="hb-review-body">
+                                        @(new HtmlString(review.Body))
+                                    </div>
+                                    <div class="hb-review-body__read-more">
+                                        <a class="hb-btn-green btn mx-1" asp-controller="Review" asp-action="Details" asp-route-id="@review.Id">Read all</a>
+                                    </div>
+                                </div>
+                            </div>
+                            @if (SignInManager.IsSignedIn(User) && UserManager.GetUserId(User) == review.UserId)
+                            {
+                                <div class="hb-review-action">
+                                    <a data-toggle="dropdown" href="#">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a class="mx-1" asp-controller="Review" asp-action="Delete" asp-route-id="@review.Id">
+                                                Delete
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="mx-1" asp-controller="Review" asp-action="Update" asp-route-id="@review.Id">
+                                                Edit
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="mt2 hb-details-movie__no-reviews">
+                    <div class="text-center">
+                        <h4>The movie has no reviews yet.</h4>
+                        <h5>Be the first to add it!</h5>
+                        <div style="font-size: 35px; color: #d9d9d9">
+                            <i class="fas fa-feather-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            }
+            <hr />
         </div>
     </div>
-    
-    
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $(".hb-details-movie__user-movie-rate i").mouseenter(function () {
+                var starId = this.id.substr(this.id.indexOf("-") + 1);
+                for (var i = 1; i <= starId; i++) {
+                    $("#star-" + i).removeClass("far fa-star grey");
+                    $("#star-" + i).addClass("fas fa-star yellow");
+                }
+            });
+            $(".hb-details-movie__user-movie-rate i").mouseleave(function () {
+                var starId = this.id.substr(this.id.indexOf("-") + 1);
+                for (var i = 1; i <= starId; i++) {
+                    $("#star-" + i).removeClass("fas fa-star yellow");
+                    $("#star-" + i).addClass("far fa-star grey");
+                }
+            });
+        });
+    </script>
+}

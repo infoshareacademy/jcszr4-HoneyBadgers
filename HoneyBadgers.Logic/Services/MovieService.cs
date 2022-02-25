@@ -7,6 +7,7 @@ using AutoMapper;
 using HoneyBadgers.Entity.Models;
 using HoneyBadgers.Entity.Repositories;
 using HoneyBadgers.Logic.Dto;
+using HoneyBadgers.Logic.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace HoneyBadgers.Logic.Services
@@ -16,22 +17,21 @@ namespace HoneyBadgers.Logic.Services
         private readonly UserService _userService;
         private readonly IRepository<Movie> _movieRepository;
         private readonly IMapper _mapper;
-        private readonly AuthService _authService;
+        private readonly IReviewService _reviewService;
         public MovieService(
             IRepository<Movie> movieRepository,
             UserService userService,
             IMapper mapper,
-            AuthService authService)
+            IReviewService reviewService)
         {
             _movieRepository = movieRepository;
             _userService = userService;
             _mapper = mapper;
-            _authService = authService;
+            _reviewService = reviewService;
         }
 
         public async Task<List<MovieDto>> GetAllMovieShortModel()
         {
-            
             var movies = await _movieRepository.GetAllQueryable()
                 .Include(m => m.Genre)
                 .Select(m => _mapper.Map<MovieDto>(m))
@@ -80,9 +80,24 @@ namespace HoneyBadgers.Logic.Services
             return _movieRepository.Get(id);
         }
 
-        public MovieDto GetMovieDtoById(string id)
+        public async Task<DetailMovieViewModel> GetDetailMovie(string id)
         {
-            var movie = _movieRepository.Get(id);
+            var movie = await _movieRepository.GetAllQueryable()
+                .Include(m => m.Genre)
+                .Include(m => m.Ratings)
+                .SingleOrDefaultAsync(m => m.Id == id);
+            movie.Reviews = await _reviewService.GetMovieReviews(id);
+            var userFavoriteMovies = _userService.GetFavoriteMovies();
+            var detailMovie = _mapper.Map<DetailMovieViewModel>(movie);
+            detailMovie.IsFavorite = userFavoriteMovies.Any(m => m.Id == id);
+            return detailMovie;
+        }
+
+        public async Task<MovieDto> GetMovieDtoById(string id)
+        {
+            var movie = await _movieRepository.GetAllQueryable()
+                .Include(m => m.Genre)
+                .SingleOrDefaultAsync(s => s.Id == id);
             return _mapper.Map<MovieDto>(movie);
         }
 

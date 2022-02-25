@@ -37,6 +37,7 @@ namespace HoneyBadgers.WebApp
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<AuthService>();
             services.AddTransient<UserService>();
+            services.AddTransient<IReviewService, ReviewService>();
             services.AddTransient<IMovieService, MovieService>();
             services.AddTransient<IReportService, ReportService>();
             var profileAssembly = typeof(MovieProfile).Assembly;
@@ -61,8 +62,9 @@ namespace HoneyBadgers.WebApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, HbContext hbContext)
         {
+            hbContext.Database.Migrate();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

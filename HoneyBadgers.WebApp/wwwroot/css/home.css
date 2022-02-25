@@ -4,6 +4,9 @@
 .hb-home-movie-list {
     margin-bottom: 32px;
 }
+.hb-home-header {
+    margin-bottom: 8px;
+}
 .hb-recent-movies {
     width: 100%;
     overflow-x: hidden;
@@ -78,4 +81,79 @@
     position: absolute;
     bottom: 0px;
     padding: 8px;
+}
+.hb-home-review-list {
+    padding-bottom: 32px;
+}
+.hb-home-review {
+    min-width: 450px;
+    position: relative;
+}
+.hb-home-review__image {
+    height: 225px;
+    width: 150px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 4px;
+}
+.hb-home-review__text {
+    position: absolute;
+    top: 15px;
+    left: 100px;
+    background: #fbfbfb;
+    z-index: 1;
+    padding: 8px;
+    border-radius: 4px;
+}
+.hb-home-review__text-header {
+    color: #b3b3b3;
+    font-size: 11px;
+    font-weight: bold;
+}
+.hb-home-review__text-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+.hb-home-review__text-content {
+    max-height: 100px;
+    position: relative;
+    overflow: hidden;
+}
+.hb-home-review__text-content .hb-home-review__text-read-more {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 50px 0 10px;
+    /* "transparent" only works here because == rgba(0,0,0,0) */
+    background-image: linear-gradient(to bottom, transparent, #fbfbfb 70%);
+}
+
+.hb-home-review__text-content .hb-home-review__text-read-more a {
+    color: #2ba837
+}
+.hb-home-review__text-user {
+    display: grid;
+    grid-template-columns: 30px auto;
+    grid-template-rows: auto;
+}
+.hb-home-review__text-user-avatar {
+    background-color: #fff;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    font-size: 22px;
+    line-height: 25px;
+    border: 3px solid #2ba837;
+    margin-right: 16px;
+    color: #2ba837;
+}
+.hb-home-review__text-user-name {
+    align-self: center;
+    margin-left: 8px;
+    font-size: 14px;
 }

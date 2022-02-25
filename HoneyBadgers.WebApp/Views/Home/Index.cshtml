@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using HoneyBadgers.Entity.Models
+@using Microsoft.AspNetCore.Html
 @model HoneyBadgers.Logic.Models.HomeViewModel
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
@@ -8,16 +9,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div>
-    <h1 class="text-center display-4">
-        Welcome
-        @if (SignInManager.IsSignedIn(User))
-        {
-            <span>
-                @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName
-            </span>
-        }
-    </h1>
+<div class="container mt-3">
     <div class="hb-home-movie-list">
         <div class="hb-home-header">
             <div class="row">
@@ -104,6 +96,46 @@
             </div>
         }
     </div>
+    }
+    @if (@Model.RecentReviews.Count > 0)
+    {
+        <div class="hb-home-movie-list">
+            <div class="hb-home-header">
+                <div class="row">
+                    <div class="col">
+                        <h3>Recent Reviews</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="hb-home-review-list">
+                <div class="d-flex flex-row justify-content-center align-items-center">
+                    @foreach (var review in Model.RecentReviews)
+                    {
+                        <div class="hb-home-review">
+                            <div class="hb-home-review__image" style="background-image: url( @review.Movie.Poster );"></div>
+                            <div class="hb-home-review__text">
+                                <div class="hb-home-review__text-header">@review.Movie.Title</div>
+                                <div class="hb-home-review__text-title">@review.Title</div>
+                                <div class="hb-home-review__text-content">
+                                    <div class="hb-home-review__text-body">@(new HtmlString(review.Body))</div>
+                                    <div class="hb-home-review__text-read-more">
+                                        <a class="mx-1" asp-controller="Review" asp-action="Details" asp-route-id="@review.Id">read more</a>
+                                    </div>
+                                </div>
+                                <div class="hb-home-review__text-user">
+                                    <div class="hb-home-review__text-user-avatar">
+                                        <i class="fas fa-user-alt"></i>
+                                    </div>
+                                    <div class="hb-home-review__text-user-name">
+                                        @review.User.FirstName @review.User.LastName
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     }
     </div>
 
