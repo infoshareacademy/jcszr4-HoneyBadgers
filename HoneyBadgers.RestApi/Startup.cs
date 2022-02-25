@@ -1,5 +1,6 @@
-using HoneyBadgers.Entity.Context;
 using HoneyBadgers.Entity.Repositories;
+using HoneyBadgers.RestApi.Context;
+using HoneyBadgers.RestApi.Repositories;
 using HoneyBadgers.RestApi.Services;
 using HoneyBadgers.RestApi.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -26,13 +27,13 @@ namespace HoneyBadgers.RestApi
         {
             services.AddControllers();
             services.AddHttpContextAccessor();
-            services.AddTransient<IReportRepository, ReportRepository>();
             services.AddTransient<IReportService, ReportService>();
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<HbContext>(o => o.UseSqlServer(connectionString, b => b.MigrationsAssembly("HoneyBadgers.RestApi")));
-
+            services.AddDbContext<HbReportContext>(o => o.UseSqlServer(connectionString, b => b.MigrationsAssembly("HoneyBadgers.RestApi")));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+            services.AddScoped(typeof(Repositories.IRepository<>), typeof(Repository<>));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HoneyBadgers.RestApi", Version = "v1" });

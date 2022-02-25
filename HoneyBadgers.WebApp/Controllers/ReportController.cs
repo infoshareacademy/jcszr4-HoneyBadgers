@@ -35,7 +35,7 @@ namespace HoneyBadgers.WebApp.Controllers
                 return View(new Report[]{ new Report(ex.Message) });
             }
             var content = await result.Content.ReadAsStringAsync();
-            var json = JsonConvert.DeserializeObject<Report[]>(content); ;
+            var json = JsonConvert.DeserializeObject<Report[]>(content); 
             return View(json);
         }
 

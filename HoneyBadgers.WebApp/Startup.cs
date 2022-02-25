@@ -38,6 +38,7 @@ namespace HoneyBadgers.WebApp
             services.AddTransient<AuthService>();
             services.AddTransient<UserService>();
             services.AddTransient<IMovieService, MovieService>();
+            services.AddTransient<IReportService, ReportService>();
             var profileAssembly = typeof(MovieProfile).Assembly;
             services.AddAutoMapper(profileAssembly);
 

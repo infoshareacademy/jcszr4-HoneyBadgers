@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HoneyBadgers.Entity.Context;
-using HoneyBadgers.Entity.Models;
+using System.Text;
+using System.Threading.Tasks;
+using HoneyBadgers.RestApi.Context;
+using HoneyBadgers.RestApi.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace HoneyBadgers.Entity.Repositories
 {
-    public class Repository<T> : IRepository<T> where T: BaseEntity
+    public class Repository<T> : RestApi.Repositories.IRepository<T> where T: BaseEntity
     {
-        private readonly HbContext _context;
+        private readonly HbReportContext _context;
         private DbSet<T> entities;
-        public Repository(HbContext context)
+        public Repository(HbReportContext context)
         {
             _context = context;
             entities = context.Set<T>();

@@ -1,21 +1,22 @@
-﻿using HoneyBadgers.Entity.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using HoneyBadgers.RestApi.Models;
+using HoneyBadgers.RestApi.Repositories;
 using HoneyBadgers.RestApi.Services.Interfaces;
 
 namespace HoneyBadgers.RestApi.Services
 {
     public class ReportService : IReportService
     {
-        private readonly IReportRepository _repository;
+        private readonly IRepository<Report> _repository;
 
-        public ReportService(IReportRepository repository)
+        public ReportService(IRepository<Report> repository)
         {
             _repository = repository;
         }
 
         public IEnumerable<Report> GetReports()
         {
-            return _repository.GetReports();
+            return _repository.GetAll();
         }
 
         public Report CreateReport()
@@ -26,7 +27,7 @@ namespace HoneyBadgers.RestApi.Services
 
         public void AddReport(Report report)
         {
-            _repository.AddReport(report);
+            _repository.Insert(report);
         }
 
     }
