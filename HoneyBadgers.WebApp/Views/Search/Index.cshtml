@@ -1,23 +1,82 @@
-﻿@model HoneyBadgers.Entity.Models.Search
+﻿@using System.Linq
+@using HoneyBadgers.Entity.Models
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.CodeAnalysis.CSharp.Syntax
+@model List<HoneyBadgers.Logic.Dto.MovieDto>
+@inject SignInManager<ApplicationUser> _signInManager
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Search result</h1>
+<hr/>
 
-<div>
-    <h4>SearchModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Query)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Query)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@if (@Model == null)
+{
+    <h4>No search results</h4>
+}
+else
+{
+    @foreach (var movie in Model)
+    {
+        <div id="movie-partial-view" class="hb-movie card mb-3">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="@movie.Poster" class="img-fluid rounded-start" alt="@movie.Title">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <div class="row hb-movie__header">
+                            <div class="col-md-10">
+                                <h6 class="card-title">@movie.Title</h6>
+                            </div>
+                            @if (_signInManager.IsSignedIn(User))
+                            {
+                                <div class="col-md-2">
+                                    @if (movie.IsFavorite)
+                                    {
+                                        <a asp-controller="Search" asp-action="RemoveFavorite" asp-route-id="@movie.Id">
+                                            <i class="fas fa-heart"></i>
+                                        </a>
+
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="Search" asp-action="AddFavorite" asp-route-id="@movie.Id">
+                                            <i class="far fa-heart"></i>
+                                        </a>
+                                    }
+                                </div>
+                            }
+                        </div>
+                        <div class="hb-movie__option card-text">
+                            <label asp-for="@movie.Year"></label>
+                            <span>@movie.Year</span>
+                        </div>
+                        <div class="hb-movie__option card-text">
+                            <label asp-for="@movie.Director"></label>
+                            <span>@movie.Director</span>
+                        </div>
+                        <div class="hb-movie__icons card-text d-flex">
+                            <div class="hb-movie__rate m-1 d-flex">
+                                <i class="fas fa-star"></i>
+                                <p class="pl-2 mb-0">@movie.ImdbRating</p>
+                            </div>
+                            <div class="hb-movie__views m-1 d-flex">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                                <p class="pl-2 mb-0">@movie.ViewsNumber</p>
+                            </div>
+                        </div>
+                        <div class="hb-movie__plot card-text">
+                            @movie.Plot
+                        </div>
+                        <div class="hb-movie__action my-3">
+                            <a class="hb-movie__btn-details btn" role="button" asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">View details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

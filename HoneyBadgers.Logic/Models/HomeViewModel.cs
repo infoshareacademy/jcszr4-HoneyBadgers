@@ -7,5 +7,6 @@ namespace HoneyBadgers.Logic.Models
     {
         public List<Movie> RecentMovies { get; set; }
         public List<Movie> FavoriteMovies { get; set; }
+        public List<Review> RecentReviews { get; set; }
     }
 }

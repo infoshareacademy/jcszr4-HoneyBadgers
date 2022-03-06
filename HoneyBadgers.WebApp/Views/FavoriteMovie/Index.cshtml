@@ -8,6 +8,7 @@
 }
 
 
+
 @if (SignInManager.IsSignedIn(User))
 {
 <div id="movies-list">
@@ -19,3 +20,50 @@ else
     <p>Feature available only for logged in users. If u wish to add some of the movies to your favourite movies list, please register or sign in if 
         you already have an account.</p>
 }
+
+<div class="container mt-3">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                <label asp-for="First().Title"></label>
+            </th>
+            <th>
+                <label asp-for="First().Director"></label>
+            </th>
+            <th>
+                <label asp-for="First().Genre"></label>
+            </th>
+            <th>
+                <label asp-for="First().ImdbRating"></label>
+            </th>
+            <th>
+                <label asp-for="First().Poster"></label>
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model) {
+            <tr>
+
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    @item.Director
+                </td>
+                <td>
+                    @item.Genre
+                </td>
+                <td>
+                    @item.ImdbRating
+                </td>
+                <td>
+                    @item.Poster
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

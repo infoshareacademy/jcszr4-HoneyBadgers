@@ -1,9 +1,10 @@
 using HoneyBadgers.Logic.Enums;
 using System.Linq;
 using System.Threading.Tasks;
+using HoneyBadgers.Logic.Models;
 using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
+using HoneyBadgers.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HoneyBadgers.WebApp.Controllers
@@ -12,10 +13,12 @@ namespace HoneyBadgers.WebApp.Controllers
     {
         private readonly IMovieService _movieService;
         private readonly UserService _userService;
-        public MovieController(IMovieService movieService, UserService userService)
+        private readonly IReportService _reportService;
+        public MovieController(IMovieService movieService, UserService userService, IReportService reportService)
         {
             _movieService = movieService;
             _userService = userService;
+            _reportService = reportService;
         }
 
         public async Task<IActionResult> Index()
@@ -45,75 +48,24 @@ namespace HoneyBadgers.WebApp.Controllers
         }
 
         // GET: MovieController/Details/5
-        public ActionResult Details(string id)
+        public async Task<ActionResult> Details(string id)
         {
-            var model = _movieService.GetMovieDtoById(id);
-            var favoriteMovie = _userService.GetFavoriteMovie(id);
-            model.IsFavorite = favoriteMovie != null;
+            var model = await _movieService.GetDetailMovie(id);
+            foreach (var genre in model.Genre)
+            {
+                await _reportService.AddGenreStats(new CreateGenreStats()
+                {
+                    GenreName = genre.Name,
+                    GenreId = genre.Id
+                });
+            }
             return View(model);
         }
 
-        // GET: MovieController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: MovieController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult AddReview(CreateReviewViewModel textEditor)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: MovieController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: MovieController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: MovieController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: MovieController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View("Index");
         }
 
         public IActionResult AddFavorite(string id)

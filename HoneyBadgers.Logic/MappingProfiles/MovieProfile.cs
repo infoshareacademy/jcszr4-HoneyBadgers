@@ -2,6 +2,7 @@
 using AutoMapper;
 using HoneyBadgers.Entity.Models;
 using HoneyBadgers.Logic.Dto;
+using HoneyBadgers.Logic.Models;
 
 namespace HoneyBadgers.Logic.MappingProfiles
 {
@@ -10,8 +11,10 @@ namespace HoneyBadgers.Logic.MappingProfiles
         public MovieProfile()
         {
             CreateMap<Movie, MovieDto>()
-                .ForMember(m => m.Genre, o => o.MapFrom(s => string.Join(", ", s.Genre.Select(g => g.Name))))
                 .ForMember(m => m.IsFavorite, o => o.Ignore());
+            CreateMap<Movie, DetailMovieViewModel>()
+                .ForMember(m => m.IsFavorite, o => o.Ignore());
+            
         }
     }
 }

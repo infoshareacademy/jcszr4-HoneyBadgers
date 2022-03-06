@@ -1,6 +1,9 @@
 ﻿header {
     position: relative;
 }
+.hb-main-content {
+    min-height: calc(100vh - 205px);
+}
 .hb-navbar, .hb-footer {
     background-color: #0d0d0d;
 }
