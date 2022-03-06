@@ -17,7 +17,7 @@ namespace HoneyBadgers.WebApp.Controllers
         public IActionResult Index()
         {
             
-            Log.Debug("Section 'About' has been displayed.");
+            Log.Information("Section 'About' has been displayed.");
             return View();
         }
     }
