@@ -1,7 +1,6 @@
-﻿using HoneyBadgers.Entity.Models;
-using HoneyBadgers.RestApi.Services;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using HoneyBadgers.RestApi.Models;
 using HoneyBadgers.RestApi.Services.Interfaces;
 
 namespace HoneyBadgers.RestApi.Controllers

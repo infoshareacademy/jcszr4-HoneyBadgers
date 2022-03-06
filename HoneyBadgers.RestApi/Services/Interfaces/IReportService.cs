@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using HoneyBadgers.Entity.Models;
+using HoneyBadgers.RestApi.Models;
 
 namespace HoneyBadgers.RestApi.Services.Interfaces
 {
