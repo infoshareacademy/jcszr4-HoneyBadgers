@@ -1,10 +1,10 @@
 using HoneyBadgers.Logic.Enums;
 using System.Linq;
 using System.Threading.Tasks;
+using HoneyBadgers.Logic.Models;
 using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
 using HoneyBadgers.WebApp.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HoneyBadgers.WebApp.Controllers
@@ -13,10 +13,12 @@ namespace HoneyBadgers.WebApp.Controllers
     {
         private readonly IMovieService _movieService;
         private readonly UserService _userService;
-        public MovieController(IMovieService movieService, UserService userService)
+        private readonly IReportService _reportService;
+        public MovieController(IMovieService movieService, UserService userService, IReportService reportService)
         {
             _movieService = movieService;
             _userService = userService;
+            _reportService = reportService;
         }
 
         public async Task<IActionResult> Index()
@@ -49,6 +51,14 @@ namespace HoneyBadgers.WebApp.Controllers
         public async Task<ActionResult> Details(string id)
         {
             var model = await _movieService.GetDetailMovie(id);
+            foreach (var genre in model.Genre)
+            {
+                await _reportService.AddGenreStats(new CreateGenreStats()
+                {
+                    GenreName = genre.Name,
+                    GenreId = genre.Id
+                });
+            }
             return View(model);
         }
 
