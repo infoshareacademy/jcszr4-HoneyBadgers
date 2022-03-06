@@ -10,6 +10,7 @@ namespace HoneyBadgers.WebApp.Controllers
     {
         private readonly IMovieService _movieService;
         private readonly UserService _userService;
+        
 
         public FavoriteMovieController(IMovieService movieService, UserService userService)
         {

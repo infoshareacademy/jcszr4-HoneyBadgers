@@ -1,4 +1,5 @@
-﻿using HoneyBadgers.Entity.Context;
+﻿using System;
+using HoneyBadgers.Entity.Context;
 using HoneyBadgers.Entity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -39,10 +40,15 @@ namespace HoneyBadgers.Logic.Services
         {
             _hbContext.UserMovie.AsQueryable();
             var userId = _authService.GetUser().Result;
+            if (userId == null)
+            {
+                return;
+            }
             var movieToAdd = _hbContext.Movies.AsQueryable().FirstOrDefault(m => m.Id == id);
+            
             var favMovie = new FavoriteMovie()
             {
-                MovieId = movieToAdd.Id,
+                MovieId = movieToAdd?.Id,
                 UserId = userId.Id
             };
             _hbContext.Add(favMovie);
