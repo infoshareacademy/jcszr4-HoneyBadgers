@@ -40,13 +40,13 @@ namespace HoneyBadgers.WebApp.Controllers
         [HttpGet]
         public async Task<ActionResult> GenreReport()
         {
-            var expenses = new List<Tuple<string, int>>();
-            expenses.Add(new Tuple<string, int>("Book", 3));
-            expenses.Add(new Tuple<string, int>("Horror", 8));
-            expenses.Add(new Tuple<string, int>("Fantasy", 6));
-            expenses.Add(new Tuple<string, int>("Bookf", 1));
+            var genre = new List<Tuple<string, int>>();
+            genre.Add(new Tuple<string, int>("Book", 3));
+            genre.Add(new Tuple<string, int>("Horror", 8));
+            genre.Add(new Tuple<string, int>("Fantasy", 6));
+            genre.Add(new Tuple<string, int>("Bookf", 1));
 
-            ViewBag.Ex = expenses;
+            ViewBag.Ex = genre;
             return View();
         }
 

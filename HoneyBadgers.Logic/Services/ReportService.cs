@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HoneyBadgers.Logic.Models;
 using HoneyBadgers.Logic.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace HoneyBadgers.Logic.Services
@@ -11,12 +12,14 @@ namespace HoneyBadgers.Logic.Services
     public class ReportService: IReportService
     {
         private readonly AuthService _authService;
+        private readonly ILogger<ReportService> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly string baseUrl = "https://localhost:44313/api";
-        public ReportService(IHttpClientFactory httpClientFactory, AuthService authService)
+        public ReportService(IHttpClientFactory httpClientFactory, AuthService authService, ILogger<ReportService> logger)
         {
             _httpClientFactory = httpClientFactory;
             _authService = authService;
+            _logger = logger;
         }
         public async Task AddGenreStats(CreateGenreStats genreStats)
         {
@@ -29,7 +32,12 @@ namespace HoneyBadgers.Logic.Services
                 Encoding.UTF8,
                 MediaTypeNames.Application.Json);
             var result = await client.PostAsync($"{baseUrl}/genre", content);
-            var cos = result;
+
+            if (!result.IsSuccessStatusCode)
+            {
+                var resultContent = await result.Content.ReadAsStringAsync();
+                _logger.LogError($"Error while creating genre stats report: {resultContent}");
+            }
         }
     }
 }
