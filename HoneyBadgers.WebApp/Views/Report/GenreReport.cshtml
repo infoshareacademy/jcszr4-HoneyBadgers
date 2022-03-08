@@ -2,11 +2,6 @@
     ViewBag.Title = "ChartInMVC";
 }
 
-@foreach (var cos in ViewBag.Ex)
-{
-    @cos.Item1
-}
-
 <div class="container " style="position: relative; width: 50%">
     <h3 align="center">Current expenses</h3>
     <canvas id="currentExpensesChart"></canvas>
@@ -32,12 +27,12 @@
                 data: dataValues,
                 fill: false,
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)',
+                    'rgba(255, 159, 64, 0.6)'
                 ],
                 hoverOffset: 10
             }]

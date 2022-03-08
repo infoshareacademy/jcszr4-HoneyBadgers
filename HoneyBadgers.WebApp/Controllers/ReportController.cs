@@ -1,83 +1,61 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using HoneyBadgers.Entity.Models;
+using HoneyBadgers.Logic.Services.Interfaces;
+using HoneyBadgers.WebApp.Models;
 using Newtonsoft.Json;
 
 namespace HoneyBadgers.WebApp.Controllers
 {
     public class ReportController : Controller
     {
-        private readonly IHttpClientFactory _iHttpClientFactory;
-        public ReportController(IHttpClientFactory iHttpClientFactory)
+        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IReportService _reportService;
+        public ReportController(IHttpClientFactory httpClientFactory, IReportService reportService)
         {
-            _iHttpClientFactory = iHttpClientFactory;
+            _httpClientFactory = httpClientFactory;
+            _reportService = reportService;
         }
         [HttpGet]
         public async Task<ActionResult<Report>> Index()
         {
-            var client = _iHttpClientFactory.CreateClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:5001/api/reports");
-
-            HttpResponseMessage result;
-            try
-            {
-                result = await client.SendAsync(request);
-            }
-            catch(Exception ex)
-            {
-                return View(new Report[]{ new Report(ex.Message) });
-            }
-            var content = await result.Content.ReadAsStringAsync();
-            var json = JsonConvert.DeserializeObject<Report[]>(content); 
-            return View(json);
-        }
-
-        [HttpGet]
-        public async Task<ActionResult> GenreReport()
-        {
-            var genre = new List<Tuple<string, int>>();
-            genre.Add(new Tuple<string, int>("Book", 3));
-            genre.Add(new Tuple<string, int>("Horror", 8));
-            genre.Add(new Tuple<string, int>("Fantasy", 6));
-            genre.Add(new Tuple<string, int>("Bookf", 1));
-
-            ViewBag.Ex = genre;
+            // var client = _iHttpClientFactory.CreateClient();
+            // var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:5001/api/reports");
+            //
+            // HttpResponseMessage result;
+            // try
+            // {
+            //     result = await client.SendAsync(request);
+            // }
+            // catch(Exception ex)
+            // {
+            //     return View(new Report[]{ new Report(ex.Message) });
+            // }
+            // var content = await result.Content.ReadAsStringAsync();
+            // var json = JsonConvert.DeserializeObject<Report[]>(content); 
             return View();
         }
 
-        [HttpPost]
-        public JsonResult NewChart()
+
+        [HttpGet]
+        public IActionResult GetReportData(string reportType)
         {
-            var strEducation = "Book";
-            var educationValue = Math.Round(34.6, 0);
-
-            List<object> iData = new List<object>();
-            //Creating sample data    
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Expense", System.Type.GetType("System.String"));
-            dt.Columns.Add("ExpenseValues", System.Type.GetType("System.Int32"));
-
-            //For Education  
-            DataRow dr = dt.NewRow();
-            dr["Expense"] = strEducation;
-            dr["ExpenseValues"] = educationValue;
-            dt.Rows.Add(dr);
-
-            //Looping and extracting each DataColumn to List<Object>    
-            foreach (DataColumn dc in dt.Columns)
+            var model = new ChartViewModel();
+            switch (reportType)
             {
-                List<object> x = new List<object>();
-                x = (from DataRow drr in dt.Rows select drr[dc.ColumnName]).ToList();
-                iData.Add(x);
+                case "genre-stats":
+                    var genre = _reportService.GetGenreStats();
+                    model.Title = "Genre Stats";
+                    model.Description = "The most viewed genre by the number of views of movies in a given genre.";
+                    model.ChartData = genre;
+                    break;
+                default:
+                    // code block
+                    break;
             }
-            ViewBag.ChartData = iData;
-            //Source data returned as JSON    
-            return Json(iData);
+
+            return PartialView("_ChartPartialView", model);
         }
     }
 }
