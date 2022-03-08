@@ -80,7 +80,7 @@ namespace HoneyBadgers.WebApp
                 .Enrich.FromLogContext()
                 .CreateLogger();
             loggerFactory.AddSerilog();
-            Log.Debug("Application is running");
+            Log.Information("Application is running");
 
             hbContext.Database.Migrate();
 
