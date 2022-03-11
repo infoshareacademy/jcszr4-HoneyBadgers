@@ -10,13 +10,13 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/import.css" />
-    <link rel="stylesheet" href="~/HoneyBadgers.WebApp.styles.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome.css" />
     <link rel="stylesheet" href="~/lib/Font-Awesome/css/regular.min.css">
     <link rel="stylesheet" href="~/lib/Font-Awesome/css/solid.min.css">
     <link rel="stylesheet" href="~/lib/summernote/summernote-bs4.min.css">
     <link rel="stylesheet" href="~/lib/summernote/summernote-lite.min.css">
     <link rel="stylesheet" href="~/lib/summernote/summernote.min.css">
+    <script src="~/lib/Chart.js/chart.min.js"></script>
 </head>
 <body>
     <header class="sticky-top">
@@ -46,9 +46,6 @@
                                 <a class="nav-link" asp-area="" asp-controller="FavoriteMovie" asp-action="Index">Favorite Movies</a>
                             </li>
                         }
-                        <li>
-                            <a class="nav-link" asp-area="" asp-controller="Report" asp-action="Index">Report</a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="About" asp-action="Index">About</a>
                         </li>
@@ -102,6 +99,7 @@
     <script src="~/lib/summernote/summernote-lite.min.js"></script>
     <script src="~/lib/summernote/summernote.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

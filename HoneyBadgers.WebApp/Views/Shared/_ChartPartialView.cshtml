@@ -1,0 +1,58 @@
+﻿@model HoneyBadgers.WebApp.Models.ChartViewModel
+
+@if (@Model != null)
+{
+    <div class="container " style="position: relative;">
+        <div class="row">
+            <div class="col">
+                <h3>@Model.Title</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-5">
+                <p>@Model.Description</p>
+            </div>
+            <div class="col-7">
+                <canvas id="chartData"></canvas>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    var model = @Html.Raw(Json.Serialize(Model));
+    var title = model['title'];
+    var models = model['chartData'];
+    var labels = [];
+    var dataValues = [];
+    for (var i = 0; i < models.length; i++) {
+        var obj = models[i];
+        labels.push(obj.item1);
+        dataValues.push(obj.item2);
+    };
+    const ctx = document.getElementById('chartData').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: title,
+                data: dataValues,
+                fill: false,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)',
+                    'rgba(255, 159, 64, 0.6)',
+                    'rgba(212, 153, 185, 0.6)',
+                    'rgba(127, 178, 133, 0.6)',
+                    'rgba(54, 117, 45, 0.6)',
+                    'rgba(133, 5, 0, 0.6)'
+                ],
+                hoverOffset: 10
+            }]
+        },
+    });
+</script>
