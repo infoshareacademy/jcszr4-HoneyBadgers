@@ -26,7 +26,7 @@ namespace HoneyBadgers.RestApi.Controllers
         [HttpGet]
         public IActionResult TestError()
         {
-            throw new InvalidOperationException("testujemy błedy");
+            throw new InvalidOperationException("test message");
         }
 
 
