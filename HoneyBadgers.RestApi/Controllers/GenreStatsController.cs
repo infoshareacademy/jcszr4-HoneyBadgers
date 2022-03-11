@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using HoneyBadgers.RestApi.Models;
 using HoneyBadgers.RestApi.Repositories;
 
@@ -22,6 +23,12 @@ namespace HoneyBadgers.RestApi.Controllers
 
             return Ok();
         }
+        [HttpGet]
+        public IActionResult TestError()
+        {
+            throw new InvalidOperationException("testujemy błedy");
+        }
+
 
     }
 }

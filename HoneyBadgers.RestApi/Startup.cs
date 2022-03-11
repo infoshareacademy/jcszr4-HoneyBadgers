@@ -1,6 +1,7 @@
 using System.IO;
 using HoneyBadgers.Entity.Repositories;
 using HoneyBadgers.RestApi.Context;
+using HoneyBadgers.RestApi.Middleware;
 using HoneyBadgers.RestApi.Repositories;
 using HoneyBadgers.RestApi.Services;
 using HoneyBadgers.RestApi.Services.Interfaces;
@@ -65,7 +66,6 @@ namespace HoneyBadgers.RestApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HoneyBadgers.RestApi v1"));
             }
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
