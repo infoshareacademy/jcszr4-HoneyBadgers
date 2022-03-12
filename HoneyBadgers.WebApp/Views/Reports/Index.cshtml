@@ -1,0 +1,57 @@
+﻿@model IEnumerable<HoneyBadgers.WebApp.Models.GenreStats>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<table class="table">
+
+    @if (Model.Count() == 1)
+    {
+        @foreach (var item in Model)
+        {
+            @item.ToString()
+        }
+    }
+    else
+    {
+        <thead>
+            <tr>
+                <th>
+                    <label asp-for="First().GenreId"></label>
+                </th>
+                <th>
+                    <label asp-for="First().GenreName"></label>
+                </th>
+                <th>
+                    <label asp-for="First().UserId"></label>
+                </th>
+                <th>
+                    <label asp-for="First().UserEmail"></label>
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @item.GenreId
+                </td>
+                <td>
+                    @item.GenreName
+                </td>
+                <td>
+                    @item.UserId
+                </td>
+                <td>
+                    @item.UserEmail
+                </td>
+            </tr>
+            }
+        </tbody>
+    }
+
+
+</table>
