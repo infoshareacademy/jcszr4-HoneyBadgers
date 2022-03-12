@@ -47,7 +47,8 @@ namespace HoneyBadgers.WebApp
             services.AddAutoMapper(profileAssembly);
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<HbContext>(o => o.UseSqlServer(connectionString, b => b.MigrationsAssembly("HoneyBadgers.WebApp")));
+            services.AddDbContext<HbContext>(o =>
+                o.UseSqlServer(connectionString, b => b.MigrationsAssembly("HoneyBadgers.WebApp")));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -90,7 +91,19 @@ namespace HoneyBadgers.WebApp
                 .Enrich.FromLogContext()
                 .CreateLogger();
             loggerFactory.AddSerilog();
-            Log.Debug("Application is running");
+            Log.Information("Application is running");
+
+            hbContext.Database.Migrate();
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/error/404");
+                app.UseHsts();
+            }
 
             app.UseSession();
             app.UseHttpsRedirection();
@@ -102,8 +115,8 @@ namespace HoneyBadgers.WebApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

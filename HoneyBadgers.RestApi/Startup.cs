@@ -1,3 +1,5 @@
+using System.IO;
+using HoneyBadgers.Entity.Repositories;
 using HoneyBadgers.RestApi.Context;
 using HoneyBadgers.RestApi.Repositories;
 using HoneyBadgers.RestApi.Services;
@@ -8,7 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 namespace HoneyBadgers.RestApi
 {
@@ -39,8 +43,20 @@ namespace HoneyBadgers.RestApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, HbReportContext hbReportContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, HbReportContext hbReportContext, ILoggerFactory loggerFactory)
         {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", false, true)
+                .Build();
+
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .Enrich.FromLogContext()
+                .CreateLogger();
+            loggerFactory.AddSerilog();
+            Log.Information("API is running");
+
             hbReportContext.Database.Migrate();
             if (env.IsDevelopment())
             {

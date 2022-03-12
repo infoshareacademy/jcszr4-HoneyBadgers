@@ -1,12 +1,20 @@
 ﻿
-<div class="container mt-3">
-    <div>
-        <partial name="../Shared/_AccountMenuPartialView.cshtml" model="@Model" />
+<div class="container my-2">
+    <div class="row">
+        <div class="col-md-auto">
+            <ul class="nav flex-column hb-side-menu p-1">
+                <li class="nav-item">
+                    <a id="hb-genre-stats" class="nav-link active" aria-current="page">My Account</a>
+                </li>
+                <li class="nav-item">
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
+                        <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <div class="col">
+            <div id="hb-account-container"></div>
+        </div>
     </div>
-    <div>
-
-    </div>
-    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
-        <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-    </form>
 </div>

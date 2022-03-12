@@ -114,3 +114,15 @@ body {
     font-weight: 500;
 }
 
+.hb-side-menu {
+    background-color: #f3f3f3;
+    border-radius: 4px;
+}
+
+.hb-side-menu > .nav-item > .nav-link {
+    color: #0d0d0d;
+}
+
+.hb-side-menu > .nav-item > .nav-link:hover {
+    color: #2ba837;
+}
