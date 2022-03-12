@@ -12,12 +12,21 @@ namespace HoneyBadgers.Logic.Services
     {
         private readonly AuthService _authService;
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly string baseUrl = "https://localhost:44313/api";
+        private readonly string baseUrl = "https://localhost:5001/api";
         public ReportService(IHttpClientFactory httpClientFactory, AuthService authService)
         {
             _httpClientFactory = httpClientFactory;
             _authService = authService;
         }
+
+        //TODO: get
+        //zwracac Tuple <(nazwa gatunku) String, (ilościowo) int>
+        //możliwość wybory z jakiego okresu
+
+        //TODO: stworzyć model raportu? 
+
+
+
         public async Task AddGenreStats(CreateGenreStats genreStats)
         {
             var user = await _authService.GetUser();
@@ -29,7 +38,6 @@ namespace HoneyBadgers.Logic.Services
                 Encoding.UTF8,
                 MediaTypeNames.Application.Json);
             var result = await client.PostAsync($"{baseUrl}/genre", content);
-            var cos = result;
         }
     }
 }
