@@ -31,6 +31,7 @@ namespace HoneyBadgers.RestApi.Services
             var numberOfGenre = _genreStatsRepository.GetAllQueryable().Count(r => r.GenreName == name);
 
             var report = new ReportGenreStats(name, numberOfGenre, numberOfRecords);  
+            _reportGenreStatsRepository.Insert(report);
         }
         public ReportGenreStats GetReportGenreStats(string id)
         {
