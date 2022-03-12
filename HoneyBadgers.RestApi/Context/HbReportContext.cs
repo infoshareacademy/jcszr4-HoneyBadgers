@@ -13,12 +13,14 @@ namespace HoneyBadgers.RestApi.Context
         {
             _httpContextAccessor = httpContextAccessor;
         }
-        public DbSet<Report> Reports { get; set; }
         public DbSet<GenreStats> GenreStats { get; set; }
+        public DbSet<ReportGenreStats> ReportGenreStatsModels { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new GenreStatsConfiguration());
+            modelBuilder.ApplyConfiguration(new ReportConfiguration());
         }
     }
 }

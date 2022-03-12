@@ -1,45 +1,43 @@
-﻿using System;
+﻿using HoneyBadgers.RestApi.Context;
+using HoneyBadgers.RestApi.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HoneyBadgers.RestApi.Context;
-using HoneyBadgers.RestApi.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
-namespace HoneyBadgers.Entity.Repositories
+namespace HoneyBadgers.RestApi.Repositories
 {
-    public class Repository<T> : RestApi.Repositories.IRepository<T> where T: BaseEntity
+    public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly HbReportContext _context;
-        private DbSet<T> entities;
+        private readonly DbSet<T> _entities;
         public Repository(HbReportContext context)
         {
             _context = context;
-            entities = context.Set<T>();
+            _entities = context.Set<T>();
         }
         public IEnumerable<T> GetAll()
         {
-            return entities.AsEnumerable();
+            return _entities.AsEnumerable();
         }
 
         public IQueryable<T> GetAllQueryable()
         {
-            return entities.AsQueryable();
+            return _entities.AsQueryable();
         }
 
         public T Get(string id)
         {
-            return entities.SingleOrDefault(s => s.Id == id);
+            return _entities.SingleOrDefault(s => s.Id == id);
         }
+
         public void Insert(T entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException("entity");
             }
-            entities.Add(entity);
+            _entities.Add(entity);
             _context.SaveChanges();
         }
 
@@ -57,7 +55,7 @@ namespace HoneyBadgers.Entity.Repositories
             {
                 throw new ArgumentNullException("entity");
             }
-            entities.Remove(entity);
+            _entities.Remove(entity);
             _context.SaveChanges();
         }
     }

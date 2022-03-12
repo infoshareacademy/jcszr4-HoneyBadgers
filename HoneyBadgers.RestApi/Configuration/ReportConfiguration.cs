@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HoneyBadgers.RestApi.Configuration
 {
-    public class ReportConfiguration : IEntityTypeConfiguration<Report>
+    public class ReportConfiguration : IEntityTypeConfiguration<ReportGenreStats>
     {
-        public void Configure(EntityTypeBuilder<Report> builder)
+        public void Configure(EntityTypeBuilder<ReportGenreStats> builder)
         {
             builder.HasKey(m => m.Id);
             builder.Property(m => m.Id).IsRequired().HasDefaultValueSql("NEWID()");

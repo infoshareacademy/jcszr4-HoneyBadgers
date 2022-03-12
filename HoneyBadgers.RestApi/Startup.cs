@@ -1,4 +1,3 @@
-using HoneyBadgers.Entity.Repositories;
 using HoneyBadgers.RestApi.Context;
 using HoneyBadgers.RestApi.Repositories;
 using HoneyBadgers.RestApi.Services;
@@ -33,7 +32,6 @@ namespace HoneyBadgers.RestApi
             services.AddDbContext<HbReportContext>(o => o.UseSqlServer(connectionString, b => b.MigrationsAssembly("HoneyBadgers.RestApi")));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
-            services.AddScoped(typeof(Repositories.IRepository<>), typeof(Repository<>));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HoneyBadgers.RestApi", Version = "v1" });
