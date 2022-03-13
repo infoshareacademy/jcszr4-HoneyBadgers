@@ -1,4 +1,7 @@
-﻿@model HoneyBadgers.Logic.Models.DetailMovieViewModel
+﻿@using HoneyBadgers.Entity.Models
+@using Microsoft.AspNetCore.Identity
+@model HoneyBadgers.Logic.Models.DetailMovieViewModel
+@inject SignInManager<ApplicationUser> SignInManager
 
 <div class="hb-details-movie__header">
     <div class="container py-3">
@@ -23,9 +26,9 @@
                         <div class="d-flex flex-row my-3">
                             @foreach (var genre in Model.Genre)
                             {
-                            <a class="hb-btn-rounded btn mx-1" asp-controller="Genre" asp-action="List" asp-route-id="@genre.Id">
-                                @genre.Name
-                            </a>
+                                <a class="hb-btn-rounded btn mx-1" asp-controller="Genre" asp-action="List" asp-route-id="@genre.Id">
+                                    @genre.Name
+                                </a>
                             }
                         </div>
                         <div class="hb-details-movie__info">
@@ -64,6 +67,26 @@
                             <div>Watched</div>
                             <div style="font-size: 25px;"><i style="color: #2ba837;" class="fas fa-chalkboard-teacher mr-2"></i>@Model.ViewsNumber</div>
                         </div>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <div class="text-center mb-4">
+                                <div>Favorited</div>
+                                <div style="font-size: 25px;">
+                                    @if (Model.IsFavorite)
+                                    {
+                                        <a class="hb-movie__btn-details btn" asp-action="RemoveFavoriteInDetail" asp-route-id="@Model.Id">
+                                            <i class="fas fa-heart" style="color: #2ba837; font-size: 35px;"></i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="hb-movie__btn-details btn" asp-action="AddFavoriteInDetail" asp-route-id="@Model.Id">
+                                            <i class="far fa-heart" style="color: #2ba837; font-size: 35px;"></i>
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
