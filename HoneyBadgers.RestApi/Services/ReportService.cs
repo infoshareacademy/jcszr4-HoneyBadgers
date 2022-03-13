@@ -1,6 +1,7 @@
 ﻿using HoneyBadgers.RestApi.Models;
 using HoneyBadgers.RestApi.Repositories;
 using HoneyBadgers.RestApi.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -43,5 +44,22 @@ namespace HoneyBadgers.RestApi.Services
         {
             return _reportGenreStatsRepository.GetAllQueryable();
         }
+
+        public ReportGenreStats GetLastGeneratedReportGenreStats()
+        {
+            return _reportGenreStatsRepository.GetAllQueryable().OrderBy(r => r.CreatedDate).LastOrDefault();
+        }
+        public List<Tuple<string, int>> GetAllGenreReport()
+        {
+            var dictionary = _genreStatsRepository.GetAll().GroupBy(g => g.GenreName).ToDictionary(grp => grp.Key, grp => grp.Count()); //TODO zrobićto asynchroniczne
+            var list = dictionary.ToList();
+            List<Tuple<string, int>> tuple = new();
+            foreach (var l in list)
+            {
+                tuple.Add(new Tuple<string, int>(l.Key, l.Value));
+            }
+            return tuple;
+        }
+
     }
 }

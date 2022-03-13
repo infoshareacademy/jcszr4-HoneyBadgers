@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HoneyBadgers.WebApp.Models
+namespace HoneyBadgers.Logic.Models
 {
     public class ReportGenreStats
     {

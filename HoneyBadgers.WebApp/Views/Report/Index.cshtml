@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container my-2">
+    <div class="row">
+        <div class="col-md-auto">
+            <ul class="nav flex-column hb-side-menu p-1">
+                <li class="nav-item">
+                    <a id="hb-genre-stats" class="nav-link active" aria-current="page">Genre Stats</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col">
+            <div id="hb-chart-container"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var reportType;
+        $(function() {
+            $("#hb-genre-stats").click(function () {
+                reportType = "genre-stats";
+                $.ajax({
+                    type: "Get",
+                    url: "/Report/GetReportData?reportType=" + reportType,
+                    success: function (data) {
+                        console.log($("#hb-chart-container"));
+                        $("#hb-chart-container").html("");
+                        $("#hb-chart-container").html(data);
+                    },
+                    error: function (response) {
+                        console.log('error');
+                        console.log(response);
+                    }
+                });
+            });
+        });
+    </script>
+}

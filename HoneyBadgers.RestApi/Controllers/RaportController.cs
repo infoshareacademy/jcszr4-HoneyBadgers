@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using HoneyBadgers.RestApi.Models;
 using HoneyBadgers.RestApi.Services.Interfaces;
+using System;
 
 namespace HoneyBadgers.RestApi.Controllers
 {
@@ -50,6 +51,21 @@ namespace HoneyBadgers.RestApi.Controllers
         {
             _reportService.InsertReportGenreStats(name);
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("report/last")]
+        public ActionResult<ReportGenreStats> GetLastReport()
+        {
+            var result = _reportService.GetLastGeneratedReportGenreStats();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("report/genrestats")]
+        public ActionResult<List<Tuple<string,int>>> GetAllGenreStatsReport()
+        {
+            return _reportService.GetAllGenreReport();
         }
 
     }
