@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using HoneyBadgers.RestApi.Models;
 using Microsoft.AspNetCore.Http;
 using Serilog;
+using Serilog.Context;
 
 namespace HoneyBadgers.RestApi.CustomExceptionMiddleware
 {
@@ -40,7 +41,7 @@ namespace HoneyBadgers.RestApi.CustomExceptionMiddleware
                 }
 
                 var result = JsonSerializer.Serialize(new { message = ex?.Message });
-                Log.Error($"Something went wrong: {ex}");
+                Serilog.Log.Error(ex, "Something went wrong, check exception message!");
                 await HandleExceptionAsync(httpContext, ex);
             }
         }
