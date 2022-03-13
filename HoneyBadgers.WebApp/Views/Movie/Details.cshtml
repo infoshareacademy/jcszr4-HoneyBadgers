@@ -12,7 +12,7 @@
 
 <div class="hb-details-movie">
     <partial name="../Shared/_MovieHeaderPartialView.cshtml" model="@Model" />
-    @if (SignInManager.IsSignedIn(User))
+    @if (SignInManager.IsSignedIn(User) && false)
     {
         <div class="hb-details-movie__user-status">
             <div class="container py-4">
