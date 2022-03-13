@@ -4,6 +4,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using HoneyBadgers.WebApp.Models;
+using System.Collections.Generic;
 
 namespace HoneyBadgers.WebApp.Controllers
 {
@@ -17,6 +18,7 @@ namespace HoneyBadgers.WebApp.Controllers
         }
         [HttpGet]
         public async Task<ActionResult<GenreStats>> Index()
+        public async Task<ActionResult<IEnumerable<ReportGenreStats>>> Index()
         {
             var client = _iHttpClientFactory.CreateClient();
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_baseUrl}/reports");
@@ -29,15 +31,17 @@ namespace HoneyBadgers.WebApp.Controllers
             catch (Exception ex)
             {
                 return View(new GenreStats[] { new GenreStats()});
+                return View(new ReportGenreStats[] { new ReportGenreStats()});
             }
             var content = await result.Content.ReadAsStringAsync();
             var json = JsonConvert.DeserializeObject<GenreStats[]>(content);
+            var json = JsonConvert.DeserializeObject<ReportGenreStats[]>(content);
             return View(json);
         }
         [HttpGet]
         
         // GET: MovieController/Details/5
-        public async Task<ActionResult> Details(string name)
+        public async Task<IActionResult> Details(string name)
         {
             var client = _iHttpClientFactory.CreateClient();
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_baseUrl}/report/{name}");
@@ -53,6 +57,25 @@ namespace HoneyBadgers.WebApp.Controllers
             var content = await result.Content.ReadAsStringAsync();
             var json = JsonConvert.DeserializeObject<ReportGenreStatsModel[]>(content);
             return View(json);
+        }
+        [HttpPost]
+        public async Task<IActionResult> GenerateReport(string name)
+        {
+            var client = _iHttpClientFactory.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Post, $"{_baseUrl}/report/generate/{name}");
+            HttpResponseMessage result;
+            try
+            {
+                result = await client.SendAsync(request);
+            }
+            catch (Exception ex)
+            {
+                return View(ex);
+            }
+            var content = await result.Content.ReadAsStringAsync();
+            var json = JsonConvert.DeserializeObject<ReportGenreStats>(content);
+            return View(Index());
+
         }
 
     }

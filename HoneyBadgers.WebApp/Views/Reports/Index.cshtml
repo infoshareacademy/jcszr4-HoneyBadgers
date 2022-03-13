@@ -1,8 +1,14 @@
 ﻿@model IEnumerable<HoneyBadgers.WebApp.Models.GenreStats>
+@model IEnumerable<HoneyBadgers.WebApp.Models.ReportGenreStats>
 
 @{
     ViewData["Title"] = "Index";
 }
+
+<label>genre name</label>
+<input id="input" class="form-control col-4 mx-1" type="text" name="genre_name"  placeholder="drama"/>
+<input type="submit" asp-action="GenerateReport" asp-route-input="name"/>
+
 
 <table class="table">
 
@@ -18,15 +24,18 @@
         <thead>
             <tr>
                 <th>
+                    <label asp-for="First().Id"></label>
                     <label asp-for="First().GenreId"></label>
                 </th>
                 <th>
                     <label asp-for="First().GenreName"></label>
                 </th>
                 <th>
+                    <label asp-for="First().Body"></label>
                     <label asp-for="First().UserId"></label>
                 </th>
                 <th>
+                    <label asp-for="First().CreatedDate"></label>
                     <label asp-for="First().UserEmail"></label>
                 </th>
 
@@ -37,15 +46,18 @@
             {
             <tr>
                 <td>
+                    @item.Id
                     @item.GenreId
                 </td>
                 <td>
                     @item.GenreName
                 </td>
                 <td>
+                    @item.Body
                     @item.UserId
                 </td>
                 <td>
+                    @item.CreatedDate
                     @item.UserEmail
                 </td>
             </tr>
