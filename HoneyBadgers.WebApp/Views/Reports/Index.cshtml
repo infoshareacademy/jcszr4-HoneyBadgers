@@ -1,0 +1,62 @@
+﻿@model IEnumerable<HoneyBadgers.WebApp.Models.ReportGenreStats>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<label>genre name</label>
+<input id="input" class="form-control col-4 mx-1" type="text" name="genre_name"  placeholder="drama"/>
+<input type="submit" asp-action="GenerateReport" asp-route-input="name"/>
+
+
+<table class="table">
+
+    @if (Model.Count() == 1)
+    {
+        @foreach (var item in Model)
+        {
+            @item.ToString()
+        }
+    }
+    else
+    {
+        <thead>
+            <tr>
+                <th>
+                    <label asp-for="First().Id"></label>
+                </th>
+                <th>
+                    <label asp-for="First().GenreName"></label>
+                </th>
+                <th>
+                    <label asp-for="First().Body"></label>
+                </th>
+                <th>
+                    <label asp-for="First().CreatedDate"></label>
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.GenreName
+                </td>
+                <td>
+                    @item.Body
+                </td>
+                <td>
+                    @item.CreatedDate
+                </td>
+            </tr>
+            }
+        </tbody>
+    }
+
+
+</table>
