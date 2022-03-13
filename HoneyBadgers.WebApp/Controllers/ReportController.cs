@@ -20,6 +20,7 @@ namespace HoneyBadgers.WebApp.Controllers
         [HttpGet]
         public async Task<ActionResult<ReportGenreStatsModel>> Index()
         {
+            //TODO: chyba do wywalenia ??????
             // var client = _iHttpClientFactory.CreateClient();
             // var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:5001/api/reports");
             //

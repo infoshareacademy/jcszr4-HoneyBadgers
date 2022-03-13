@@ -64,7 +64,7 @@ namespace HoneyBadgers.Logic.Services
             }
             catch (Exception ex)
             {
-                result = new HttpResponseMessage(); // TODO
+                result = new HttpResponseMessage(); // TODO coś z tym jeszcze musze zrobić
             }
             var content = await result.Content.ReadAsStringAsync();
             var json = JsonConvert.DeserializeObject<ReportGenreStats[]>(content);
@@ -82,7 +82,7 @@ namespace HoneyBadgers.Logic.Services
             }
             catch (Exception ex)
             {
-                result = new HttpResponseMessage(); // TODO
+                result = new HttpResponseMessage(); // TODO coś z tym jeszcze musze zrobić
             }
             var content = await result.Content.ReadAsStringAsync();
             var json = JsonConvert.DeserializeObject<ReportGenreStats>(content);
@@ -98,7 +98,7 @@ namespace HoneyBadgers.Logic.Services
             }
             catch (Exception ex)
             {
-                result = new HttpResponseMessage(); // TODO
+                result = new HttpResponseMessage(); // TODO coś z tym jeszcze musze zrobić
             }
             //chwilowo na czas testu zakomentowane - prawdopodobnie do wywalenia
             //var content = await result.Content.ReadAsStringAsync(); 
@@ -115,7 +115,7 @@ namespace HoneyBadgers.Logic.Services
             } 
             catch(Exception ex)
             {
-                result = new HttpResponseMessage();
+                result = new HttpResponseMessage(); // TODO coś z tym jeszcze musze zrobić
             }
             var content = await result.Content.ReadAsStringAsync();
             var json = JsonConvert.DeserializeObject<ReportGenreStats>(content);
@@ -133,7 +133,7 @@ namespace HoneyBadgers.Logic.Services
             }
             catch (Exception ex)
             {
-                result = new HttpResponseMessage();
+                result = new HttpResponseMessage(); // TODO coś z tym jeszcze musze zrobić
             }
             var content = await result.Content.ReadAsStringAsync();
             var json = JsonConvert.DeserializeObject<List<Tuple<string, int>>>(content);
