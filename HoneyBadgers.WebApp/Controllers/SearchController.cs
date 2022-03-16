@@ -29,7 +29,7 @@ namespace HoneyBadgers.WebApp.Controllers
                 return View(model);
             }
 
-            model = _movieService.GetAllMovieShortModel().Result.Where(x => x.Title.ToLower().Contains(search)).ToList();
+            model = _movieService.GetAllMovieShortModel().Result.Where(x => x.Title.ToLower().Contains(search.ToLower())).ToList();
 
             return model.Count == 0 ? View() : View(model);
         }
