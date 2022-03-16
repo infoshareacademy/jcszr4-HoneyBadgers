@@ -10,16 +10,17 @@ namespace HoneyBadgers.WebApp.Controllers
 {
     public class ReportController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        //private readonly IHttpClientFactory _httpClientFactory;
         private readonly IReportService _reportService;
         public ReportController(IHttpClientFactory httpClientFactory, IReportService reportService)
         {
-            _httpClientFactory = httpClientFactory;
+            //_httpClientFactory = httpClientFactory; // czy my tego potrzebujemy tu? Może to załatwiać service w logice
             _reportService = reportService;
         }
         [HttpGet]
-        public async Task<ActionResult<Report>> Index()
+        public async Task<ActionResult<ReportGenreStatsModel>> Index()
         {
+            //TODO: chyba do wywalenia ??????
             // var client = _iHttpClientFactory.CreateClient();
             // var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:5001/api/reports");
             //
@@ -45,7 +46,7 @@ namespace HoneyBadgers.WebApp.Controllers
             switch (reportType)
             {
                 case "genre-stats":
-                    var genre = _reportService.GetGenreStats();
+                    var genre = _reportService.GetAllGenreStatsReport().Result;
                     model.Title = "Genre Stats";
                     model.Description = "The most viewed genre by the number of views of movies in a given genre.";
                     model.ChartData = genre;
