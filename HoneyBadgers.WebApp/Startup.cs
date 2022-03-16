@@ -67,9 +67,20 @@ namespace HoneyBadgers.WebApp
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, HbContext hbContext,
-            ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, HbContext hbContext, ILoggerFactory loggerFactory)
         {
+            hbContext.Database.Migrate();
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/error/404");
+                app.UseHsts();
+            }
+
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", false, true)

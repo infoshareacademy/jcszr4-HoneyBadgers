@@ -7,7 +7,12 @@ namespace HoneyBadgers.Logic.Services.Interfaces
 {
     public interface IReportService
     {
-        public Task AddGenreStats(CreateGenreStats genreStats);
-        public List<Tuple<string, int>> GetGenreStats();
+        Task AddGenreStats(CreateGenreStats genreStats);
+        List<Tuple<string, int>> GetGenreStats();
+        Task<IEnumerable<ReportGenreStats>> GetAllReports();
+        Task<ReportGenreStats> GetReportById(string id);
+        Task GenerateReportGenreStats(string genreName);
+        Task<Tuple<string,int>> GetLastReportGenreStats();
+        Task<List<Tuple<string, int>>> GetAllGenreStatsReport();
     }
 }

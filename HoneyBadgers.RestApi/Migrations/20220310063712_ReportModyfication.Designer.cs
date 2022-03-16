@@ -4,14 +4,16 @@ using HoneyBadgers.RestApi.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HoneyBadgers.RestApi.Migrations
 {
     [DbContext(typeof(HbReportContext))]
-    partial class HbReportContextModelSnapshot : ModelSnapshot
+    [Migration("20220310063712_ReportModyfication")]
+    partial class ReportModyfication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +58,7 @@ namespace HoneyBadgers.RestApi.Migrations
                     b.ToTable("GenreStats");
                 });
 
-            modelBuilder.Entity("HoneyBadgers.RestApi.Models.ReportGenreStats", b =>
+            modelBuilder.Entity("HoneyBadgers.RestApi.Models.Report", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -74,9 +76,6 @@ namespace HoneyBadgers.RestApi.Migrations
 
                     b.Property<string>("GenreName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Precents")
-                        .HasColumnType("float");
 
                     b.Property<int>("RowsInDB")
                         .HasColumnType("int");
