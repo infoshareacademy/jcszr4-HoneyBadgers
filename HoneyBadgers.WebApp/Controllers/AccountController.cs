@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using HoneyBadgers.Entity.Models;
 using HoneyBadgers.Logic.Models;
 using Microsoft.AspNetCore.Mvc;
-using HoneyBadgers.Logic.Services;
+using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
@@ -13,12 +12,12 @@ namespace HoneyBadgers.WebApp.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly AuthService _authService;
+        private readonly IAuthService _authService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<AccountController> _logger;
         public AccountController(
-            AuthService authService,
+            IAuthService authService,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<AccountController> logger

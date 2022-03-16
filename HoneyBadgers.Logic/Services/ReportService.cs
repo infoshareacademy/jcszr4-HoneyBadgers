@@ -13,11 +13,11 @@ namespace HoneyBadgers.Logic.Services
 {
     public class ReportService: IReportService
     {
-        private readonly AuthService _authService;
+        private readonly IAuthService _authService;
         private readonly ILogger<ReportService> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly string baseUrl = "https://localhost:5001/api";
-        public ReportService(IHttpClientFactory httpClientFactory, AuthService authService, ILogger<ReportService> logger)
+        public ReportService(IHttpClientFactory httpClientFactory, IAuthService authService, ILogger<ReportService> logger)
         {
             _httpClientFactory = httpClientFactory;
             _authService = authService;

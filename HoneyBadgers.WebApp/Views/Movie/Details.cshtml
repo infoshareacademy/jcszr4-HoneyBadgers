@@ -12,6 +12,15 @@
 
 <div class="hb-details-movie">
     <partial name="../Shared/_MovieHeaderPartialView.cshtml" model="@Model" />
+    <div class="container py-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a  onclick="history.go(-1); return false;" href="#">Back</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+            </ol>
+        </nav>
+    </div>
+    
     @if (SignInManager.IsSignedIn(User) && false)
     {
         <div class="hb-details-movie__user-status">
@@ -96,9 +105,12 @@
                                     <div class="hb-review-body">
                                         @(new HtmlString(review.Body))
                                     </div>
-                                    <div class="hb-review-body__read-more">
-                                        <a class="hb-btn-green btn mx-1" asp-controller="Review" asp-action="Details" asp-route-id="@review.Id">Read all</a>
-                                    </div>
+                                    @if (@review.Body.Length > 250)
+                                    {
+                                        <div class="hb-review-body__read-more">
+                                            <a class="hb-btn-green btn mx-1" asp-controller="Review" asp-action="Details" asp-route-id="@review.Id">Read all</a>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                             @if (SignInManager.IsSignedIn(User) && UserManager.GetUserId(User) == review.UserId)

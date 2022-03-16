@@ -5,15 +5,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using HoneyBadgers.Logic.Services.Interfaces;
 
 namespace HoneyBadgers.Logic.Services
 {
-    public class UserService
+    public class UserService: IUserService
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly AuthService _authService;
+        private readonly IAuthService _authService;
         private readonly HbContext _hbContext;
-        public UserService(UserManager<ApplicationUser> userManager, AuthService authService, HbContext hbContext)
+        public UserService(UserManager<ApplicationUser> userManager, IAuthService authService, HbContext hbContext)
         {
             _userManager = userManager;
             _authService = authService;

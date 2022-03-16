@@ -1,5 +1,4 @@
-﻿using HoneyBadgers.Logic.Enums;
-using HoneyBadgers.Logic.Services.Interfaces;
+﻿using HoneyBadgers.Logic.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,36 +7,50 @@ using HoneyBadgers.Entity.Models;
 using HoneyBadgers.Entity.Repositories;
 using HoneyBadgers.Logic.Dto;
 using HoneyBadgers.Logic.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace HoneyBadgers.Logic.Services
 {
     public class MovieService : IMovieService
     {
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
         private readonly IRepository<Movie> _movieRepository;
         private readonly IMapper _mapper;
         private readonly IReviewService _reviewService;
+        private readonly IAuthService _authService;
         public MovieService(
             IRepository<Movie> movieRepository,
-            UserService userService,
+            IUserService userService,
             IMapper mapper,
-            IReviewService reviewService)
+            IReviewService reviewService,
+            IAuthService authService)
         {
             _movieRepository = movieRepository;
             _userService = userService;
             _mapper = mapper;
             _reviewService = reviewService;
+            _authService = authService;
         }
 
         public async Task<List<MovieDto>> GetAllMovieShortModel()
         {
             var movies = await _movieRepository.GetAllQueryable()
                 .Include(m => m.Genre)
+                .Include(m => m.Reviews)
                 .Select(m => _mapper.Map<MovieDto>(m))
                 .ToListAsync();
             var userFavoriteMovies = _userService.GetFavoriteMovies();
             movies.ForEach(m => m.IsFavorite = userFavoriteMovies.Any(f => f.Id == m.Id));
+            var userId = _authService.GetUserId();
+            if (userId != null)
+            {
+                movies.ForEach(m =>
+                {
+                    var userReview = m.Reviews.Find(r => r.UserId == userId);
+                    m.UserReviewId = userReview?.Id;
+                });
+            }
             return movies;
         }
 
@@ -46,33 +59,6 @@ namespace HoneyBadgers.Logic.Services
             return await _movieRepository.GetAllQueryable()
                 .Include(m => m.Genre)
                 .ToListAsync();
-        }
-
-        public List<Movie> GetSortMovie(List<Movie> sortedMovies, SortType sortType)
-        {
-            switch (sortType)
-            {
-                case SortType.ByMostPopularDescending:
-                    sortedMovies = sortedMovies.OrderByDescending(m => m.ViewsNumber).ToList();
-                    break;
-                case SortType.ByMostPopularAscending:
-                    sortedMovies = sortedMovies.OrderBy(m => m.ViewsNumber).ToList();
-                    break;
-            }
-            return sortedMovies;
-        }
-        public List<MovieDto> GetSortMovie(List<MovieDto> sortedMovies, SortType sortType)
-        {
-            switch (sortType)
-            {
-                case SortType.ByMostPopularDescending:
-                    sortedMovies = sortedMovies.OrderByDescending(m => m.ViewsNumber).ToList();
-                    break;
-                case SortType.ByMostPopularAscending:
-                    sortedMovies = sortedMovies.OrderBy(m => m.ViewsNumber).ToList();
-                    break;
-            }
-            return sortedMovies;
         }
 
         public Movie GetById(string id)
@@ -91,14 +77,6 @@ namespace HoneyBadgers.Logic.Services
             var detailMovie = _mapper.Map<DetailMovieViewModel>(movie);
             detailMovie.IsFavorite = userFavoriteMovies.Any(m => m.Id == id);
             return detailMovie;
-        }
-
-        public async Task<MovieDto> GetMovieDtoById(string id)
-        {
-            var movie = await _movieRepository.GetAllQueryable()
-                .Include(m => m.Genre)
-                .SingleOrDefaultAsync(s => s.Id == id);
-            return _mapper.Map<MovieDto>(movie);
         }
 
         public async Task<List<Movie>> GetRecent(int amount = 5)

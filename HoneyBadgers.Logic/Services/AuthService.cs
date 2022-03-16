@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
 using HoneyBadgers.Entity.Models;
+using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace HoneyBadgers.Logic.Services
 {
-    public class AuthService
+    public class AuthService: IAuthService
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;

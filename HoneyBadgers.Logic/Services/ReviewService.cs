@@ -5,6 +5,7 @@ using AutoMapper;
 using HoneyBadgers.Entity.Models;
 using HoneyBadgers.Entity.Repositories;
 using HoneyBadgers.Logic.Models;
+using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace HoneyBadgers.Logic.Services
@@ -25,9 +26,9 @@ namespace HoneyBadgers.Logic.Services
     {
         private readonly IRepository<Movie> _movieRepository;
         private readonly IRepository<Review> _reviewRepository;
-        private readonly AuthService _authService;
+        private readonly IAuthService _authService;
         private readonly IMapper _mapper;
-        public ReviewService(AuthService authService,
+        public ReviewService(IAuthService authService,
             IRepository<Movie> movieRepository,
             IRepository<Review> reviewRepository,
             IMapper mapper)

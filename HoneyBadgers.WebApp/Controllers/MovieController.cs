@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using HoneyBadgers.Logic.Enums;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,23 +13,26 @@ namespace HoneyBadgers.WebApp.Controllers
     public class MovieController : Controller
     {
         private readonly IMovieService _movieService;
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
         private readonly IReportService _reportService;
-        public MovieController(IMovieService movieService, UserService userService, IReportService reportService)
+        private readonly IMovieSortService _movieSortService;
+        public MovieController(IMovieService movieService, IUserService userService, IReportService reportService, IMovieSortService movieSortService)
         {
             _movieService = movieService;
             _userService = userService;
             _reportService = reportService;
+            _movieSortService = movieSortService;
         }
 
         public async Task<IActionResult> Index()
         {
 
-            var model = await _movieService.GetAllMovieShortModel();
+            var movies = await _movieService.GetAllMovieShortModel();
+            var model = _movieSortService.SortMovie(movies, SortType.ByMostPopularDescending);
             return View(model);
         }
 
-        public async Task<IActionResult> ShowMovies(SortType sortType, double ratingFrom, double ratingTo, bool isFavorite)
+        public async Task<IActionResult> ShowMovies(SortType sortType, double ratingFrom, double ratingTo)
         {
             var movies = await _movieService.GetAllMovieShortModel();
 
@@ -37,12 +41,8 @@ namespace HoneyBadgers.WebApp.Controllers
                 ratingTo = 10;
             }
 
-            movies = SearchService.FindMovieWithRatingBetweenLowerHigher(movies, ratingFrom, ratingTo);
-            if (isFavorite)
-            {
-                movies = movies.Where(m => m.IsFavorite).ToList();
-            }
-            var model = _movieService.GetSortMovie(movies, sortType);
+            movies = _movieSortService.FindMovieWithRatingBetweenLowerHigher(movies, ratingFrom, ratingTo);
+            var model = _movieSortService.SortMovie(movies, sortType);
 
             return PartialView("_MoviePartialView", model);
         }
