@@ -38,11 +38,12 @@ namespace HoneyBadgers.WebApp
             services.AddHttpContextAccessor();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddTransient<AuthService>();
-            services.AddTransient<UserService>();
+            services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<IReviewService, ReviewService>();
             services.AddTransient<IMovieService, MovieService>();
             services.AddTransient<IReportService, ReportService>();
+            services.AddTransient<IMovieSortService, MovieSortService>();
             var profileAssembly = typeof(MovieProfile).Assembly;
             services.AddAutoMapper(profileAssembly);
 

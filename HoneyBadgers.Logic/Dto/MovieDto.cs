@@ -20,5 +20,7 @@ namespace HoneyBadgers.Logic.Dto
         public bool IsFavorite { get; set; }
         public string Runtime { get; set; }
         public string Language { get; set; }
+        public List<Review> Reviews { get; set; }
+        public string UserReviewId { get; set; }
     }
 }

@@ -11,7 +11,8 @@ namespace HoneyBadgers.Logic.MappingProfiles
         public MovieProfile()
         {
             CreateMap<Movie, MovieDto>()
-                .ForMember(m => m.IsFavorite, o => o.Ignore());
+                .ForMember(m => m.IsFavorite, o => o.Ignore())
+                .ForMember(m => m.UserReviewId, o => o.Ignore());
             CreateMap<Movie, DetailMovieViewModel>()
                 .ForMember(m => m.IsFavorite, o => o.Ignore());
             

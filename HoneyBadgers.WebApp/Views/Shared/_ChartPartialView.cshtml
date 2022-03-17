@@ -2,7 +2,7 @@
 
 @if (@Model != null)
 {
-    <div class="container " style="position: relative;">
+    <div class="container" style="position: relative;">
         <div class="row">
             <div class="col">
                 <h3>@Model.Title</h3>
@@ -21,6 +21,7 @@
 
 <script>
     var model = @Html.Raw(Json.Serialize(Model));
+    console.log(model);
     var title = model['title'];
     var models = model['chartData'];
     var labels = [];

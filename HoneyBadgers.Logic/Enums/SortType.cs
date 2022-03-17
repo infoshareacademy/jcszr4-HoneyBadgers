@@ -4,12 +4,17 @@ namespace HoneyBadgers.Logic.Enums
 {
     public enum SortType
     {
-        [Display(Name = "No filters")]
-        None,
-        [Display(Name = "By most popular - descending")]
+        [Display(Name = "Most popular - descending")]
         ByMostPopularDescending,
-        [Display(Name = "By most popular - ascending")]
+        [Display(Name = "Most popular - ascending")]
         ByMostPopularAscending,
-
+        [Display(Name = "Rating - descending")]
+        ByRatingDescending,
+        [Display(Name = "Rating - ascending")]
+        ByRatingAscending,
+        [Display(Name = "Year - descending")]
+        ByYearDescending,
+        [Display(Name = "Year - ascending")]
+        ByYearAscending
     }
 }
