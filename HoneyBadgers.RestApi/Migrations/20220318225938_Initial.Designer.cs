@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HoneyBadgers.RestApi.Migrations
 {
     [DbContext(typeof(HbReportContext))]
-    [Migration("20220318194337_Initial")]
+    [Migration("20220318225938_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,10 +106,13 @@ namespace HoneyBadgers.RestApi.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("IpAddress")
+                    b.Property<string>("HTTPMethod")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserIpAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")

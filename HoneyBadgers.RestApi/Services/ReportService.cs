@@ -67,14 +67,14 @@ namespace HoneyBadgers.RestApi.Services
             return tuple;
         }
 
-        public bool StoreUserActivity(string actionArguments, string url, string userName, string ipAddress)
+        public bool StoreUserActivity(string actionArguments, string url, string userName, string userIpAdress)
         {
             var userActivity = new UserActivity()
             {
                 ActionArguments = actionArguments,
                 Url = url,
                 UserName = userName,
-                IpAddress = ipAddress,
+                UserIpAddress = userIpAdress,
                 CreatedDate = DateTime.Now
             };
 

@@ -30,10 +30,13 @@ namespace HoneyBadgers.Logic.Services
                 actionArguments += JsonConvert.SerializeObject(argument.Value);
             }
 
-            var httpRequest = context.HttpContext.Request.HttpContext.Request.Method;
+            var httpRequestMethod = context.HttpContext.Request.HttpContext.Request.Method;
+
+            var ipAddress = context.HttpContext.Connection.LocalIpAddress;
+            var port = context.HttpContext.Connection.LocalPort;
             var controllerName = context.RouteData.Values["controller"];
             var actionName = context.RouteData.Values["action"];
-            var url = $"{httpRequest}/{controllerName}/{actionName}";
+            var url = $"{ipAddress}:{port}/{controllerName}/{actionName}";
 
             var userName = context.HttpContext.User.Identity?.Name;
 
@@ -42,14 +45,15 @@ namespace HoneyBadgers.Logic.Services
                 userName = "Guest";
             }
 
-            var ipAddress = context.HttpContext.Connection.RemoteIpAddress?.ToString();
+            var userIpAddress = context.HttpContext.Connection.RemoteIpAddress?.ToString();
 
             var userActivity = new UserActivity()
             {
+                HTTPMethod = httpRequestMethod,
                 ActionArguments = actionArguments,
                 Url = url,
                 UserName = userName,
-                IpAddress = ipAddress
+                UserIpAddress = userIpAddress
             };
 
             await _reportService.AddUserActivity(userActivity);

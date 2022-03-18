@@ -104,10 +104,13 @@ namespace HoneyBadgers.RestApi.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("IpAddress")
+                    b.Property<string>("HTTPMethod")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserIpAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
