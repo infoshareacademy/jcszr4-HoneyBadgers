@@ -14,9 +14,9 @@ namespace HoneyBadgers.Logic.Services
 {
     public class UserActivityService : IActionFilter
     {
-        private readonly ReportService _reportService;
+        private readonly IReportService _reportService;
 
-        public UserActivityService(ReportService reportService)
+        public UserActivityService(IReportService reportService)
         {
             _reportService = reportService;
         }
