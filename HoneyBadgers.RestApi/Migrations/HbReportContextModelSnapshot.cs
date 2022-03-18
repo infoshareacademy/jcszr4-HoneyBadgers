@@ -94,15 +94,14 @@ namespace HoneyBadgers.RestApi.Migrations
 
             modelBuilder.Entity("HoneyBadgers.RestApi.Models.UserActivity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ActionArguments")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ActivityDate")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("IpAddress")

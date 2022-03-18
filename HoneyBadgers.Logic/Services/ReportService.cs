@@ -17,7 +17,7 @@ namespace HoneyBadgers.Logic.Services
         private readonly IAuthService _authService;
         private readonly ILogger<ReportService> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly string _baseUrl = "https://localhost:5001/api";
+        private readonly string _baseUrl = "https://localhost:44313/api";
 
         public ReportService(IHttpClientFactory httpClientFactory, IAuthService authService, ILogger<ReportService> logger)
         {
@@ -162,7 +162,7 @@ namespace HoneyBadgers.Logic.Services
                 JsonConvert.SerializeObject(userActivity),
                 Encoding.UTF8,
                 MediaTypeNames.Application.Json);
-            var result = await client.PostAsync($"{_baseUrl}/useractivity", content);
+            var result = await client.PostAsync($"{_baseUrl}/report/useractivity", content);
 
             if (!result.IsSuccessStatusCode)
             {
@@ -171,6 +171,17 @@ namespace HoneyBadgers.Logic.Services
             }
         }
 
+        public async Task GetUsersActivity(UserActivity userActivity)
+        {
+            // var client = _httpClientFactory.CreateClient();
+            // var result = await client.GetAsync($"{_baseUrl}/report/useractivity");
+            //
+            // if (!result.IsSuccessStatusCode)
+            // {
+            //     var resultContent = await result.Content.ReadAsStringAsync();
+            //     _logger.LogError($"Error while get users activity: {resultContent}");
+            // }
+        }
 
     }
 }

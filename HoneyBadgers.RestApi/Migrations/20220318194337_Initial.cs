@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HoneyBadgers.RestApi.Migrations
 {
-    public partial class NewMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,21 +24,47 @@ namespace HoneyBadgers.RestApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reports",
+                name: "ReportGenreStatsModels",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValueSql: "NEWID()"),
+                    GenreName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TimesInDB = table.Column<int>(type: "int", nullable: false),
+                    RowsInDB = table.Column<int>(type: "int", nullable: false),
+                    Precents = table.Column<double>(type: "float", nullable: false),
+                    Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReportGenreStatsModels", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserActivity",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Body = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ActionArguments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IpAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reports", x => x.Id);
+                    table.PrimaryKey("PK_UserActivity", x => x.Id);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_GenreStats_Id",
                 table: "GenreStats",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReportGenreStatsModels_Id",
+                table: "ReportGenreStatsModels",
                 column: "Id",
                 unique: true);
         }
@@ -49,7 +75,10 @@ namespace HoneyBadgers.RestApi.Migrations
                 name: "GenreStats");
 
             migrationBuilder.DropTable(
-                name: "Reports");
+                name: "ReportGenreStatsModels");
+
+            migrationBuilder.DropTable(
+                name: "UserActivity");
         }
     }
 }

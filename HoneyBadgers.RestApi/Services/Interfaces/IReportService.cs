@@ -1,6 +1,7 @@
 ﻿using HoneyBadgers.RestApi.Models;
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HoneyBadgers.RestApi.Services.Interfaces
 {
@@ -14,5 +15,6 @@ namespace HoneyBadgers.RestApi.Services.Interfaces
         ReportGenreStats GetLastGeneratedReportGenreStats();
         List<Tuple<string, int>> GetAllGenreReport();
         bool StoreUserActivity(string actionArguments, string url, string userName, string ipAddress);
+        List<UserActivity> GetUsersActivity();
     }
 }

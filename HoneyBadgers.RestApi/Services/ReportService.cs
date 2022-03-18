@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using HoneyBadgers.RestApi.Context;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HoneyBadgers.RestApi.Services
 {
@@ -12,13 +13,15 @@ namespace HoneyBadgers.RestApi.Services
     {
         private readonly IRepository<ReportGenreStats> _reportGenreStatsRepository;
         private readonly IRepository<GenreStats> _genreStatsRepository;
+        private readonly IRepository<UserActivity> _usersActivityRepository;
         private readonly HbReportContext _dbContext;
 
-        public ReportService(IRepository<GenreStats> genreStatsRepository, IRepository<ReportGenreStats> reportGenreStatsRepository, HbReportContext dbContext)
+        public ReportService(IRepository<GenreStats> genreStatsRepository, IRepository<ReportGenreStats> reportGenreStatsRepository, HbReportContext dbContext, IRepository<UserActivity> usersActivityRepository)
         {
             _genreStatsRepository = genreStatsRepository;
             _reportGenreStatsRepository = reportGenreStatsRepository;
             _dbContext = dbContext;
+            _usersActivityRepository = usersActivityRepository;
         }
 
         public void InsertGenreStats(GenreStats genreStats)
@@ -72,13 +75,19 @@ namespace HoneyBadgers.RestApi.Services
                 Url = url,
                 UserName = userName,
                 IpAddress = ipAddress,
-                ActivityDate = DateTime.Now
+                CreatedDate = DateTime.Now
             };
 
             _dbContext.UserActivity.Add(userActivity);
             _dbContext.SaveChanges();
 
             return true;
+        }
+
+        public List<UserActivity> GetUsersActivity()
+        {
+            var usersActivity = _dbContext.UserActivity.Select(x => x).ToList();
+            return usersActivity;
         }
 
     }

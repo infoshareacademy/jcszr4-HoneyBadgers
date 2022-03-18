@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HoneyBadgers.RestApi.Migrations
 {
     [DbContext(typeof(HbReportContext))]
-    [Migration("20220310063712_ReportModyfication")]
-    partial class ReportModyfication
+    [Migration("20220318194337_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,7 +58,7 @@ namespace HoneyBadgers.RestApi.Migrations
                     b.ToTable("GenreStats");
                 });
 
-            modelBuilder.Entity("HoneyBadgers.RestApi.Models.Report", b =>
+            modelBuilder.Entity("HoneyBadgers.RestApi.Models.ReportGenreStats", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -77,6 +77,9 @@ namespace HoneyBadgers.RestApi.Migrations
                     b.Property<string>("GenreName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("Precents")
+                        .HasColumnType("float");
+
                     b.Property<int>("RowsInDB")
                         .HasColumnType("int");
 
@@ -89,6 +92,32 @@ namespace HoneyBadgers.RestApi.Migrations
                         .IsUnique();
 
                     b.ToTable("ReportGenreStatsModels");
+                });
+
+            modelBuilder.Entity("HoneyBadgers.RestApi.Models.UserActivity", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ActionArguments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("IpAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserActivity");
                 });
 #pragma warning restore 612, 618
         }
