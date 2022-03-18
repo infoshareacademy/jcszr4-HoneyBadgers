@@ -68,5 +68,15 @@ namespace HoneyBadgers.RestApi.Controllers
             return _reportService.GetAllGenreReport();
         }
 
+        [HttpPost]
+        [Route("report/useractivity")]
+        public IActionResult AddUserActivity(UserActivity userActivity)
+        {
+            
+            _reportService.StoreUserActivity(userActivity.ActionArguments, userActivity.Url, userActivity.UserName, userActivity.IpAddress);
+
+            return Ok(userActivity);
+        }
+
     }
 }

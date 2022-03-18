@@ -4,6 +4,7 @@ using HoneyBadgers.RestApi.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HoneyBadgers.RestApi.Context;
 
 namespace HoneyBadgers.RestApi.Services
 {
@@ -11,11 +12,13 @@ namespace HoneyBadgers.RestApi.Services
     {
         private readonly IRepository<ReportGenreStats> _reportGenreStatsRepository;
         private readonly IRepository<GenreStats> _genreStatsRepository;
+        private readonly HbReportContext _dbContext;
 
-        public ReportService(IRepository<GenreStats> genreStatsRepository, IRepository<ReportGenreStats> reportGenreStatsRepository)
+        public ReportService(IRepository<GenreStats> genreStatsRepository, IRepository<ReportGenreStats> reportGenreStatsRepository, HbReportContext dbContext)
         {
             _genreStatsRepository = genreStatsRepository;
             _reportGenreStatsRepository = reportGenreStatsRepository;
+            _dbContext = dbContext;
         }
 
         public void InsertGenreStats(GenreStats genreStats)
@@ -59,6 +62,23 @@ namespace HoneyBadgers.RestApi.Services
                 tuple.Add(new Tuple<string, int>(l.Key, l.Value));
             }
             return tuple;
+        }
+
+        public bool StoreUserActivity(string actionArguments, string url, string userName, string ipAddress)
+        {
+            var userActivity = new UserActivity()
+            {
+                ActionArguments = actionArguments,
+                Url = url,
+                UserName = userName,
+                IpAddress = ipAddress,
+                ActivityDate = DateTime.Now
+            };
+
+            _dbContext.UserActivity.Add(userActivity);
+            _dbContext.SaveChanges();
+
+            return true;
         }
 
     }

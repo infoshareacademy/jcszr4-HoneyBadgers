@@ -25,7 +25,7 @@
                 reportType = "genre-stats";
                 $.ajax({
                     type: "Get",
-                    url: "/Report/GetReportData?reportType=" + reportType,
+                    url: "/Report/GetReportActionArguments?reportType=" + reportType,
                     success: function (data) {
                         console.log($("#hb-chart-container"));
                         $("#hb-chart-container").html("");

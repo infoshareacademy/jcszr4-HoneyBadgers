@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
+using HoneyBadgers.Entity.Models;
 using HoneyBadgers.Logic.Models;
 using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -153,5 +154,23 @@ namespace HoneyBadgers.Logic.Services
 
             return genre;
         }
+
+        public async Task AddUserActivity(UserActivity userActivity)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var content = new StringContent(
+                JsonConvert.SerializeObject(userActivity),
+                Encoding.UTF8,
+                MediaTypeNames.Application.Json);
+            var result = await client.PostAsync($"{_baseUrl}/useractivity", content);
+
+            if (!result.IsSuccessStatusCode)
+            {
+                var resultContent = await result.Content.ReadAsStringAsync();
+                _logger.LogError($"Error while creating user activity: {resultContent}");
+            }
+        }
+
+
     }
 }
