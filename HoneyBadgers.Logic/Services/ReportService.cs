@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Mime;
 using System.Text;
@@ -171,17 +172,24 @@ namespace HoneyBadgers.Logic.Services
             }
         }
 
-        public async Task GetUsersActivity(UserActivity userActivity)
+        public async Task<List<UserActivityViewModel>> GetUsersActivity()
         {
-            // var client = _httpClientFactory.CreateClient();
-            // var result = await client.GetAsync($"{_baseUrl}/report/useractivity");
-            //
-            // if (!result.IsSuccessStatusCode)
-            // {
-            //     var resultContent = await result.Content.ReadAsStringAsync();
-            //     _logger.LogError($"Error while get users activity: {resultContent}");
-            // }
-        }
+            var client = _httpClientFactory.CreateClient();
+            var result = await client.GetAsync($"{_baseUrl}/report/useractivity");
 
+            if (!result.IsSuccessStatusCode)
+            {
+                var resultContent = await result.Content.ReadAsStringAsync();
+                _logger.LogError($"Error while get users activity: {resultContent}");
+            }
+
+            var content = await result.Content.ReadAsStringAsync();
+
+            var userActivity = JsonConvert.DeserializeObject<List<UserActivityViewModel>>(content)
+                .OrderByDescending(x => x.CreatedDate)
+                .ToList();
+            
+            return userActivity;
+        }
     }
 }

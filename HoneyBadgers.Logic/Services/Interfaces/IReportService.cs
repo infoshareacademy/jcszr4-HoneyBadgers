@@ -16,5 +16,6 @@ namespace HoneyBadgers.Logic.Services.Interfaces
         Task<Tuple<string,int>> GetLastReportGenreStats();
         Task<List<Tuple<string, int>>> GetAllGenreStatsReport();
         Task AddUserActivity(UserActivity userActivity);
+        Task<List<UserActivityViewModel>> GetUsersActivity();
     }
 }

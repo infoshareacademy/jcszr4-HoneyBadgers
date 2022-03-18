@@ -1,0 +1,64 @@
+﻿@model IEnumerable<HoneyBadgers.Logic.Models.UserActivityViewModel>
+@{
+    ViewData["Title"] = "GetUserActivityReport";
+}
+
+<h1>GetUserActivityReport</h1>
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col">
+            <h1>Movies</h1>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Url)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IpAddress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ActionArguments)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Url)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IpAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ActionArguments)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

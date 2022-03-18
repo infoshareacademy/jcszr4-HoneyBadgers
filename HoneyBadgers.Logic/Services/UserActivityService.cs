@@ -27,7 +27,7 @@ namespace HoneyBadgers.Logic.Services
 
             foreach (var argument in context.ActionArguments)
             {
-                actionArguments += JsonConvert.SerializeObject(argument);
+                actionArguments += JsonConvert.SerializeObject(argument.Value);
             }
 
             var httpRequest = context.HttpContext.Request.HttpContext.Request.Method;
@@ -49,8 +49,7 @@ namespace HoneyBadgers.Logic.Services
                 ActionArguments = actionArguments,
                 Url = url,
                 UserName = userName,
-                IpAddress = ipAddress,
-                ActivityDate = DateTime.Now
+                IpAddress = ipAddress
             };
 
             await _reportService.AddUserActivity(userActivity);
