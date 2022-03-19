@@ -4,7 +4,7 @@ using HoneyBadgers.RestApi.Models;
 
 namespace HoneyBadgers.RestApi.Repositories
 {
-    public interface IRepository<T>
+    public interface IRepository<T> where T : BaseEntity
     {
         IEnumerable<T> GetAll();
         IQueryable<T> GetAllQueryable();
