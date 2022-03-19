@@ -27,7 +27,16 @@ namespace HoneyBadgers.Logic.Services
 
             foreach (var argument in context.ActionArguments)
             {
-                actionArguments += JsonConvert.SerializeObject(argument.Value);
+                actionArguments += JsonConvert.SerializeObject(argument);
+
+                if (actionArguments.Contains("Password"))
+                {
+                    var splitArguments = actionArguments.Split(',').ToList();
+                    splitArguments.RemoveAll(x => x.Contains("Password"));
+
+                    actionArguments = null;
+                    actionArguments = string.Join(", ", splitArguments);
+                }
             }
 
             var httpRequestMethod = context.HttpContext.Request.HttpContext.Request.Method;
