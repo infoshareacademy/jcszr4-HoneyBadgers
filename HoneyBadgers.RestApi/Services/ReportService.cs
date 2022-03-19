@@ -51,7 +51,7 @@ namespace HoneyBadgers.RestApi.Services
         }
         public List<Tuple<string, int>> GetAllGenreReport()
         {
-            var dictionary = _genreStatsRepository.GetAll().GroupBy(g => g.GenreName).ToDictionary(grp => grp.Key, grp => grp.Count()); //TODO zrobićto asynchroniczne
+            var dictionary = _genreStatsRepository.GetAll().GroupBy(g => g.GenreName).ToDictionary(grp => grp.Key, grp => grp.Count()); 
             var list = dictionary.ToList();
             List<Tuple<string, int>> tuple = new();
             foreach (var l in list)
