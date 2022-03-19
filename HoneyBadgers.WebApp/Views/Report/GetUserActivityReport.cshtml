@@ -1,18 +1,24 @@
 ﻿@model IEnumerable<HoneyBadgers.Logic.Models.UserActivityViewModel>
+
 @{
-    ViewData["Title"] = "GetUserActivityReport";
+    ViewData["Title"] = "Users Activity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>GetUserActivityReport</h1>
-
-<div class="container mt-3">
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Report" asp-action="GetUserActivityReport">Manage</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Users Activity</li>
+        </ol>
+    </nav>
     <div class="row">
         <div class="col">
-            <h1>Movies</h1>
+            <h1>Users Activity</h1>
         </div>
     </div>
-    <table class="table">
-        <thead>
+    <table class="table table-striped">
+        <thead class="thead-dark">
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Id)
