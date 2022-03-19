@@ -18,7 +18,7 @@ namespace HoneyBadgers.Logic.Services
         private readonly IAuthService _authService;
         private readonly ILogger<ReportService> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly string _baseUrl = "https://localhost:44313/api";
+        private readonly string _baseUrl = "https://localhost:5001/api";
 
         public ReportService(IHttpClientFactory httpClientFactory, IAuthService authService, ILogger<ReportService> logger)
         {
