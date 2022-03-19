@@ -153,10 +153,7 @@ namespace HoneyBadgers.WebApp.Controllers
         
                 return RedirectToAction("Users");
             }
-            else
-            {
-                return RedirectToAction("Users");
-            }
+            return RedirectToAction("Users");
         }
     }
 }
