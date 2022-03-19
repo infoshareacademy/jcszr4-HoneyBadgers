@@ -14,13 +14,11 @@ namespace HoneyBadgers.RestApi.Services
         private readonly IRepository<ReportGenreStats> _reportGenreStatsRepository;
         private readonly IRepository<GenreStats> _genreStatsRepository;
         private readonly IRepository<UserActivity> _usersActivityRepository;
-        private readonly HbReportContext _dbContext;
 
-        public ReportService(IRepository<GenreStats> genreStatsRepository, IRepository<ReportGenreStats> reportGenreStatsRepository, HbReportContext dbContext, IRepository<UserActivity> usersActivityRepository)
+        public ReportService(IRepository<GenreStats> genreStatsRepository, IRepository<ReportGenreStats> reportGenreStatsRepository, IRepository<UserActivity> usersActivityRepository)
         {
             _genreStatsRepository = genreStatsRepository;
             _reportGenreStatsRepository = reportGenreStatsRepository;
-            _dbContext = dbContext;
             _usersActivityRepository = usersActivityRepository;
         }
 
@@ -79,13 +77,12 @@ namespace HoneyBadgers.RestApi.Services
                 CreatedDate = DateTime.Now
             };
 
-            _dbContext.UserActivity.Add(userActivity);
-            _dbContext.SaveChanges();
+            _usersActivityRepository.Insert(userActivity);
         }
 
         public List<UserActivity> GetUsersActivity()
         {
-            var usersActivity = _dbContext.UserActivity.Select(x => x).ToList();
+            var usersActivity = _usersActivityRepository.GetAll().ToList();
             return usersActivity;
         }
 
