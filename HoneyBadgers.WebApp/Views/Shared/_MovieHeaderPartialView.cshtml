@@ -26,7 +26,10 @@
                         <div class="d-flex flex-row my-3">
                             @foreach (var genre in Model.Genre)
                             {
-                                <a class="hb-btn-rounded btn mx-1" asp-controller="Genre" asp-action="List" asp-route-id="@genre.Id">
+                                @*<a class="hb-btn-rounded btn mx-1" asp-controller="Genre" asp-action="List" asp-route-id="@genre.Id">
+                                    @genre.Name
+                                </a>*@
+                                <a class="hb-btn-rounded btn mx-1" href="">
                                     @genre.Name
                                 </a>
                             }
