@@ -14,7 +14,7 @@ namespace HoneyBadgers.RestApi.Services.Interfaces
         IEnumerable<ReportGenreStats> GetReports();
         ReportGenreStats GetLastGeneratedReportGenreStats();
         List<Tuple<string, int>> GetAllGenreReport();
-        bool StoreUserActivity(string actionArguments, string url, string userName, string ipAddress);
+        bool StoreUserActivity(string actionArguments, string url, string userName, string ipAddress, string HTTPMethod);
         List<UserActivity> GetUsersActivity();
     }
 }

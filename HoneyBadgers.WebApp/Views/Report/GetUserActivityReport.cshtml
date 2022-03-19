@@ -24,6 +24,9 @@
                     @Html.DisplayNameFor(model => model.UserName)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.HTTPMethod)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.Url)
                 </th>
                 <th>
@@ -46,6 +49,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HTTPMethod)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Url)

@@ -67,7 +67,7 @@ namespace HoneyBadgers.RestApi.Services
             return tuple;
         }
 
-        public bool StoreUserActivity(string actionArguments, string url, string userName, string userIpAdress)
+        public bool StoreUserActivity(string actionArguments, string url, string userName, string userIpAdress, string HTTPMethod)
         {
             var userActivity = new UserActivity()
             {
@@ -75,6 +75,7 @@ namespace HoneyBadgers.RestApi.Services
                 Url = url,
                 UserName = userName,
                 UserIpAddress = userIpAdress,
+                HTTPMethod = HTTPMethod,
                 CreatedDate = DateTime.Now
             };
 

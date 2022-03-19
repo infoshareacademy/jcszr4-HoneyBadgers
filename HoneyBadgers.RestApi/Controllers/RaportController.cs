@@ -81,7 +81,7 @@ namespace HoneyBadgers.RestApi.Controllers
         public IActionResult AddUserActivity(UserActivity userActivity)
         {
             
-            _reportService.StoreUserActivity(userActivity.ActionArguments, userActivity.Url, userActivity.UserName, userActivity.UserIpAddress);
+            _reportService.StoreUserActivity(userActivity.ActionArguments, userActivity.Url, userActivity.UserName, userActivity.UserIpAddress, userActivity.HTTPMethod);
 
             return Ok(userActivity);
         }
