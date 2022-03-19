@@ -3,71 +3,67 @@
 @using HoneyBadgers.Entity.Models
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-@model HoneyBadgers.WebApp.Models.ReviewListModel
+@model ReviewListModel
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="hb-review-details__header">
+
+<div class="hb-review-list">
+    <partial name="../Shared/_MovieHeaderPartialView.cshtml" model="@Model.Movie" />
     <div class="container py-3">
-        <div class="row">
-            <div class="col-md-auto">
-                <img style="border-radius: 4px;" height="225" src="@Model.Movie.Poster" alt="@Model.Movie.Title" />
-            </div>
-            <div class="col mr-1">
-                <h5>@Model.Movie.Title</h5>
-            </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Movie" asp-action="Details" asp-route-id="@Model.Movie.Id">@Model.Movie.Title</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Reviews</li>
+            </ol>
+        </nav>
+        <div class="mt-2">
+            @foreach (var review in Model.Reviews)
+            {
+                <div class="hb-review my-2">
+                    <div class="hb-review-avatar">
+                        <i class="fas fa-user-alt"></i>
+                    </div>
+                    <div class="hb-review-text">
+                        <h5>@review.Title</h5>
+                        <div class="hb-reviewer">@review.User.FirstName @review.User.LastName</div>
+                        <div class="hb-review-content">
+                            <div class="hb-review-body">
+                                @(new HtmlString(review.Body))
+                            </div>
+                            @if (@review.Body.Length > 250)
+                            {
+                                <div class="hb-review-body__read-more">
+                                    <a class="hb-btn-green btn mx-1" asp-controller="Review" asp-action="Details" asp-route-id="@review.Id">Read all</a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    @if (SignInManager.IsSignedIn(User) && UserManager.GetUserId(User) == review.UserId)
+                    {
+                        <div class="hb-review-action">
+                            <a data-toggle="dropdown" href="#">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a class="mx-1" asp-controller="Review" asp-action="Delete" asp-route-id="@review.Id">
+                                        Delete
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="mx-1" asp-controller="Review" asp-action="Update" asp-route-id="@review.Id">
+                                        Edit
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+            }
         </div>
     </div>
 </div>
-<div class="container">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a asp-controller="Movie" asp-action="Details" asp-route-id="@Model.Movie.Id">@Model.Movie.Title</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Reviews</li>
-        </ol>
-    </nav>
-    <div class="mt-2">
-        @foreach (var review in Model.Reviews)
-        {
-            <div class="hb-review my-2">
-                <div class="hb-review-avatar">
-                    <i class="fas fa-user-alt"></i>
-                </div>
-                <div class="hb-review-text">
-                    <h5>@review.Title</h5>
-                    <div class="hb-reviewer">@review.User.FirstName @review.User.LastName</div>
-                    <div class="hb-review-content">
-                        <div class="hb-review-body">
-                            @(new HtmlString(review.Body))
-                        </div>
-                        <div class="hb-review-body__read-more">
-                            <a class="hb-btn-green btn mx-1" asp-controller="Review" asp-action="Details" asp-route-id="@review.Id">Read all</a>
-                        </div>
-                    </div>
-                </div>
-                @if (SignInManager.IsSignedIn(User) && UserManager.GetUserId(User) == review.UserId)
-                {
-                    <div class="hb-review-action">
-                        <a data-toggle="dropdown" href="#">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a class="mx-1" asp-controller="Review" asp-action="Delete" asp-route-id="@review.Id">
-                                    Delete
-                                </a>
-                            </li>
-                            <li>
-                                <a class="mx-1" asp-controller="Review" asp-action="Update" asp-route-id="@review.Id">
-                                    Edit
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                }
-            </div>
-        }
-    </div>
-</div>
+
