@@ -1,0 +1,76 @@
+﻿@model IEnumerable<HoneyBadgers.Logic.Models.UserActivityViewModel>
+
+@{
+    ViewData["Title"] = "Users Activity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Report" asp-action="GetUserActivityReport">Manage</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Users Activity</li>
+        </ol>
+    </nav>
+    <div class="row">
+        <div class="col">
+            <h1>Users Activity</h1>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HTTPMethod)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Url)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserIpAddress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ActionArguments)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HTTPMethod)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Url)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserIpAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ActionArguments)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

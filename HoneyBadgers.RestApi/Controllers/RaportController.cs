@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HoneyBadgers.RestApi.Models;
 using HoneyBadgers.RestApi.Services.Interfaces;
 using System;
+using HoneyBadgers.RestApi.Services;
 
 namespace HoneyBadgers.RestApi.Controllers
 {
@@ -66,6 +67,23 @@ namespace HoneyBadgers.RestApi.Controllers
         public ActionResult<List<Tuple<string,int>>> GetAllGenreStatsReport()
         {
             return _reportService.GetAllGenreReport();
+        }
+
+        [HttpGet]
+        [Route("report/useractivity")]
+        public List<UserActivity> GetUsersActivity()
+        {
+            return _reportService.GetUsersActivity();
+        }
+
+        [HttpPost]
+        [Route("report/useractivity")]
+        public IActionResult AddUserActivity(UserActivity userActivity)
+        {
+            
+            _reportService.StoreUserActivity(userActivity.ActionArguments, userActivity.Url, userActivity.UserName, userActivity.UserIpAddress, userActivity.HTTPMethod);
+
+            return Ok(userActivity);
         }
 
     }

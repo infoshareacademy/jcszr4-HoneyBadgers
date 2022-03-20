@@ -15,6 +15,7 @@ namespace HoneyBadgers.RestApi.Context
         }
         public DbSet<GenreStats> GenreStats { get; set; }
         public DbSet<ReportGenreStats> ReportGenreStatsModels { get; set; }
+        public DbSet<UserActivity> UserActivity { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

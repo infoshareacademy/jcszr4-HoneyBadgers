@@ -33,7 +33,10 @@ namespace HoneyBadgers.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient();
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(typeof(UserActivityService));
+            }).AddRazorRuntimeCompilation();
             services.AddSession();
             services.AddHttpContextAccessor();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();

@@ -4,6 +4,8 @@ using HoneyBadgers.RestApi.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HoneyBadgers.RestApi.Context;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HoneyBadgers.RestApi.Services
 {
@@ -11,11 +13,13 @@ namespace HoneyBadgers.RestApi.Services
     {
         private readonly IRepository<ReportGenreStats> _reportGenreStatsRepository;
         private readonly IRepository<GenreStats> _genreStatsRepository;
+        private readonly IRepository<UserActivity> _usersActivityRepository;
 
-        public ReportService(IRepository<GenreStats> genreStatsRepository, IRepository<ReportGenreStats> reportGenreStatsRepository)
+        public ReportService(IRepository<GenreStats> genreStatsRepository, IRepository<ReportGenreStats> reportGenreStatsRepository, IRepository<UserActivity> usersActivityRepository)
         {
             _genreStatsRepository = genreStatsRepository;
             _reportGenreStatsRepository = reportGenreStatsRepository;
+            _usersActivityRepository = usersActivityRepository;
         }
 
         public void InsertGenreStats(GenreStats genreStats)
@@ -59,6 +63,27 @@ namespace HoneyBadgers.RestApi.Services
                 tuple.Add(new Tuple<string, int>(l.Key, l.Value));
             }
             return tuple;
+        }
+
+        public void StoreUserActivity(string actionArguments, string url, string userName, string userIpAdress, string HTTPMethod)
+        {
+            var userActivity = new UserActivity()
+            {
+                ActionArguments = actionArguments,
+                Url = url,
+                UserName = userName,
+                UserIpAddress = userIpAdress,
+                HTTPMethod = HTTPMethod,
+                CreatedDate = DateTime.Now
+            };
+
+            _usersActivityRepository.Insert(userActivity);
+        }
+
+        public List<UserActivity> GetUsersActivity()
+        {
+            var usersActivity = _usersActivityRepository.GetAll().ToList();
+            return usersActivity;
         }
 
     }

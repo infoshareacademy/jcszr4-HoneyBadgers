@@ -91,6 +91,35 @@ namespace HoneyBadgers.RestApi.Migrations
 
                     b.ToTable("ReportGenreStatsModels");
                 });
+
+            modelBuilder.Entity("HoneyBadgers.RestApi.Models.UserActivity", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ActionArguments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("HTTPMethod")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserIpAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserActivity");
+                });
 #pragma warning restore 612, 618
         }
     }

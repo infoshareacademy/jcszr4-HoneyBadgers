@@ -16,13 +16,13 @@
       }
     },
     "HoneyBadgers.WebApp": {
-        "commandName": "Project",
-        "dotnetRunMessages": "true",
-        "launchBrowser": true,
-        "applicationUrl": "https://127.0.0.2:5001;http://127.0.0.2:5000",
-        "environmentVariables": {
-            "ASPNETCORE_ENVIRONMENT": "Development"
-        }
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "launchBrowser": true,
+      "applicationUrl": "https://127.0.0.2:5001;http://127.0.0.2:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     }
   }
 }
