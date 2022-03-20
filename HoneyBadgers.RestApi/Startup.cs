@@ -1,5 +1,7 @@
+using System;
 using System.IO;
 using HoneyBadgers.RestApi.Context;
+using HoneyBadgers.RestApi.CustomExceptionMiddleware;
 using HoneyBadgers.RestApi.Repositories;
 using HoneyBadgers.RestApi.Services;
 using HoneyBadgers.RestApi.Services.Interfaces;
@@ -59,11 +61,13 @@ namespace HoneyBadgers.RestApi
             hbReportContext.Database.Migrate();
             if (env.IsDevelopment())
             {
+                
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HoneyBadgers.RestApi v1"));
             }
-
+            app.UseMiddleware<ExceptionMiddleware>();
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();

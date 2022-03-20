@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HoneyBadgers.WebApp.Controllers
 {
+    [Controller]
+    [Route("report")]
     public class ReportController : Controller
     {
         private readonly IReportService _reportService;
@@ -19,6 +21,7 @@ namespace HoneyBadgers.WebApp.Controllers
 
 
         [HttpGet]
+        [Route("getreportdata")]
         public IActionResult GetReportData(string reportType)
         {
             var model = new ChartViewModel();
@@ -36,6 +39,15 @@ namespace HoneyBadgers.WebApp.Controllers
             }
 
             return PartialView("_ChartPartialView", model);
+        }
+
+        [HttpGet]
+        [Route("useractivity")]
+        public IActionResult GetUserActivityReport()
+        {
+            var model = _reportService.GetUsersActivity().Result;
+
+            return View(model);
         }
     }
 }

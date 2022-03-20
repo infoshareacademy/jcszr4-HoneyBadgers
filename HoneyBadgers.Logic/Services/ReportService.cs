@@ -4,10 +4,16 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
+using HoneyBadgers.Entity.Models;
+using HoneyBadgers.Logic.Models;
+using HoneyBadgers.Logic.Services.Interfaces;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace HoneyBadgers.Logic.Services
 {
@@ -135,6 +141,42 @@ namespace HoneyBadgers.Logic.Services
             genre.Add(new Tuple<string, int>("Western", 1));
 
             return genre;
+        }
+
+        public async Task AddUserActivity(UserActivity userActivity)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var content = new StringContent(
+                JsonConvert.SerializeObject(userActivity),
+                Encoding.UTF8,
+                MediaTypeNames.Application.Json);
+            var result = await client.PostAsync($"{_baseUrl}/report/useractivity", content);
+
+            if (!result.IsSuccessStatusCode)
+            {
+                var resultContent = await result.Content.ReadAsStringAsync();
+                _logger.LogError($"Error while creating user activity: {resultContent}");
+            }
+        }
+
+        public async Task<List<UserActivityViewModel>> GetUsersActivity()
+        {
+            var client = _httpClientFactory.CreateClient();
+            var result = await client.GetAsync($"{_baseUrl}/report/useractivity");
+
+            if (!result.IsSuccessStatusCode)
+            {
+                var resultContent = await result.Content.ReadAsStringAsync();
+                _logger.LogError($"Error while get users activity: {resultContent}");
+            }
+
+            var content = await result.Content.ReadAsStringAsync();
+
+            var userActivity = JsonConvert.DeserializeObject<List<UserActivityViewModel>>(content)
+                .OrderByDescending(x => x.CreatedDate)
+                .ToList();
+            
+            return userActivity;
         }
     }
 }

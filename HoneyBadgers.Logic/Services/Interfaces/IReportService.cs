@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using HoneyBadgers.Entity.Models;
 using HoneyBadgers.Logic.Models;
 
 namespace HoneyBadgers.Logic.Services.Interfaces
@@ -14,5 +15,7 @@ namespace HoneyBadgers.Logic.Services.Interfaces
         Task GenerateReportGenreStats(string genreName);
         Task<Tuple<string,int>> GetLastReportGenreStats();
         Task<List<Tuple<string, int>>> GetAllGenreStatsReport();
+        Task AddUserActivity(UserActivity userActivity);
+        Task<List<UserActivityViewModel>> GetUsersActivity();
     }
 }

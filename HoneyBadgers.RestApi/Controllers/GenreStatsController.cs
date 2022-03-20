@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using HoneyBadgers.RestApi.Models;
 using HoneyBadgers.RestApi.Repositories;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace HoneyBadgers.RestApi.Controllers
 {
@@ -10,9 +13,11 @@ namespace HoneyBadgers.RestApi.Controllers
     {
         private readonly IRepository<GenreStats> _repository;
 
+
         public GenreController(IRepository<GenreStats> repository)
         {
-            _repository = repository ;
+            _repository = repository;
+
         }
 
         [HttpPost]
@@ -22,6 +27,5 @@ namespace HoneyBadgers.RestApi.Controllers
 
             return Ok();
         }
-
     }
 }
