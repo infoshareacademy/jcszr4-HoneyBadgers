@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using HoneyBadgers.Entity.Context;
@@ -6,6 +7,7 @@ using HoneyBadgers.Entity.Models;
 using HoneyBadgers.Logic.Models;
 using HoneyBadgers.Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace HoneyBadgers.WebApp.Controllers
 {
@@ -14,16 +16,19 @@ namespace HoneyBadgers.WebApp.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly HbContext _context;
         private readonly IMovieService _movieService;
-        public ManageController(UserManager<ApplicationUser> userManager, HbContext context, IMovieService movieService)
+        private readonly ILogger<ManageController> _logger;
+        public ManageController(UserManager<ApplicationUser> userManager, HbContext context, IMovieService movieService, ILogger<ManageController> logger)
         {
             _userManager = userManager;
             _context = context;
             _movieService = movieService;
+            _logger = logger;
         }
         public IActionResult Index()
         {
             if (!User.IsInRole("Admin"))
             {
+                Serilog.Log.Error("Denied access to unauthorized user at {Date}. HTTP 403 Forbidden response status code", DateTime.Now);
                 return StatusCode(403);
             }
                 
@@ -34,6 +39,7 @@ namespace HoneyBadgers.WebApp.Controllers
         {
             if (!User.IsInRole("Admin"))
             {
+                Serilog.Log.Error("Denied access to unauthorized user at {Date}. HTTP 403 Forbidden response status code", DateTime.Now);
                 return StatusCode(403);
             }
             var model = _userManager.Users.ToList();
@@ -44,6 +50,7 @@ namespace HoneyBadgers.WebApp.Controllers
         {
             if (!User.IsInRole("Admin"))
             {
+                Serilog.Log.Error("Denied access to unauthorized user at {Date}. HTTP 403 Forbidden response status code", DateTime.Now);
                 return StatusCode(403);
             }
             var model = await _movieService.GetAll();
@@ -54,6 +61,7 @@ namespace HoneyBadgers.WebApp.Controllers
         {
             if (!User.IsInRole("Admin"))
             {
+                Serilog.Log.Error("Denied access to unauthorized user at {Date}. HTTP 403 Forbidden response status code", DateTime.Now);
                 return StatusCode(403);
             }
             return View();
@@ -64,6 +72,7 @@ namespace HoneyBadgers.WebApp.Controllers
         {
             if (!User.IsInRole("Admin"))
             {
+                Serilog.Log.Error("Denied access to unauthorized user at {Date}. HTTP 403 Forbidden response status code", DateTime.Now);
                 return StatusCode(403);
             }
             if (ModelState.IsValid)
@@ -91,6 +100,7 @@ namespace HoneyBadgers.WebApp.Controllers
         {
             if (!User.IsInRole("Admin"))
             {
+                Serilog.Log.Error("Denied access to unauthorized user at {Date}. HTTP 403 Forbidden response status code", DateTime.Now);
                 return StatusCode(403);
             }
             var user = await _userManager.FindByIdAsync(id);
@@ -102,6 +112,7 @@ namespace HoneyBadgers.WebApp.Controllers
         {
             if (!User.IsInRole("Admin"))
             {
+                Serilog.Log.Error("Denied access to unauthorized user at {Date}. HTTP 403 Forbidden response status code", DateTime.Now);
                 return StatusCode(403);
             }
             if (ModelState.IsValid)
@@ -116,6 +127,7 @@ namespace HoneyBadgers.WebApp.Controllers
         {
             if (!User.IsInRole("Admin"))
             {
+                Serilog.Log.Error("Denied access to unauthorized user at {Date}. HTTP 403 Forbidden response status code", DateTime.Now);
                 return StatusCode(403);
             }
             var user = await _userManager.FindByIdAsync(id);
@@ -128,6 +140,7 @@ namespace HoneyBadgers.WebApp.Controllers
         {
             if (!User.IsInRole("Admin"))
             {
+                Serilog.Log.Error("Denied access to unauthorized user at {Date}. HTTP 403 Forbidden response status code", DateTime.Now);
                 return StatusCode(403);
             }
             if (ModelState.IsValid)

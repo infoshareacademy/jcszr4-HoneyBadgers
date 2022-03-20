@@ -12,12 +12,12 @@ namespace HoneyBadgers.RestApi.Controllers
     public class GenreController : ControllerBase
     {
         private readonly IRepository<GenreStats> _repository;
-        
+
 
         public GenreController(IRepository<GenreStats> repository)
         {
-            _repository = repository ;
-            
+            _repository = repository;
+
         }
 
         [HttpPost]
@@ -27,13 +27,5 @@ namespace HoneyBadgers.RestApi.Controllers
 
             return Ok();
         }
-        [HttpGet]
-        public IActionResult TestError()
-        {
-            throw new AccessViolationException("Violation Exception while accessing the resource.");
-           
-        }
-
-
     }
 }
