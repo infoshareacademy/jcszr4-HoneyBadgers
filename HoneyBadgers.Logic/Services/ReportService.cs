@@ -1,4 +1,8 @@
-﻿using System;
+﻿using HoneyBadgers.Logic.Models;
+using HoneyBadgers.Logic.Services.Interfaces;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -13,7 +17,7 @@ using Newtonsoft.Json;
 
 namespace HoneyBadgers.Logic.Services
 {
-    public class ReportService: IReportService
+    public class ReportService : IReportService
     {
         private readonly IAuthService _authService;
         private readonly ILogger<ReportService> _logger;
@@ -40,7 +44,7 @@ namespace HoneyBadgers.Logic.Services
                 genreStats.UserEmail = "Guest";
                 genreStats.UserId = Guid.Empty.ToString();
             }
-            
+
             var client = _httpClientFactory.CreateClient();
             var content = new StringContent(
                 JsonConvert.SerializeObject(genreStats),
@@ -55,19 +59,15 @@ namespace HoneyBadgers.Logic.Services
             }
         }
 
-        public async  Task<IEnumerable<ReportGenreStats>> GetAllReports()
+        public async Task<IEnumerable<ReportGenreStats>> GetAllReports()
         {
             var client = _httpClientFactory.CreateClient();
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_baseUrl}/reports");
 
-            HttpResponseMessage result;
-            try
+            var result = await client.SendAsync(request);
+            if (!result.IsSuccessStatusCode)
             {
-                result = await client.SendAsync(request);
-            }
-            catch (Exception ex)
-            {
-                result = new HttpResponseMessage(); // TODO coś z tym jeszcze musze zrobić
+                return null;
             }
             var content = await result.Content.ReadAsStringAsync();
             var json = JsonConvert.DeserializeObject<ReportGenreStats[]>(content);
@@ -78,20 +78,18 @@ namespace HoneyBadgers.Logic.Services
         {
             var client = _httpClientFactory.CreateClient();
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_baseUrl}/report/{id}");
-            HttpResponseMessage result;
-            try
+
+            var result = await client.SendAsync(request);
+            if (!result.IsSuccessStatusCode)
             {
-                result = await client.SendAsync(request);
-            }
-            catch (Exception ex)
-            {
-                result = new HttpResponseMessage(); // TODO coś z tym jeszcze musze zrobić
+                return null;
             }
             var content = await result.Content.ReadAsStringAsync();
             var json = JsonConvert.DeserializeObject<ReportGenreStats>(content);
             return json;
         }
-        public async Task GenerateReportGenreStats(string genreName) {
+        public async Task GenerateReportGenreStats(string genreName)
+        {
             var client = _httpClientFactory.CreateClient();
             var request = new HttpRequestMessage(HttpMethod.Post, $"{_baseUrl}/report/generate/{genreName}");
             HttpResponseMessage result;
@@ -101,24 +99,17 @@ namespace HoneyBadgers.Logic.Services
             }
             catch (Exception ex)
             {
-                result = new HttpResponseMessage(); // TODO coś z tym jeszcze musze zrobić
+                result = new HttpResponseMessage();
             }
-            //chwilowo na czas testu zakomentowane - prawdopodobnie do wywalenia
-            //var content = await result.Content.ReadAsStringAsync(); 
-            //var json = JsonConvert.DeserializeObject<ReportGenreStats>(content);
         }
-        public async Task<Tuple<string,int>> GetLastReportGenreStats()
+        public async Task<Tuple<string, int>> GetLastReportGenreStats()
         {
             var client = _httpClientFactory.CreateClient();
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_baseUrl}/report/last");
-            HttpResponseMessage result;
-            try
+            var result = await client.SendAsync(request);
+            if (!result.IsSuccessStatusCode)
             {
-                result = await client.SendAsync(request);
-            } 
-            catch(Exception ex)
-            {
-                result = new HttpResponseMessage(); // TODO coś z tym jeszcze musze zrobić
+                return null;
             }
             var content = await result.Content.ReadAsStringAsync();
             var json = JsonConvert.DeserializeObject<ReportGenreStats>(content);
@@ -129,14 +120,10 @@ namespace HoneyBadgers.Logic.Services
         {
             var client = _httpClientFactory.CreateClient();
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_baseUrl}/report/genrestats");
-            HttpResponseMessage result;
-            try
+            var result = await client.SendAsync(request);
+            if (!result.IsSuccessStatusCode)
             {
-                result = await client.SendAsync(request);
-            }
-            catch (Exception ex)
-            {
-                result = new HttpResponseMessage(); // TODO coś z tym jeszcze musze zrobić
+                return null;
             }
             var content = await result.Content.ReadAsStringAsync();
             var json = JsonConvert.DeserializeObject<List<Tuple<string, int>>>(content);

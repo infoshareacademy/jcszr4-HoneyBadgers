@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using HoneyBadgers.Entity.Models;
+using HoneyBadgers.Logic.Models;
 using HoneyBadgers.Logic.Services;
 using HoneyBadgers.Logic.Services.Interfaces;
 using HoneyBadgers.WebApp.Models;
@@ -21,7 +22,7 @@ namespace HoneyBadgers.WebApp.Controllers
         {
             var model = new ReviewListModel()
             {
-                Movie = _movieService.GetById(id),
+                Movie = await _movieService.GetDetailMovie(id),
                 Reviews = await _reviewService.GetAllMovieReviews(id)
             };
             return View(model);
