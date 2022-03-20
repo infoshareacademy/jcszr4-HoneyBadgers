@@ -3,8 +3,9 @@
 }
 .manage-btns > .manage-btn {
     min-width: 250px;
+    width: 300px;
     height: 225px;
-    padding: 16px 24px;
+    padding: 16px;
     margin: 8px;
     background-color: #f3f3f3;
     transition: .5s ease-out;
